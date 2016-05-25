@@ -5,7 +5,13 @@
 		try
 		{
 			readHeader();
-			readContainer();
+
+			// 
+			var useGithub = true;
+			var githubUsername = 'azerato';
+			readContainer(useGithub);
+			
+
 			readFooter();
 		}
 		catch(ex)
@@ -36,30 +42,59 @@
 				var fileEmplacement = 'compositions/' + fileName + '.html';
 				$.ajax({
 					url: fileEmplacement,
-					type: 'GET',
-					success: function(data) {
-						$expectedElementPlace.replaceWith(data);
-					}
+					type: 'GET'
+				}).success(function(data) {
+					$expectedElementPlace.replaceWith(data);
 				});
 			}
 		}
 	};
 
-	var readContainer = function()
+	var readContainer = function(useGithub, githubUsername)
 	{
 		var $elContainer = $('[data-composition=container]');
 
 		var type = $elContainer.attr('data-type');
 
-		// edit IIS config value <directoryBrowse enabled="true" />
 		if(type === 'blog')
 		{
 			var postsEmplacement = 'content/posts/';
-			var allPosts = undefined;
-			$.ajax({
-				url: postsEmplacement,
-				type: 'GET',
-				success: function(data) {
+			if(useGithub === true && useGithub !== undefined && githubUsername !== '' && githubUsername !== undefined)
+			{
+				var postsEmplacement = 'https://api.github.com/repos/' + githubUsername +'/' 
+							+ githubUsername + '.github.io/contents/' 
+							+ postsEmplacement;
+
+				$.ajax({
+					url: postsEmplacement,
+					type: 'GET',
+					dataType: 'jsonp'
+				}).success(function(results) {
+					if(results !== undefined)
+					{
+						allPosts = results.data;
+						// first el is parent directory
+						if(allPosts.length > 0)
+						{
+							for (var i = allPosts.length - 1; i >= 1; i--) {
+								var postUrl = allPosts[i].download_url;
+								if(postUrl.length > 0)
+								{
+									postsReader($elContainer, postUrl);
+								}
+							}
+						}
+					}
+				});
+			}
+			else
+			{
+				// edit IIS config value <directoryBrowse enabled="true" />	
+				var allPosts = undefined;
+				$.ajax({
+					url: postsEmplacement,
+					type: 'GET'
+				}).success(function(data) {
 					allPosts = data;
 
 					// test with IIS server
@@ -78,8 +113,8 @@
 							}
 						}
 					}
-				}
-			});		
+				});
+			}
 		}
 	};
 
@@ -87,10 +122,9 @@
 	{
 		$.ajax({
 			url: postUrl,
-			type: 'GET',
-			success: function(data) {
-				$elContainer.append(data);
-			}
+			type: 'GET'
+		}).success(function(data) {
+			$elContainer.append(data);
 		});
 	};
 })();
