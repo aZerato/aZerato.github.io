@@ -9,7 +9,7 @@
 			// 
 			var useGithub = true;
 			var githubUsername = 'azerato';
-			readContainer(useGithub);
+			readContainer(useGithub, githubUsername);
 			
 
 			readFooter();
@@ -61,23 +61,21 @@
 			var postsEmplacement = 'content/posts/';
 			if(useGithub === true && useGithub !== undefined && githubUsername !== '' && githubUsername !== undefined)
 			{
-				var postsEmplacement = 'https://api.github.com/repos/' + githubUsername +'/' 
+				postsEmplacement = 'https://api.github.com/repos/' + githubUsername +'/' 
 							+ githubUsername + '.github.io/contents/' 
 							+ postsEmplacement;
 
 				$.ajax({
 					url: postsEmplacement,
 					type: 'GET',
-					dataType: 'jsonp'
+					dataType: 'json'
 				}).success(function(results) {
 					if(results !== undefined)
 					{
-						allPosts = results.data;
-						// first el is parent directory
-						if(allPosts.length > 0)
+						if(results.length > 0)
 						{
-							for (var i = allPosts.length - 1; i >= 1; i--) {
-								var postUrl = allPosts[i].download_url;
+							for (var i = results.length - 1; i >= 0; i--) {
+								var postUrl = results[i].download_url;
 								if(postUrl.length > 0)
 								{
 									postsReader($elContainer, postUrl);
