@@ -24,15 +24,16 @@
 		dataStoreProvider, 
 		urlRouterProvider, 
 		stateProvider,
-		translateProvider)
+		translateProvider,
+		articlesServiceProvider)
 	{
 		stateProvider.state('root', {
 			views: {
 				'header': {
-					template: '<header></header>',
+					template: '<header-component></header-component>',
 				},
 				'footer': {
-					template: '<footer></footer>'	
+					template: '<footer-component></footer-component>'	
 				}
 			}
 		});
@@ -59,13 +60,17 @@
 
 		// Default language
 		translateProvider.preferredLanguage('en');
+
+		articlesServiceProvider.setGithubUsername('aZerato');
+		articlesServiceProvider.setPostsEmplacement('content/posts/');
 	};
 
 	config.$inject = [
 		'dataStoreProvider', 
 		'$urlRouterProvider', 
 		'$stateProvider',
-		'$translateProvider'
+		'$translateProvider',
+		'articlesServiceProvider'
 	];
 
 	app.config(config);

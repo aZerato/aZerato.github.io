@@ -7,40 +7,63 @@
 	var appModule = angular.module('app');
 	
 /*
-	 * Creation of an instance your Contacts form Controller.
+	 * Creation of an instance your Articles Controller.
 	 */
 	var articlesController = function(
 		$scope,
-		$state	
+		$state,
+		$http,
+		$sce,
+		dataStore,
+		articlesService
 	) {
-		$scope.articles = {};
+		$scope.articles = dataStore.get($scope.articles);
+
+		if($scope.articles === null || 
+			$scope.articles.length === 0)
+		{
+			$scope.articles = [];
+			articlesService.get($http)
+				.then(function(response) {
+					for (var i = response.data.length - 1; i >= 0; i--) {
+						$scope.articles.push(
+								// only same origin url are thrusted by angular.
+								$sce.trustAsResourceUrl(response.data[i].download_url)
+							);
+					}
+
+					dataStore.set('articles', $scope.articles);
+				});
+		}
 	};
 
 	/*
 	 * Inject depencencies to your controller.
-	 * Caution : inject the service 'dataStore'.
-	 * Caution : inject the service '$cookies' for use the module 'ngCookies'.
 	 */
 	articlesController.$inject = [
 		'$scope', 
-		'$state'
+		'$state',
+		'$http',
+		'$sce',
+		'dataStore',
+		'articlesService'
 	];
 
 	/*
-	 * 
+	 * Creation of an article ng component object.
 	 */
 	 var articleComponent = {
 	 	controller: articlesController,
-	 	template: '<div>articles</div>' 
+	 	templateUrl: 'app/articles/articles.list.html'
 	 };
 
 	/*
-     * Inject your new controller to module.
+     * Inject your new component to app.
 	 */
-	appModule.component('articles', articleComponent);
+	appModule.component('articlesComponent', articleComponent);
 
 	/*
-	 *
+	 * Add personalized config for this component.
 	 */
 	var config = function(stateProvider)
 	{
@@ -49,7 +72,7 @@
 			url:'/home',
 			views: {
 				'main@': {
-					template: '<articles></articles>',
+					template: '<articles-component></articles-component>',
 				}
 			}
 		});

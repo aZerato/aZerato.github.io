@@ -7,7 +7,7 @@
 	 * 
 	 */
 	var footerController = function() {
-		return null:
+		
 	};
 
 	/*
@@ -18,6 +18,6 @@
 		templateUrl: './app/common/footer/footer.html'
 	};
 
-	appModule.component('footer', footerComponent);
+	appModule.component('footerComponent', footerComponent);
 
 }(window.angular));

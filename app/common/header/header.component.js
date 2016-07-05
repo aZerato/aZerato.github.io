@@ -55,6 +55,6 @@
 	};
 
 	
-	appModule.component('header', headerComponent);
+	appModule.component('headerComponent', headerComponent);
 
 }(window.angular));
