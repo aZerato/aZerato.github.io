@@ -1,0 +1,25 @@
+{
+  "name": "annuaire-angular-js",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "EMEA\\j-p.cartoux <jean-philippe.cartoux@modisfrance.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "angular": "^1.5.7",
+    "angular-cookies": "^1.5.7",
+    "angular-ui-router": "^0.3.1",
+    "angular-translate": "^2.11.0",
+    "angular-translate-loader-static-files": "^2.11.0"
+  }
+}

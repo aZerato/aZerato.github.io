@@ -1,0 +1,32 @@
+{
+	"app": {
+		"title": "AngularJS EN"
+	},
+	"header": {
+		"AddContact": "Add Contact",
+		"About": "About"
+	},
+	"contacts": {
+		"form": {
+			"LastName": "Name",
+			"FirstName": "Firstname",
+			"Email": "Email",
+			"Cellphone": "Cellphone",
+			"Add": "Add",
+			"Back": "Back"
+		},
+		"tab": {
+			"Search": "Search",
+			"Informations": "Informations",
+			"Cellphone": "Cellphone",
+			"Email": "Email",
+			"Actions": "Actions"
+		}
+	},
+	"about": {
+		"content": "Hi ! I'm 'About.html' page"
+	},
+	"footer": {
+		"content": "Hi ! I'm the footer !"
+	}
+}

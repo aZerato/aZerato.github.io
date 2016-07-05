@@ -1,34 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-  	<meta charset="utf-8">
-  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-  	<meta name="viewport" content="width=device-width,initial-scale=1">
+<html>
+	<head>
+		<meta charset="utf-8">
+		
+		<title>Annuaire Sample</title>
 
-  	<meta name="description" content="My personal website.">
-  	<meta name="keywords" content="C#, csharp, c-sharp, .NET, DOTNET, HTML, CSS, JS, JavaScript, framework, bootstrap, front-end, frontend, web development">
-  	<meta name="author" content="Jean-Philippe CARTOUX">
-  	<title>aZerato.github.io</title>
+		<!-- build:css css/main.css -->
+		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+		<!-- endbuild -->
+	</head>
+	<body>
+		
+		<div class="container-fluid" ng-app="app">
 
-	<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+			<ui-view name="header"></ui-view>
 
-  	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" />
+			<ui-view name="main"></ui-view>
 
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+			<div ui-view="footer"></div>
+			
+		</div>
 
-	<script type="text/javascript" src="./assets/js/compositions.reader.js"></script>
+		<!-- build:js app/vendor.js -->
+		<script type="text/javascript" src="bower_components/angular/angular.js"></script>
+		<script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.js"></script>
+		<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+		<script type="text/javascript" src="bower_components/angular-translate/angular-translate.js"></script>
+		<script type="text/javascript" src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+		<!-- endbuild -->
 
-	<link rel="stylesheet" href="./assets/styles/bootstrap.custom.css" />
-  </head>
-  <body>
+		<!-- build:js app/script.js -->
+		<script type="text/javascript" src="app/app.config.js"></script>
+		
+		<script type="text/javascript" src="app/common/services/datastore.provider.js"></script>
 
-	 <div data-composition="header"></div>
+		<script type="text/javascript" src="app/common/header/header.component.js"></script>
+		<script type="text/javascript" src="app/common/footer/footer.component.js"></script>
+		
+		<script type="text/javascript" src="app/articles/articles.component.js"></script>
+		<!-- endbuild -->
 
-   <div data-composition="container" data-type="blog"></div>
-
-   <div data-composition="footer"></div>
-
-  </body>
+	</body>
 </html>
