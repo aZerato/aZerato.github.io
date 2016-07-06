@@ -3,25 +3,23 @@
 	<head>
 		<meta charset="utf-8">
 		
-		<title>Annuaire Sample</title>
+		<title>aZerato.github.io</title>
 
 		<!-- build:css css/main.css -->
 		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
 		<!-- endbuild -->
 	</head>
-	<body>
-		
-		<div class="container-fluid" ng-app="app">
+	<body ng-app="app">
 
-			<ui-view name="header"></ui-view>
+		<ui-view name="header"></ui-view>
 
-			<ui-view name="main"></ui-view>
+		<ui-view name="main"></ui-view>
 
-			<div ui-view="footer"></div>
-			
-		</div>
+		<ui-view name="footer"></ui-view>			
 
 		<!-- build:js app/vendor.js -->
+		<script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+		<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 		<script type="text/javascript" src="bower_components/angular/angular.js"></script>
 		<script type="text/javascript" src="bower_components/angular-cookies/angular-cookies.js"></script>
 		<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>

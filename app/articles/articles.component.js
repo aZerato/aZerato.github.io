@@ -65,7 +65,7 @@
 	var config = function(stateProvider)
 	{
 		// routing state configuration
-		stateProvider.state('root.contacts', {
+		stateProvider.state('root.articles', {
 			url:'/home',
 			views: {
 				'main@': {

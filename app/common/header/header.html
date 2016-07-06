@@ -1,21 +1,37 @@
-<h1>
-  <span translate>app.title</span> - {{today | date:'dd-MM-yyyy'}}
-</h1>
-  
-<button type="button" ng-class="{active: currentLang == 'en'}" class="btn btn-primary" ng-click="changeLang('en')">
-  EN
-</button>
-<button type="button" ng-class="{active: currentLang == 'fr'}" class="btn btn-primary" ng-click="changeLang('fr')">
-  FR
-</button>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" ui-sref="root.articles"><span translate>app.title</span></a>
+    </div>
 
-<ul class="nav nav-tabs">
-  <li role="presentation" ui-sref-active="active">
-  	<a ui-sref="root.contacts">
-  		<span class="glyphicon glyphicon-home"></span> Home
-  	</a>
-  </li>
-  <li role="presentation" ui-sref-active="active">
-  	<a ui-sref="root.about">{{'header.About' | translate}}</a>
-  </li>
-</ul>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li role="presentation" ui-sref-active="active">
+          <a ui-sref="root.articles">
+            Home
+          </a>
+        </li>
+        <li role="presentation" ui-sref-active="active">
+          <a ui-sref="root.about">{{'header.About' | translate}}</a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Languages<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li ng-click="changeLang('fr')">
+              <a href="#">French</a>
+            </li>
+            <li ng-click="changeLang('en')">
+              <a href="#">English</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
