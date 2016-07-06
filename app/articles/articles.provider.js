@@ -27,9 +27,11 @@
 			return {
 				get: function($http, $sce, $q)
 				{
+					// get files url throught github api.
 					var finalPostsEmplacement = 'https://api.github.com/repos/' + self.githubUsername +'/' + self.githubUsername + '.github.io/contents/' + self.postsEmplacement;
 					if(self.localPosts === true)
 					{
+						// it's local files.
 						finalPostsEmplacement = self.postsEmplacement;
 					}
 
@@ -49,9 +51,9 @@
 						else
 						{
 							// from github api.
-							for (var i = response.length - 1; i >= 0; i--) {
+							for (var j = response.length - 1; j >= 0; j--) {
 								// only same origin url are thrusted by angular, thus, uses $sce.trustAsResources.
-								articles.push($sce.trustAsResourceUrl(response[i].download_url));
+								articles.push($sce.trustAsResourceUrl(response[j].download_url));
 							}
 						}
 
