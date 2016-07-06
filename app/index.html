@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		
+		<title>aZerato.github.io</title>
+
+		<!-- build:css build/css/main.css -->
+		<link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+		<!-- endbuild -->
+	</head>
+	<body ng-app="app">
+
+		<ui-view name="header"></ui-view>
+
+		<ui-view name="main"></ui-view>
+
+		<ui-view name="footer"></ui-view>			
+
+		<!-- build:js build/vendor.js -->
+		<script type="text/javascript" src="../bower_components/jquery/dist/jquery.js"></script>
+		<script type="text/javascript" src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+		<script type="text/javascript" src="../bower_components/angular/angular.js"></script>
+		<script type="text/javascript" src="../bower_components/angular-cookies/angular-cookies.js"></script>
+		<script type="text/javascript" src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+		<script type="text/javascript" src="../bower_components/angular-translate/angular-translate.js"></script>
+		<script type="text/javascript" src="../bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+		<!-- endbuild -->
+
+		<!-- build:js build/script.js -->
+		<script type="text/javascript" src="app.config.js"></script>
+		
+		<script type="text/javascript" src="common/services/datastore.provider.js"></script>
+
+		<script type="text/javascript" src="common/header/header.component.js"></script>
+		<script type="text/javascript" src="common/footer/footer.component.js"></script>
+		
+		<script type="text/javascript" src="articles/articles.component.js"></script>
+		<script type="text/javascript" src="articles/articles.provider.js"></script>
+		<!-- endbuild -->
+
+	</body>
+</html>

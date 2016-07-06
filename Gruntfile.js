@@ -13,23 +13,23 @@ module.exports = function(grunt){
 		connect: {
 			release: {
 				options: {
-					base :'dist/',
+					base :'./',
 					port: port,
 					keepalive: true
 				}
 			},
-			server: {
+			debug: {
 				options: {
-					base :'./',
+					base :'./app',
 					port: port,
 					keepalive: true
 				}
 			}
 		},
 		useminPrepare: {
-			html: 'index.html',
+			html: 'app/index.html',
 			options: {
-				dest: 'dist/',
+				dest: 'build/',
 				flow: {
 					html: {
 						steps: {
@@ -42,24 +42,17 @@ module.exports = function(grunt){
 			}
 		},
 		usemin: {
-			html: ['dist/*.html'],
+			html: ['build/*.html'],
 			options: {
-				assetsDirs: ['dist']
+				assetsDirs: ['build']
 			}
 		},
 		copy: {
-			dist:{
-				files: [{
-					expand: true,
-				    cwd: './',
-				    src: 'index.html',
-				    dest: 'dist/',
-				    flatten: true,
-				    filter: 'isFile',
-				},
+			build: {
+				files:[
 				{
 					expand: true,
-				    src: ['app/common/i18n/*.json'],
+				    src: ['build/common/i18n/*.json'],
 				    dest: 'dist/app/common/i18n/',
 				    flatten: true,
 				    filter: 'isFile',
@@ -87,51 +80,19 @@ module.exports = function(grunt){
 				    dest: 'dist/app/common/about/',
 				    flatten: true,
 				    filter: 'isFile',
-				},
-				{
-					expand: true,
-				    cwd: './app/common/form/',
-				    src: 'form.html',
-				    dest: 'dist/app/common/form/',
-				    flatten: true,
-				    filter: 'isFile',
-				},
-				{
-					expand: true,
-				    cwd: './app/contacts/',
-				    src: 'contacts.html',
-				    dest: 'dist/app/contacts/',
-				    flatten: true,
-				    filter: 'isFile',
-				},
-				{
-					expand: true,
-				    cwd: './app/contacts/',
-				    src: 'contacts.form.html',
-				    dest: 'dist/app/contacts/',
-				    flatten: true,
-				    filter: 'isFile',
-				},
-				{
-					expand: true,
-				    cwd: './app/contacts/',
-				    src: 'contacts.list.html',
-				    dest: 'dist/app/contacts/',
-				    flatten: true,
-				    filter: 'isFile',
 				}]
 			},
 			fonts:{
 				expand: true,
 				flatten: true,
-				dest: 'dist/fonts/',
+				dest: 'build/fonts/',
 				src: ['bower_components/bootstrap/fonts/**'],
 				filter: 'isFile'
 			}
 		},
 		clean: {
-			dist: {
-				src: ['dist/']
+			build: {
+				src: ['build/']
 			},
 			tmp: {
 				src:['.tmp']
@@ -142,12 +103,12 @@ module.exports = function(grunt){
 				algorithm: 'md5',
 				length: 8
 			},
-			dist: {
-				src: 'dist/{js,css}/**'
+			build: {
+				src: 'build/{js,css}/**'
 			}
 		},
 		jshint: {
-			build: ['app/**/*.js']
+			debug: ['app/**/*.js']
 		}
 	});
 
@@ -165,12 +126,12 @@ module.exports = function(grunt){
 
 
 	// Tasks definition
-	grunt.registerTask('default', ['open:server','connect:server']);
+	grunt.registerTask('default', ['open:server','connect:debug']);
 	grunt.registerTask('check', [
-		'jshint:build'
+		'jshint:debug'
 	]);
 	grunt.registerTask('build', [
-		'clean:dist',
+		'clean:build',
 		'useminPrepare',
 		'concat',
 		'copy',

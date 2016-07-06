@@ -3,30 +3,12 @@
 		"title": "JPC FR"
 	},
 	"header": {
-		"AddContact": "Ajouter Contact",
-		"About": "Infos"
-	},
-	"contacts": {
-		"form": {
-			"LastName": "Nom",
-			"FirstName": "Prénom",
-			"Email": "Email",
-			"Cellphone": "Téléphone",
-			"Add": "Ajouter",
-			"Back": "Retour"
-		},
-		"tab": {
-			"Search": "Rechercher",
-			"Informations": "Informations",
-			"Cellphone": "Téléphone",
-			"Email": "Email",
-			"Actions": "Actions"
-		}
+		"About": "A propos"
 	},
 	"about": {
-		"content": "Hé ! Je suis la page 'About.html'"
+		"content": "Hi ! I'm 'About.html' page"
 	},
 	"footer": {
-		"content": "Hé ! Je suis le footer !"
+		"content": "Hi ! I'm the footer !"
 	}
 }
