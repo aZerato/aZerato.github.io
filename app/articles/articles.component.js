@@ -14,6 +14,7 @@
 		$state,
 		$http,
 		$sce,
+		$q,
 		dataStore,
 		articlesService
 	) {
@@ -23,17 +24,12 @@
 			$scope.articles.length === 0)
 		{
 			$scope.articles = [];
-			articlesService.get($http)
-				.then(function(response) {
-					for (var i = response.data.length - 1; i >= 0; i--) {
-						$scope.articles.push(
-								// only same origin url are thrusted by angular.
-								$sce.trustAsResourceUrl(response.data[i].download_url)
-							);
-					}
+			articlesService.get($http, $sce, $q)
+			.then(function(response) {
+				$scope.articles = response;
 
-					dataStore.set('articles', $scope.articles);
-				});
+				dataStore.set('articles', $scope.articles);
+			});
 		}
 	};
 
@@ -45,6 +41,7 @@
 		'$state',
 		'$http',
 		'$sce',
+		'$q',
 		'dataStore',
 		'articlesService'
 	];

@@ -62,7 +62,8 @@
 		translateProvider.preferredLanguage('en');
 
 		articlesServiceProvider.setGithubUsername('aZerato');
-		articlesServiceProvider.setPostsEmplacement('content/posts/');
+		articlesServiceProvider.setPostsEmplacement('blog/content/posts/');
+		//articlesServiceProvider.setLocalPostsEmplacement(true);
 	};
 
 	config.$inject = [
