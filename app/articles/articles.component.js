@@ -18,7 +18,7 @@
 		dataStore,
 		articlesService
 	) {
-		$scope.articles = dataStore.get($scope.articles);
+		$scope.articles = dataStore.get('articles');
 
 		if($scope.articles === null || 
 			$scope.articles.length === 0)
