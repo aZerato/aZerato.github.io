@@ -24,6 +24,7 @@
 			$scope.articles.length === 0)
 		{
 			$scope.articles = [];
+			
 			articlesService.get($http, $sce, $q)
 			.then(function(response) {
 				$scope.articles = response;

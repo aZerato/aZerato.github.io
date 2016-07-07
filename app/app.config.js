@@ -63,7 +63,7 @@
 
 		articlesServiceProvider.setGithubUsername('aZerato');
 		articlesServiceProvider.setPostsEmplacement('/blog/content/posts/');
-		articlesServiceProvider.setLocalPostsEmplacement(true);
+		articlesServiceProvider.setLocalPostsEmplacement(false);
 	};
 
 	config.$inject = [
