@@ -15,7 +15,7 @@
 	 */
 	var footerComponent = {
 		controller: footerController,
-		templateUrl: './app/common/footer/footer.html'
+		templateUrl: '/app/common/footer/footer.html'
 	};
 
 	appModule.component('footerComponent', footerComponent);

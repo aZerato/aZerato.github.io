@@ -42,7 +42,7 @@
 			url: '/about',
 			views: {
 				'main@': {
-					templateUrl: 'app/common/about/about.html'
+					templateUrl: '/app/common/about/about.html'
 				}
 			}
 		});
@@ -54,7 +54,7 @@
 
 		// i18n
 		translateProvider.useStaticFilesLoader({
-			prefix: 'app/common/i18n/',
+			prefix: '/app/common/i18n/',
 			suffix: '.json'
 		});
 
@@ -62,7 +62,7 @@
 		translateProvider.preferredLanguage('en');
 
 		articlesServiceProvider.setGithubUsername('aZerato');
-		articlesServiceProvider.setPostsEmplacement('blog/content/posts/');
+		articlesServiceProvider.setPostsEmplacement('/blog/content/posts/');
 		articlesServiceProvider.setLocalPostsEmplacement(true);
 	};
 

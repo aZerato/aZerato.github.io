@@ -51,7 +51,7 @@
 	 */
 	 var articleComponent = {
 	 	controller: articlesController,
-	 	templateUrl: 'app/articles/articles.list.html'
+	 	templateUrl: '/app/articles/articles.list.html'
 	 };
 
 	/*

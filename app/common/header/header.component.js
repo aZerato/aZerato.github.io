@@ -51,7 +51,7 @@
 	 */
 	var headerComponent = {
 		controller: headerController,
-		templateUrl: './app/common/header/header.html'
+		templateUrl: '/app/common/header/header.html'
 	};
 
 	

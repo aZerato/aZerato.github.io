@@ -5,22 +5,18 @@ module.exports = function(grunt){
 	// Grunt configuration
 	grunt.initConfig({
 		open: {
-			server: {
+			release: {
 				// Gets the port from the connect information
 				path: url
+			},
+			debug: {
+				path: url + '/app/'
 			}
 		},
 		connect: {
-			release: {
+			server: {
 				options: {
 					base :'./',
-					port: port,
-					keepalive: true
-				}
-			},
-			debug: {
-				options: {
-					base :'./app',
 					port: port,
 					keepalive: true
 				}
@@ -126,7 +122,7 @@ module.exports = function(grunt){
 
 
 	// Tasks definition
-	grunt.registerTask('default', ['open:server','connect:debug']);
+	grunt.registerTask('default', ['open:debug','connect:server']);
 	grunt.registerTask('check', [
 		'jshint:debug'
 	]);
@@ -140,8 +136,8 @@ module.exports = function(grunt){
 		'filerev',
 		'usemin',
 		'clean:tmp',
-		'open:server',
-		'connect:release'
+		'open:release',
+		'connect:server'
 	]);
 
 }

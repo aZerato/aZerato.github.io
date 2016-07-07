@@ -17,7 +17,7 @@
 		this.githubUsername = 'default';
 
 		// The folder where i can find yours posts.
-		this.postsEmplacement = 'blog/content/posts/';
+		this.postsEmplacement = '/blog/content/posts/';
 
 		// if local Posts files, i get only their URLs with github api & i get them directly from website root.
 		this.localPosts = false;
@@ -28,7 +28,7 @@
 				get: function($http, $sce, $q)
 				{
 					// get files url throught github api.
-					var finalPostsEmplacement = 'https://api.github.com/repos/' + self.githubUsername +'/' + self.githubUsername + '.github.io/contents/' + self.postsEmplacement;
+					var finalPostsEmplacement = 'https://api.github.com/repos/' + self.githubUsername +'/' + self.githubUsername + '.github.io/contents' + self.postsEmplacement;
 					if(self.localPosts === true)
 					{
 						// it's local files.
