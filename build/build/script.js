@@ -15,7 +15,7 @@
 	 * Main module = App.
 	 */
 	var app = angular.module('app', imports);
-
+ 
 	/*
 	 * Share the dataStore for all the app.
 	 * Caution : inject the provider 'dataStoreProvider'
