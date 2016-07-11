@@ -18,7 +18,7 @@ Set your posts folder :
 
 > articlesServiceProvider.setPostsEmplacement('/blog/content/posts/');
 
-With this app i load dynamically my posts in html from github or local folder.
+With this app i load dynamically my posts in html from a local folder thanks to github api.
 For me, my posts are in this folder '[blog/content/posts/](https://github.com/aZerato/aZerato.github.io/tree/master/blog/content/posts)'.
 
 ## How to start
