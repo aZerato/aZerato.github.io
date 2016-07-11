@@ -25,6 +25,7 @@
 		urlRouterProvider, 
 		stateProvider,
 		translateProvider,
+		sceDelegateProvider,
 		articlesServiceProvider)
 	{
 		stateProvider.state('root', {
@@ -42,7 +43,7 @@
 			url: '/about',
 			views: {
 				'main@': {
-					templateUrl: '/app/common/about/about.html'
+					templateUrl: '/blog/content/pages/about.html'
 				}
 			}
 		});
@@ -60,10 +61,21 @@
 
 		// Default language
 		translateProvider.preferredLanguage('en');
+		translateProvider.useSanitizeValueStrategy('escapeParameters');
 
+		// for loading posts with urls getted with github API.
+		sceDelegateProvider.resourceUrlWhitelist([
+			// Allow same origin resource loads.
+			'self',
+			// Allow loading from our assets domain.  Notice the difference between * and **.
+			'https://raw.githubusercontent.com/**'
+		]);
+
+		// Param your github posts recuperation.
 		articlesServiceProvider.setGithubUsername('aZerato');
+		articlesServiceProvider.setLocalPostsEmplacement(true);
 		articlesServiceProvider.setPostsEmplacement('/blog/content/posts/');
-		articlesServiceProvider.setLocalPostsEmplacement(false);
+
 	};
 
 	config.$inject = [
@@ -71,10 +83,35 @@
 		'$urlRouterProvider', 
 		'$stateProvider',
 		'$translateProvider',
+		'$sceDelegateProvider',
 		'articlesServiceProvider'
 	];
 
 	app.config(config);
+
+	var run = function(
+		$rootScope,
+		$cookies)
+	{
+		var favLang = $cookies.get('favLang');
+		if(favLang === '' || favLang == null)
+		{
+			favLang = 'en';
+			$cookies.put('favLang', favLang);
+		}
+		$rootScope.currentLang = favLang;
+
+		$rootScope.getCurrentLang = function() {
+			return $rootScope.currentLang;
+		};
+	};
+
+	run.$inject = [
+		'$rootScope',
+		'$cookies'
+	];
+
+	app.run(run);
 
 })(window.angular);
 (function (angular) {
@@ -132,38 +169,24 @@
 	 * 
 	 */
 	var headerController = function(
-			$scope,
-			$state, 
-			$translate,
-			$cookies)
-		{
-			$scope.changeLang = function(key) {
-				$translate.use(key);
-				$scope.currentLang = key;
-				$cookies.put('favLang', key);
-			};
-
-			// define default lang
-			var keyLang = $cookies.get('favLang');
-			if(keyLang)
-			{
-				$scope.currentLang = keyLang;
-				$translate.use(keyLang);
-			}
-			else
-			{
-				$scope.currentLang = $translate.use(); // return 'en', default value setted in app.config.js.
-			}
-
-			$cookies.put('favLang', $scope.currentLang);
+		$rootScope,
+		$scope,
+		$translate,
+		$cookies)
+	{
+		$scope.changeLang = function(key) {
+			$translate.use(key);
+			$rootScope.currentLang = key;
+			$cookies.put('favLang', key);
+		};
 	};
 
 	/*
 	 * 
 	 */
 	headerController.$inject = [
-		'$scope', 
-		'$state',
+		'$rootScope',
+		'$scope',
 		'$translate',
 		'$cookies'
 	];
@@ -215,22 +238,25 @@
 	 * Creation of an instance your Articles Controller.
 	 */
 	var articlesController = function(
+		$rootScope,
 		$scope,
 		$state,
 		$http,
-		$sce,
 		$q,
 		dataStore,
-		articlesService
+		articlesService,
+		$translate
 	) {
 		$scope.articles = dataStore.get('articles');
+
+		//$rootScope.currentLang;
 
 		if($scope.articles === null || 
 			$scope.articles.length === 0)
 		{
 			$scope.articles = [];
 			
-			articlesService.get($http, $sce, $q)
+			articlesService.get($http, $q)
 			.then(function(response) {
 				$scope.articles = response;
 
@@ -243,13 +269,14 @@
 	 * Inject depencencies to your controller.
 	 */
 	articlesController.$inject = [
+		'$rootScope',
 		'$scope', 
 		'$state',
 		'$http',
-		'$sce',
 		'$q',
 		'dataStore',
-		'articlesService'
+		'articlesService',
+		'$translate'
 	];
 
 	/*
@@ -313,7 +340,7 @@
 		this.$get = function() {
 			var githubUsername = this.githubUsername;
 			return {
-				get: function($http, $sce, $q)
+				get: function($http, $q)
 				{
 					// get files url throught github api.
 					var finalPostsEmplacement = 'https://api.github.com/repos/' + self.githubUsername +'/' + self.githubUsername + '.github.io/contents' + self.postsEmplacement;
@@ -340,8 +367,7 @@
 						{
 							// from github api.
 							for (var j = response.length - 1; j >= 0; j--) {
-								// only same origin url are thrusted by angular, thus, uses $sce.trustAsResources.
-								articles.push($sce.trustAsResourceUrl(response[j].download_url));
+								articles.push(response[j].download_url);
 							}
 						}
 

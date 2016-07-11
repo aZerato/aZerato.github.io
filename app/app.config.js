@@ -61,7 +61,8 @@
 
 		// Default language
 		translateProvider.preferredLanguage('en');
-		
+		translateProvider.useSanitizeValueStrategy('escapeParameters');
+
 		// for loading posts with urls getted with github API.
 		sceDelegateProvider.resourceUrlWhitelist([
 			// Allow same origin resource loads.
@@ -72,8 +73,9 @@
 
 		// Param your github posts recuperation.
 		articlesServiceProvider.setGithubUsername('aZerato');
-		articlesServiceProvider.setPostsEmplacement('/blog/content/posts/');
 		articlesServiceProvider.setLocalPostsEmplacement(true);
+		articlesServiceProvider.setPostsEmplacement('/blog/content/posts/');
+
 	};
 
 	config.$inject = [

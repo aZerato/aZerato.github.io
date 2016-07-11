@@ -21,6 +21,8 @@
 	) {
 		$scope.articles = dataStore.get('articles');
 
+		//$rootScope.currentLang;
+
 		if($scope.articles === null || 
 			$scope.articles.length === 0)
 		{
