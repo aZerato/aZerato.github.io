@@ -29,31 +29,21 @@
 				{
 					// get files url throught github api.
 					var finalPostsEmplacement = 'https://api.github.com/repos/' + self.githubUsername +'/' + self.githubUsername + '.github.io/contents' + self.postsEmplacement;
-					if(self.localPosts === true)
-					{
-						// it's local files.
-						finalPostsEmplacement = self.postsEmplacement;
-					}
-
+					
 					// Promise.
 					var defer = $q.defer();
 
 					$http.get(finalPostsEmplacement)
 					.success(function(response) {
 						var articles = [];
-						if(self.localPosts === true)
-						{
-							// from local folder.
-							for (var i = response.length - 1; i >= 0; i--) {
-								articles.push(self.postsEmplacement + '' + response[i]);
+								// from github api.
+						for (var j = response.length - 1; j >= 0; j--) {
+							var fileUrl = response[j].download_url;
+							if(self.localPosts)
+							{
+								fileUrl = '/' + response[j].path;
 							}
-						}
-						else
-						{
-							// from github api.
-							for (var j = response.length - 1; j >= 0; j--) {
-								articles.push(response[j].download_url);
-							}
+							articles.push(fileUrl);
 						}
 
 						defer.resolve(articles);
