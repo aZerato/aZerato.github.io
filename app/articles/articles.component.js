@@ -10,13 +10,14 @@
 	 * Creation of an instance your Articles Controller.
 	 */
 	var articlesController = function(
+		$rootScope,
 		$scope,
 		$state,
 		$http,
-		$sce,
 		$q,
 		dataStore,
-		articlesService
+		articlesService,
+		$translate
 	) {
 		$scope.articles = dataStore.get('articles');
 
@@ -25,7 +26,7 @@
 		{
 			$scope.articles = [];
 			
-			articlesService.get($http, $sce, $q)
+			articlesService.get($http, $q)
 			.then(function(response) {
 				$scope.articles = response;
 
@@ -38,13 +39,14 @@
 	 * Inject depencencies to your controller.
 	 */
 	articlesController.$inject = [
+		'$rootScope',
 		'$scope', 
 		'$state',
 		'$http',
-		'$sce',
 		'$q',
 		'dataStore',
-		'articlesService'
+		'articlesService',
+		'$translate'
 	];
 
 	/*

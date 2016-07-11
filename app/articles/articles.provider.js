@@ -25,7 +25,7 @@
 		this.$get = function() {
 			var githubUsername = this.githubUsername;
 			return {
-				get: function($http, $sce, $q)
+				get: function($http, $q)
 				{
 					// get files url throught github api.
 					var finalPostsEmplacement = 'https://api.github.com/repos/' + self.githubUsername +'/' + self.githubUsername + '.github.io/contents' + self.postsEmplacement;
@@ -52,8 +52,7 @@
 						{
 							// from github api.
 							for (var j = response.length - 1; j >= 0; j--) {
-								// only same origin url are thrusted by angular, thus, uses $sce.trustAsResources.
-								articles.push($sce.trustAsResourceUrl(response[j].download_url));
+								articles.push(response[j].download_url);
 							}
 						}
 

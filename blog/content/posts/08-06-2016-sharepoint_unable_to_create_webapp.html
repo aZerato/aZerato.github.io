@@ -1,0 +1,16 @@
+<div class="container">
+	<h2>Sharepoint 2007 : problème création WebApp</h2>
+	<p>
+		Lors de la création d'une <i>WebApp</i> il met arrivé de ne pas avoir le <b>pool application IIS</b> et son répertoire web de créé.
+	</p>
+	<p>
+		Vous pouvez tenter de relancer le service Sharepoint, il semblerait qu'il se mélange un peu les pinceaux.
+		<code>
+			net stop "Windows SharePoint Services Timer"
+			net start "Windows SharePoint Services Timer"
+		</code>
+	</p>
+	<p>
+		Si ça ne résoud rien : <a href="http://sharepoint.stackexchange.com/questions/15351/new-web-app-creation-fails-to-create-iis-site-on-secondary-node">second espoir</a>
+	</p>
+</div>

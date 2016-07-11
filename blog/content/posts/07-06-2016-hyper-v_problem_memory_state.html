@@ -1,9 +1,20 @@
-<div class="container">
+
+<div class="container" ng-show="getCurrentLang() == 'fr'">
 	<h2>Hyper-V : "n'a pas pu créer ou ouvrir le fichier d'état de mise en mémoire"</h2>
 	<p>
-		Après une copie d'une VM (bien qu'elle fut bien arrêtée), cette même VM sur mon poste était impossible de la démarrer. Alors que la copie transmise au collègue était parfaitement fonctionnelle.
+		Après une copie d'une VM (bien qu'elle fut bien arrêtée), cette même VM sur mon poste était impossible de à démarrer. Alors que la copie transmise au collègue était parfaitement fonctionnelle.
 	</p>
 	<p>
 		J'ai donc fait un export de la VM puis je l'ai réimporté et tout s'est remis à fonctionner.
+	</p>
+</div>
+
+<div class="container" ng-show="getCurrentLang() == 'en'">
+	<h2>Hyper-V : "Failed to create memory contents file"</h2>
+	<p>
+		For sharing a Virtual Machine, even if it was stopped correctly, i was unable to start it. The shared version started correctly on the co-worker pc.
+	</p>
+	<p>
+		I do an export, and re-import it for start it.
 	</p>
 </div>

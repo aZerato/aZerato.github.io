@@ -25,6 +25,7 @@
 		urlRouterProvider, 
 		stateProvider,
 		translateProvider,
+		sceDelegateProvider,
 		articlesServiceProvider)
 	{
 		stateProvider.state('root', {
@@ -42,7 +43,7 @@
 			url: '/about',
 			views: {
 				'main@': {
-					templateUrl: '/app/common/about/about.html'
+					templateUrl: '/blog/content/pages/about.html'
 				}
 			}
 		});
@@ -60,10 +61,19 @@
 
 		// Default language
 		translateProvider.preferredLanguage('en');
+		
+		// for loading posts with urls getted with github API.
+		sceDelegateProvider.resourceUrlWhitelist([
+			// Allow same origin resource loads.
+			'self',
+			// Allow loading from our assets domain.  Notice the difference between * and **.
+			'https://raw.githubusercontent.com/**'
+		]);
 
+		// Param your github posts recuperation.
 		articlesServiceProvider.setGithubUsername('aZerato');
 		articlesServiceProvider.setPostsEmplacement('/blog/content/posts/');
-		articlesServiceProvider.setLocalPostsEmplacement(false);
+		articlesServiceProvider.setLocalPostsEmplacement(true);
 	};
 
 	config.$inject = [
@@ -71,9 +81,34 @@
 		'$urlRouterProvider', 
 		'$stateProvider',
 		'$translateProvider',
+		'$sceDelegateProvider',
 		'articlesServiceProvider'
 	];
 
 	app.config(config);
+
+	var run = function(
+		$rootScope,
+		$cookies)
+	{
+		var favLang = $cookies.get('favLang');
+		if(favLang === '' || favLang == null)
+		{
+			favLang = 'en';
+			$cookies.put('favLang', favLang);
+		}
+		$rootScope.currentLang = favLang;
+
+		$rootScope.getCurrentLang = function() {
+			return $rootScope.currentLang;
+		};
+	};
+
+	run.$inject = [
+		'$rootScope',
+		'$cookies'
+	];
+
+	app.run(run);
 
 })(window.angular);
