@@ -73,7 +73,6 @@
 
 		// Param your github posts recuperation.
 		articlesServiceProvider.setGithubUsername('aZerato');
-		articlesServiceProvider.setLocalPostsEmplacement(true);
 		articlesServiceProvider.setPostsEmplacement('/blog/content/posts/');
 
 	};

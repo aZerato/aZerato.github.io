@@ -2,7 +2,7 @@
 
 [My Github.io website](http://aZerato.github.io/)
 
-This angular app use Github API.
+This angular app uses Github API.
 
 ## How to configure
 
@@ -10,7 +10,7 @@ Edit this file :
 
 > app/app.config.js
 
-Set your username :
+Set your github username :
 
 > articlesServiceProvider.setGithubUsername('aZerato');
 
@@ -18,16 +18,15 @@ Set your posts folder :
 
 > articlesServiceProvider.setPostsEmplacement('/blog/content/posts/');
 
-Load posts files through Github API or directly from local folder.
-
-> articlesServiceProvider.setLocalPostsEmplacement(true);
+With this app i load dynamically my posts in html from github or local folder.
+For me, my posts are in this folder '[blog/content/posts/](https://github.com/aZerato/aZerato.github.io/tree/master/blog/content/posts)'.
 
 ## How to start
 
 If not already done :
 
-- Download node.js
-- Install bower globally
+- Download 'node.js'
+- Install 'bower' globally
 
 > npm install bower -g
 

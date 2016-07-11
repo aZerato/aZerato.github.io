@@ -134,9 +134,7 @@ module.exports = function(grunt){
 		'cssmin',
 		'filerev',
 		'usemin',
-		'clean:tmp',
-		'open:release',
-		'connect:server'
+		'clean:tmp'
 	]);
 
 }
