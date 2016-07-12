@@ -92,6 +92,9 @@ module.exports = function(grunt){
 			},
 			tmp: {
 				src:['.tmp']
+			},
+			css: {
+				src:['build/styles/']
 			}
 		},
 		filerev: {
@@ -105,6 +108,24 @@ module.exports = function(grunt){
 		},
 		jshint: {
 			debug: ['app/**/*.js']
+		},
+		less: {
+			compile: {
+				files: {
+					'build/styles/custom.bootstrap.css' : 'styles/register.less'
+				}
+			}
+		},
+		watch: {
+			less: {
+				files: [
+					'styles/**'
+				],
+				tasks: [
+					'clean:css',
+					'less:compile'
+				]
+			}
 		}
 	});
 
@@ -120,12 +141,20 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-filerev');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 
+	grunt.loadNpmTasks('grunt-contrib-less');
+	grunt.loadNpmTasks('grunt-contrib-watch');
+
 
 	// Tasks definition
 	grunt.registerTask('default', ['open:debug','connect:server']);
 	grunt.registerTask('check', [
 		'jshint:debug'
 	]);
+
+	grunt.registerTask('watchLess', [
+		'watch:less'
+	]);
+
 	grunt.registerTask('build', [
 		'clean:build',
 		'useminPrepare',
@@ -134,6 +163,7 @@ module.exports = function(grunt){
 		'cssmin',
 		'filerev',
 		'usemin',
+		'less:compile',
 		'clean:tmp'
 	]);
 

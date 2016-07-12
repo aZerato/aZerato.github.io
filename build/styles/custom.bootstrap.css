@@ -1,0 +1,33 @@
+a {
+  color: #99979c;
+}
+a:hover,
+a:focus {
+  color: #2a2730;
+}
+.cst-header {
+  border-bottom: 1px solid #99979c;
+}
+.cst-header .navbar-toggle .icon-bar {
+  background-color: #99979c;
+}
+.cst-footer {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  margin-top: 100px;
+  color: #99979c;
+  background-color: #2a2730;
+}
+.cst-footer ul {
+  padding-left: 0;
+  margin-bottom: 20px;
+}
+.cst-footer ul li {
+  display: inline-block;
+}
+.cst-footer ul li a {
+  color: white;
+}
+.articles-component {
+  background-color: #99979c;
+}
