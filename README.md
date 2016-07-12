@@ -57,3 +57,7 @@ Run jshint
 Concat/minify app files in '/build'
 
 > grunt build
+
+less Watcher (add/edit less files in "styles/" folder they are auto compiled in one file : "build/styles/custom.bootstrap.css")
+
+> grunt watchLess
