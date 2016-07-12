@@ -1,11 +1,39 @@
 .cst-header {
-	border-bottom: 1px solid @nice-lite-grey;
-
-	.navbar-toggle
+	&.navbar-inverse 
 	{
-		.icon-bar
+		background-color: @azure;
+		border-bottom: 1px solid @azure-darker;
+
+		.navbar-header
 		{
-			background-color: @nice-lite-grey;
+			.navbar-brand 
+			{
+				color: white;
+			}
 		}
+
+		.navbar-nav 
+		{
+			> li 
+			{
+				&.active,
+				&:hover,
+				&:focus 
+				{
+					> a 
+					{
+						color: white;
+						background-color: inherit;
+					}
+				}
+				&
+				{
+					> a
+					{
+						color: fade(white, 80%);
+					}
+				}
+    		}
+    	}
 	}
 }
