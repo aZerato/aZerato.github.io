@@ -1,9 +1,9 @@
 <div class="container cst-article">
 	
-	<div>
+	<div ng-show="$root.currentLang == 'fr'">
 		<h2>Sharepoint 2007 : problème création WebApp</h2>
 		<p>
-			Lors de la création d'une <i>WebApp</i> il est arrivé de ne trouver nulle part le <b>pool applicatif IIS</b> et son répertoire web.
+			Lors de la création d'une <i>WebApp</i> il était impossible trouver le <b>pool applicatif IIS</b> et son répertoire web.
 		</p>
 		<p>
 			Vous pouvez tenter de relancer le service Sharepoint, il semblerait qu'il se mélange un peu les pinceaux.
@@ -20,6 +20,29 @@
 		</p>
 		<p>
 			Si ça ne résoud rien : <a href="http://sharepoint.stackexchange.com/questions/15351/new-web-app-creation-fails-to-create-iis-site-on-secondary-node">seconde chance</a>
+		</p>
+	</div>
+
+	<div ng-show="$root.currentLang == 'en'">
+		<h2>Sharepoint 2007 : problem WebApp creation</h2>
+		<p>
+			During <i>WebApp</i> creation, I was unable to find <b>the IIS pool</b> & the web folder.
+		</p>
+		<p>
+			You can restart the Sharepoint service, it would seem that Sharepoint is confused.
+		</p>
+		<p>
+			<code>
+				net stop "Windows SharePoint Services Timer"
+			</code>
+		</p>
+		<p>
+			<code>
+				net start "Windows SharePoint Services Timer"
+			</code>
+		</p>
+		<p>
+			<a href="http://sharepoint.stackexchange.com/questions/15351/new-web-app-creation-fails-to-create-iis-site-on-secondary-node">another chance</a>
 		</p>
 	</div>
 

@@ -1,6 +1,6 @@
 <div class="container cst-article">
 
-	<div>
+	<div ng-show="$root.currentLang == 'fr'">
 		<h2>Sharepoint 2007 : 'Enable Validation' error</h2>
 		<p>
 			Attention quand vous créez un element via C# tel qu'un "DropDownList" (soit un <code>&lt;select&gt;</code>), il y a un 'binding' entre son état initial (au chargement de la page) et son état à l'envoie du formulaire. Par conséquent, si vous effectuez des modifications via du JavaScript sur le contenu du "select", vous risquez bien de rencontrer une telle erreur.
@@ -59,6 +59,73 @@ void OnSaveButtonClick(object sender, EventArgs e)
     if (!String.IsNullOrEmpty(agenceValue))
     {
 		// notre traitement
+	}
+
+	//[...]
+}
+			</pre>
+		</p>
+	</div>
+
+	<div ng-show="$root.currentLang == 'en'">
+		<h2>Sharepoint 2007 : 'Enable Validation' error</h2>
+		<p>
+			Caution when you create an "DropDownList" control (equi html : <code>&lt;select&gt;</code>), a 'binding' is created between initial state (when page is loaded) & the state when you submit the form. Consequently, if you use JavaScript for edit the content of the "select", you can face at this problem.
+		</p>
+		<p>
+			If you have a html element that you may edit via JavaScript, use the HtmlGenericControl object.
+		</p>
+		<p>
+			Sample, i've got a <code>&lt;select&gt;</code> that i want to edit with an ajax request :
+			
+			<pre>
+// globals
+private HtmlGenericControl custDropDownList;
+private HtmlGenericControl custIdHidden;
+
+// at page load.
+protected override void CreateChildControls()
+{
+	//[...]
+
+	// create controls.
+	this.custDropDownList = new HtmlGenericControl("select") { 
+		ID = "custDropDownList" 
+	};
+	this.custDropDownList.Attributes.Add("class", "col-xs-12 textbox-input");
+	this.custDropDownList.Attributes.Add("disabled", "disabled");
+	contentPanel.Controls.Add(this.custDropDownList);
+
+	// add input hidden.
+	this.custIdHidden = new HtmlGenericControl("input");
+	this.custIdHidden.Attributes.Add("type", "hidden");
+	this.custIdHidden.Attributes.Add("id", "custIdHidden");
+	this.custIdHidden.Attributes.Add("name", "custIdHidden");
+	contentPanel.Controls.Add(this.custIdHidden);
+
+	//[...]
+
+	// the submit button.
+	Button saveButton = new Button() { 
+		Text = "Envoyer" 
+	};
+	saveButton.Click += new EventHandler(OnSaveButtonClick);
+	contentPanel.Controls.Add(saveButton);
+
+	//[...]
+}
+
+// submit.
+void OnSaveButtonClick(object sender, EventArgs e)
+{
+	//[...]
+
+	// get the value thanks to ID.
+	string hiddenValue = Context.Request.Form["custIdHidden"];
+
+    if (!String.IsNullOrEmpty(agenceValue))
+    {
+		// ...
 	}
 
 	//[...]

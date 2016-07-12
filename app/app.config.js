@@ -60,7 +60,7 @@
 		});
 
 		// Default language
-		translateProvider.preferredLanguage('en');
+		translateProvider.preferredLanguage('fr');
 		translateProvider.useSanitizeValueStrategy('escapeParameters');
 
 		// for loading posts with urls getted with github API.

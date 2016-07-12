@@ -1,8 +1,5 @@
-body {
-  background-color: #f5f8fa;
-}
 a {
-  color: white;
+  color: #a8a2b4;
 }
 a:hover,
 a:focus {
@@ -38,8 +35,12 @@ a:focus {
 .cst-footer ul li {
   display: inline-block;
 }
-.cst-footer ul li a {
+.cst-footer a {
   color: white;
+}
+.cst-footer a:hover,
+.cst-footer a:focus {
+  color: #d3e0e9;
 }
 .cst-article {
   margin-top: 20px;

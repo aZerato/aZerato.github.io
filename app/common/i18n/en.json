@@ -3,7 +3,10 @@
 		"title": "JPC EN"
 	},
 	"header": {
-		"About": "About"
+		"about": "About",
+		"languages": "Languages",
+		"french": "French",
+		"english": "English"
 	},
 	"about": {
 		"content": "Hi ! I'm 'About.html' page"

@@ -14,11 +14,17 @@
     	li
     	{
     		display: inline-block;
-
-    		a
-    		{
-    			color: white;
-    		}
     	}
+	}
+
+	a
+	{
+		color: white;
+
+		&:hover,
+		&:focus
+		{
+			color: @grey-lite;
+		}
 	}
 }
