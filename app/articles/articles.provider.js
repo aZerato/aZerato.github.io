@@ -13,19 +13,8 @@
 	{
 		var self = this;
 
-		// Default username.
-		this.githubUsername = 'default';
-
-		// Default folder where i can find yours posts.
-		this.postsEmplacement = '/blog/content/posts/';
-
-		// if local Posts files, i get only their URLs with github api & i get them directly from website root.
-		this.localPosts = false;
-
-		this.setGithubUsername = function(username)
-		{
-			this.githubUsername = username;
-		};
+		// Default folder where i can find the posts.json file.
+		this.postsEmplacement = '/blog/content/posts/posts.json';
 
 		this.setPostsEmplacement = function(postsEmplacement)
 		{
@@ -34,20 +23,22 @@
 
 		this.$get = function() {
 			return {
-				get: function($http, $q)
+				get: function($http, $q, $sce)
 				{
-					// get files url throught github api.
-					var postsEmplacement = 'https://api.github.com/repos/' + self.githubUsername +'/' + self.githubUsername + '.github.io/contents' + self.postsEmplacement;
-					
 					// Promise.
 					var defer = $q.defer();
 
-					$http.get(postsEmplacement)
+					$http.get(self.postsEmplacement)
 					.success(function(response) {
 						var articles = [];
-								// from github api.
+
 						for (var j = response.length - 1; j >= 0; j--) {
-							articles.push('/' + response[j].path);
+							$sce.trustAsHtml(response[j].fr.summary);
+							$sce.trustAsHtml(response[j].fr.content);
+							$sce.trustAsHtml(response[j].en.summary);
+							$sce.trustAsHtml(response[j].en.content);
+							
+							articles.push(response[j]);
 						}
 
 						defer.resolve(articles);

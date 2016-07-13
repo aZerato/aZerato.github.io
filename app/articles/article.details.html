@@ -1,0 +1,15 @@
+<div class="container cst-article">
+	
+	<img 
+		class="cst-article-main-img" 
+		src="{{article.img}}" />
+	
+	<div ng-show="$root.currentLang == 'fr'">
+		{{article.fr.content}}
+	</div>
+
+	<div ng-show="$root.currentLang == 'en'">
+		{{article.en.content}}
+	</div>
+
+</div>

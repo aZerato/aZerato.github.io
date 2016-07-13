@@ -15,11 +15,12 @@
 		$state,
 		$http,
 		$q,
+		$sce,
 		dataStore,
 		articlesService,
 		$translate
 	) {
-		$scope.articles = dataStore.get('articles');
+		$scope.articles = [];
 
 		//$rootScope.currentLang;
 
@@ -28,11 +29,9 @@
 		{
 			$scope.articles = [];
 			
-			articlesService.get($http, $q)
+			articlesService.get($http, $q, $sce)
 			.then(function(response) {
 				$scope.articles = response;
-
-				dataStore.set('articles', $scope.articles);
 			});
 		}
 	};
@@ -46,6 +45,7 @@
 		'$state',
 		'$http',
 		'$q',
+		'$sce',
 		'dataStore',
 		'articlesService',
 		'$translate'

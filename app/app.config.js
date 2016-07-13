@@ -7,6 +7,7 @@
 	 */
 	var imports = [
 		'ui.router',
+		'ngSanitize',
 		'ngCookies',
 		'pascalprecht.translate'
 	];
@@ -25,7 +26,6 @@
 		urlRouterProvider, 
 		stateProvider,
 		translateProvider,
-		sceDelegateProvider,
 		articlesServiceProvider)
 	{
 		stateProvider.state('root', {
@@ -63,17 +63,8 @@
 		translateProvider.preferredLanguage('fr');
 		translateProvider.useSanitizeValueStrategy('escapeParameters');
 
-		// for loading posts with urls getted with github API.
-		sceDelegateProvider.resourceUrlWhitelist([
-			// Allow same origin resource loads.
-			'self',
-			// Allow loading from our assets domain.  Notice the difference between * and **.
-			'https://raw.githubusercontent.com/**'
-		]);
-
-		// Param your github posts recuperation.
-		articlesServiceProvider.setGithubUsername('aZerato');
-		articlesServiceProvider.setPostsEmplacement('/blog/content/posts/');
+		// Param the url for getting posts.
+		articlesServiceProvider.setPostsEmplacement('/blog/content/posts/posts.json');
 
 	};
 
@@ -82,7 +73,6 @@
 		'$urlRouterProvider', 
 		'$stateProvider',
 		'$translateProvider',
-		'$sceDelegateProvider',
 		'articlesServiceProvider'
 	];
 

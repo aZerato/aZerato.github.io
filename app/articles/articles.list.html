@@ -1,5 +1,17 @@
-<div ng-repeat="articleUrl in articles">
-	<ng-include 
-		src="articleUrl">
-	</ng-include>
+<div ng-repeat="article in articles">
+	
+	<div class="container cst-article">
+	
+		<img 
+			class="cst-article-main-img" 
+			src="{{article.img}}" />
+		
+		<div ng-show="$root.currentLang == 'fr'" ng-bind-html="article.fr.summary">
+		</div>
+
+		<div ng-show="$root.currentLang == 'en'" ng-bind-html="article.en.summary">
+		</div>
+
+	</div>
+
 </div>
