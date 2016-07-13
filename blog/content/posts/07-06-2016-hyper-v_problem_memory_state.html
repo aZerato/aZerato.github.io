@@ -1,11 +1,8 @@
-<div class="container cst-article">
+<img data-img="https://media2.giphy.com/media/10Wao1zhMpBgaI/200_s.gif" />
 	
-	<img 
-		class="cst-article-main-img" 
-		src="https://media2.giphy.com/media/10Wao1zhMpBgaI/200_s.gif" />
-	
-	<div ng-show="$root.currentLang == 'fr'">
-		<h2>Hyper-V : "n'a pas pu créer ou ouvrir le fichier d'état de mise en mémoire"</h2>
+<div data-lang="fr">
+	<div data-model="title">Hyper-V : "n'a pas pu créer ou ouvrir le fichier d'état de mise en mémoire"</div>
+	<div data-model="summary">
 		<p>
 			Après une copie d'une VM (bien qu'elle fut bien arrêtée), cette même VM sur mon poste était impossible de à démarrer. Alors que la copie transmise au collègue était parfaitement fonctionnelle.
 		</p>
@@ -13,9 +10,19 @@
 			J'ai donc fait un export de la VM puis je l'ai réimporté et tout s'est remis à fonctionner.
 		</p>
 	</div>
+	<div data-model="content">
+		<p>
+			Après une copie d'une VM (bien qu'elle fut bien arrêtée), cette même VM sur mon poste était impossible de à démarrer. Alors que la copie transmise au collègue était parfaitement fonctionnelle.
+		</p>
+		<p>
+			J'ai donc fait un export de la VM puis je l'ai réimporté et tout s'est remis à fonctionner.
+		</p>
+	</div>
+</div>
 
-	<div ng-show="$root.currentLang == 'en'">
-		<h2>Hyper-V : "Failed to create memory contents file"</h2>
+<div data-lang="en">
+	<div data-model="title">Hyper-V : "Failed to create memory contents file"</div>
+	<div data-model="summary">
 		<p>
 			For sharing a Virtual Machine, even if it was stopped correctly, i was unable to start it. The shared version started correctly on the co-worker pc.
 		</p>
@@ -23,5 +30,12 @@
 			I do an export, and re-import it for start it.
 		</p>
 	</div>
-
+	<div data-model="content">
+		<p>
+			For sharing a Virtual Machine, even if it was stopped correctly, i was unable to start it. The shared version started correctly on the co-worker pc.
+		</p>
+		<p>
+			I do an export, and re-import it for start it.
+		</p>
+	</div>
 </div>

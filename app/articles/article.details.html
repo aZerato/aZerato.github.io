@@ -5,10 +5,12 @@
 		src="{{article.img}}" />
 	
 	<div ng-show="$root.currentLang == 'fr'">
+		{{article.fr.title}}
 		{{article.fr.content}}
 	</div>
 
 	<div ng-show="$root.currentLang == 'en'">
+		{{article.enfr.title}}
 		{{article.en.content}}
 	</div>
 

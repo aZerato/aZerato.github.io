@@ -2,7 +2,9 @@
 
 [My Github.io website](http://aZerato.github.io/)
 
-This angular app uses Github API.
+This angular app is created for blogging.
+- Create your post with a specific html template
+- Compile them
 
 ## How to configure
 
@@ -18,8 +20,9 @@ Set your posts folder :
 
 > articlesServiceProvider.setPostsEmplacement('/blog/content/posts/');
 
-With this app i load dynamically my posts in html from a local folder thanks to github api.
-For me, my posts are in this folder '[blog/content/posts/](https://github.com/aZerato/aZerato.github.io/tree/master/blog/content/posts)'.
+My posts are in this folder '[blog/content/posts/](https://github.com/aZerato/aZerato.github.io/tree/master/blog/content/posts)'. 
+With specific html annotation, i write it, and i use a little CLI command for compile to a json file '[blog/content/posts/posts.json](https://github.com/aZerato/aZerato.github.io/tree/master/blog/content/posts/post.json)'.
+
 
 ## How to start
 
@@ -61,3 +64,9 @@ Concat/minify app files in '/build'
 less Watcher (add/edit less files in "styles/" folder they are auto compiled in one file : "build/styles/custom.bootstrap.css")
 
 > grunt watchLess
+
+## Write & compile posts
+
+For sample posts structure '[blog/content/posts/](https://github.com/aZerato/aZerato.github.io/tree/master/blog/content/posts)'.
+
+When you have terminated, go to 'cli/' folder with your CLI, and run 'posts.converter.js' script.

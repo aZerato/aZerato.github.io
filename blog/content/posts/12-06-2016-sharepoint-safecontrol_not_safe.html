@@ -1,11 +1,8 @@
-<div class="container cst-article">
+<img data-img="https://media.makeameme.org/created/safe.jpg" />
 	
-	<img 
-		class="cst-article-main-img" 
-		src="https://media.makeameme.org/created/safe.jpg" />
-	
-	<div ng-show="$root.currentLang == 'fr'">
-		<h2>Sharepoint 2007 - Après déploiement d'une app un bug au lancement affiche "SafeControl / is not Safe"</h2>
+<div data-lang="fr">
+	<div data-model="title">Sharepoint 2007 - Après déploiement d'une app un bug au lancement affiche "SafeControl / is not Safe"</div>
+	<div data-model="summary">
 		<p>
 			- Vérifier si dans 'Central Admin' > Operations > 'Solution management' : que notre application '.wsp' est bien déployée.
 		</p>
@@ -13,9 +10,19 @@
 			- Au niveau du site : 'monsitesharepoint.com/_layouts/settings.aspx' > 'Paramètres du site' > 'Fonctionnalités de la collection du site' et désactivez & réactivez les features nécessaires.
 		</p>
 	</div>
+	<div data-model="content">
+		<p>
+			- Vérifier si dans 'Central Admin' > Operations > 'Solution management' : que notre application '.wsp' est bien déployée.
+		</p>
+		<p>
+			- Au niveau du site : 'monsitesharepoint.com/_layouts/settings.aspx' > 'Paramètres du site' > 'Fonctionnalités de la collection du site' et désactivez & réactivez les features nécessaires.
+		</p>
+	</div>
+</div>
 
-	<div ng-show="$root.currentLang == 'en'">
-		<h2>Sharepoint 2007 - "SafeControl / is not Safe"</h2>
+<div data-lang="en">
+	<div data-model="title">Sharepoint 2007 - "SafeControl / is not Safe"</div>
+	<div data-model="summary">
 		<p>
 			- Check 'Central Admin' > Operations > 'Solution management' : the app '.wsp' is deployed.
 		</p>
@@ -23,5 +30,12 @@
 			- Check at site level : 'myspwebsite.com/_layouts/settings.aspx' > 'Site Collection Administration' > 'Site collection features' & deactivate/reactivate features.
 		</p>
 	</div>
-
+	<div data-model="content">
+		<p>
+			- Check 'Central Admin' > Operations > 'Solution management' : the app '.wsp' is deployed.
+		</p>
+		<p>
+			- Check at site level : 'myspwebsite.com/_layouts/settings.aspx' > 'Site Collection Administration' > 'Site collection features' & deactivate/reactivate features.
+		</p>
+	</div>
 </div>

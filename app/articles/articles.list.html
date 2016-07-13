@@ -6,9 +6,11 @@
 			class="cst-article-main-img" 
 			src="{{article.img}}" />
 		
+		<h2 ng-show="$root.currentLang == 'fr'" ng-bind-html="article.fr.title"></h2>
 		<div ng-show="$root.currentLang == 'fr'" ng-bind-html="article.fr.summary">
 		</div>
 
+		<h2 ng-show="$root.currentLang == 'en'" ng-bind-html="article.en.title"></h2>
 		<div ng-show="$root.currentLang == 'en'" ng-bind-html="article.en.summary">
 		</div>
 

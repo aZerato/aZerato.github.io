@@ -7,6 +7,7 @@
 	 */
 	var imports = [
 		'ui.router',
+		'ngSanitize',
 		'ngCookies',
 		'pascalprecht.translate'
 	];
@@ -25,7 +26,6 @@
 		urlRouterProvider, 
 		stateProvider,
 		translateProvider,
-		sceDelegateProvider,
 		articlesServiceProvider)
 	{
 		stateProvider.state('root', {
@@ -60,20 +60,11 @@
 		});
 
 		// Default language
-		translateProvider.preferredLanguage('en');
+		translateProvider.preferredLanguage('fr');
 		translateProvider.useSanitizeValueStrategy('escapeParameters');
 
-		// for loading posts with urls getted with github API.
-		sceDelegateProvider.resourceUrlWhitelist([
-			// Allow same origin resource loads.
-			'self',
-			// Allow loading from our assets domain.  Notice the difference between * and **.
-			'https://raw.githubusercontent.com/**'
-		]);
-
-		// Param your github posts recuperation.
-		articlesServiceProvider.setGithubUsername('aZerato');
-		articlesServiceProvider.setPostsEmplacement('/blog/content/posts/');
+		// Param the url for getting posts.
+		articlesServiceProvider.setPostsEmplacement('/blog/content/posts/posts.json');
 
 	};
 
@@ -82,7 +73,6 @@
 		'$urlRouterProvider', 
 		'$stateProvider',
 		'$translateProvider',
-		'$sceDelegateProvider',
 		'articlesServiceProvider'
 	];
 
@@ -242,11 +232,12 @@
 		$state,
 		$http,
 		$q,
+		$sce,
 		dataStore,
 		articlesService,
 		$translate
 	) {
-		$scope.articles = dataStore.get('articles');
+		$scope.articles = [];
 
 		//$rootScope.currentLang;
 
@@ -255,11 +246,9 @@
 		{
 			$scope.articles = [];
 			
-			articlesService.get($http, $q)
+			articlesService.get($http, $q, $sce)
 			.then(function(response) {
 				$scope.articles = response;
-
-				dataStore.set('articles', $scope.articles);
 			});
 		}
 	};
@@ -273,6 +262,7 @@
 		'$state',
 		'$http',
 		'$q',
+		'$sce',
 		'dataStore',
 		'articlesService',
 		'$translate'
@@ -327,19 +317,8 @@
 	{
 		var self = this;
 
-		// Default username.
-		this.githubUsername = 'default';
-
-		// Default folder where i can find yours posts.
-		this.postsEmplacement = '/blog/content/posts/';
-
-		// if local Posts files, i get only their URLs with github api & i get them directly from website root.
-		this.localPosts = false;
-
-		this.setGithubUsername = function(username)
-		{
-			this.githubUsername = username;
-		};
+		// Default folder where i can find the posts.json file.
+		this.postsEmplacement = '/blog/content/posts/posts.json';
 
 		this.setPostsEmplacement = function(postsEmplacement)
 		{
@@ -348,20 +327,22 @@
 
 		this.$get = function() {
 			return {
-				get: function($http, $q)
+				get: function($http, $q, $sce)
 				{
-					// get files url throught github api.
-					var postsEmplacement = 'https://api.github.com/repos/' + self.githubUsername +'/' + self.githubUsername + '.github.io/contents' + self.postsEmplacement;
-					
 					// Promise.
 					var defer = $q.defer();
 
-					$http.get(postsEmplacement)
+					$http.get(self.postsEmplacement)
 					.success(function(response) {
 						var articles = [];
-								// from github api.
+
 						for (var j = response.length - 1; j >= 0; j--) {
-							articles.push('/' + response[j].path);
+							$sce.trustAsHtml(response[j].fr.summary);
+							$sce.trustAsHtml(response[j].fr.content);
+							$sce.trustAsHtml(response[j].en.summary);
+							$sce.trustAsHtml(response[j].en.content);
+							
+							articles.push(response[j]);
 						}
 
 						defer.resolve(articles);
