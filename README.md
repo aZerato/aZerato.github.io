@@ -12,10 +12,6 @@ Edit this file :
 
 > app/app.config.js
 
-Set your github username :
-
-> articlesServiceProvider.setGithubUsername('aZerato');
-
 Set your posts folder :
 
 > articlesServiceProvider.setPostsEmplacement('/blog/content/posts/');
@@ -69,4 +65,4 @@ less Watcher (add/edit less files in "styles/" folder they are auto compiled in 
 
 For sample posts structure '[blog/content/posts/](https://github.com/aZerato/aZerato.github.io/tree/master/blog/content/posts)'.
 
-When you have terminated, go to 'cli/' folder with your CLI, and run 'posts.converter.js' script.
+When you have terminated, go to 'cli/' folder with your CLI, and run 'posts.converter.js' script. (work in progress)
