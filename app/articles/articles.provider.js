@@ -21,6 +21,16 @@
 			this.postsEmplacement = postsEmplacement;
 		};
 
+		// Default folder where i can find the pagination.json file.
+		this.paginationConfigEmplacement = '/blog/content/posts/pagination.json';
+
+		this.setPaginationConfigEmplacement = function(paginationConfigEmplacement)
+		{
+			this.paginationConfigEmplacement = paginationConfigEmplacement;
+		};
+
+		this.PaginationConfig = {};
+
 		this.$get = function() {
 			return {
 				getById: function(id, $http, $q, $sce)
@@ -54,7 +64,7 @@
 
 					return defer.promise;
 				},
-				get: function($http, $q, $sce)
+				getAll: function($http, $q, $sce)
 				{
 					// Promise.
 					var defer = $q.defer();
@@ -76,6 +86,56 @@
 					})
 					.error(function(error) {
 						console.log('articlesServiceProvider::$get::get error(' + error + ')');
+
+						defer.reject(error);
+					});
+
+					return defer.promise;
+				},
+				readPaginationConfig: function($http, $q, $sce)
+				{
+					// Promise.
+					var defer = $q.defer();
+
+					$http.get(self.paginationConfigEmplacement)
+					.success(function(response) {
+						defer.resolve(response);
+					})
+					.error(function(error) {
+						console.log('articlesServiceProvider::$get::readPaginationConfig error(' + error + ')');
+
+						defer.reject(error);
+					});
+
+					return defer.promise;
+				},
+				getFromTo: function(from, to, $http, $q, $sce)
+				{
+					// Promise.
+					var defer = $q.defer();
+
+					$http.get(self.postsEmplacement)
+					.success(function(response) {
+						var articles = [];
+
+						if (to > response.length)
+						{
+							to = response.length;
+						}
+
+						for (var j = to - 1; j >= from; j--) {
+							$sce.trustAsHtml(response[j].fr.summary);
+							$sce.trustAsHtml(response[j].fr.content);
+							$sce.trustAsHtml(response[j].en.summary);
+							$sce.trustAsHtml(response[j].en.content);
+							
+							articles.push(response[j]);
+						}
+
+						defer.resolve(articles);
+					})
+					.error(function(error) {
+						console.log('articlesServiceProvider::$get::getFromTo error(' + error + ')');
 
 						defer.reject(error);
 					});

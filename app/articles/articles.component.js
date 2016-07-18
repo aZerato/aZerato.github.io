@@ -20,22 +20,47 @@
 		articlesService,
 		$translate
 	) {
-		$scope.articles = [];
-		$scope.articlesLoaded = false;
-
 		//$rootScope.currentLang;
 
-		if($scope.articles === null || 
-			$scope.articles.length === 0)
+		var pageConfig = undefined;
+		
+		$scope.currentPage = 1;
+		$scope.articles = [];
+		$scope.articlesLoaded = false;
+		$scope.pages = [];
+
+		// first load.
+		if(pageConfig === undefined)
 		{
-			$scope.articles = [];
-			
-			articlesService.get($http, $q, $sce)
+			articlesService.readPaginationConfig($http, $q, $sce)
+			.then(function(response) {
+				pageConfig = response;
+
+				articlesService.getFromTo(0, pageConfig.number_per_page, $http, $q, $sce)
+				.then(function(response) {
+					$scope.articles = response;
+					$scope.articlesLoaded = true;
+				});
+
+				var numPage = Math.ceil(pageConfig.total / pageConfig.number_per_page);
+				for (var j = 1; j < numPage + 1; j++) {
+					$scope.pages.push({
+						page: j
+					});
+				}
+			});
+		}
+
+		$scope.changePage = function(numpage) {
+			$scope.articlesLoaded = false;
+			var from = (numpage * pageConfig.number_per_page) - pageConfig.number_per_page;
+			var to = from + pageConfig.number_per_page;
+			articlesService.getFromTo(from, to, $http, $q, $sce)
 			.then(function(response) {
 				$scope.articles = response;
 				$scope.articlesLoaded = true;
 			});
-		}
+		};
 	};
 
 	/*

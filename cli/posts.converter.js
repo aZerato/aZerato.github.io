@@ -44,3 +44,14 @@ for(var i = 0; i < allPostsPath.length - 1; i++)
 var postsJsonPath = path.join(postsPath, 'posts.json');
 var jsonPostsString = JSON.stringify(jsonPosts);
 fs.writeFileSync(postsJsonPath, jsonPostsString, 'utf8');
+
+// Create pagination object.
+var jsonPagination = {
+	number_per_page: 3,
+	total: jsonPosts.length
+};
+
+var paginationJsonPath = path.join(postsPath, 'pagination.json');
+var jsonPaginationString = JSON.stringify(jsonPagination);
+fs.writeFileSync(paginationJsonPath, jsonPaginationString, 'utf8');
+

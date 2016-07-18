@@ -65,4 +65,8 @@ less Watcher (add/edit less files in "styles/" folder they are auto compiled in 
 
 For sample posts structure '[blog/content/posts/](https://github.com/aZerato/aZerato.github.io/tree/master/blog/content/posts)'.
 
-When you have terminated, go to 'cli/' folder with your CLI, and run 'posts.converter.js' script. (work in progress)
+When you have terminated, go to 'cli/' folder with your CLI, and run : 
+
+> node posts.converter.js
+
+(work in progress)

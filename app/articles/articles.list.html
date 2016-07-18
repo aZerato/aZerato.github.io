@@ -1,10 +1,10 @@
-<div ng-repeat="article in articles" ng-show="articlesLoaded">
+<div ng-show="articlesLoaded">
 	
-	<div class="container cst-article">
-	
+	<div ng-repeat="article in articles" class="container cst-article">
+
 		<img 
 			class="cst-article-main-img" 
-			src="{{article.img}}" ng-show="article.img"/>
+			ng-src="{{article.img}}" />
 		
 		<h2 ng-show="$root.currentLang == 'fr'" ng-bind-html="article.fr.title"></h2>
 		<div ng-show="$root.currentLang == 'fr'" ng-bind-html="article.fr.summary">
@@ -20,4 +20,10 @@
 
 	</div>
 
+</div>
+
+<div class="btn-toolbar" role="toolbar" aria-label="pagination">
+	<div class="btn-group" role="group" aria-label="page-group">
+		<button ng-click="changePage(page.page)" ng-repeat="page in pages" class="btn btn-default" type="button">{{page.page}}</button>
+	</div>
 </div>
