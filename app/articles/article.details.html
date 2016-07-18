@@ -1,17 +1,15 @@
-<div class="container cst-article">
+<div class="container cst-article" ng-show="articleLoaded">
 	
 	<img 
 		class="cst-article-main-img" 
-		src="{{article.img}}" />
+		src="{{article.img}}" ng-show="article.img"/>
 	
-	<div ng-show="$root.currentLang == 'fr'">
-		{{article.fr.title}}
-		{{article.fr.content}}
+	<h2 ng-show="$root.currentLang == 'fr'" ng-bind-html="article.fr.title"></h2>
+	<div ng-show="$root.currentLang == 'fr'" ng-bind-html="article.fr.content">
 	</div>
 
-	<div ng-show="$root.currentLang == 'en'">
-		{{article.enfr.title}}
-		{{article.en.content}}
+	<h2 ng-show="$root.currentLang == 'en'" ng-bind-html="article.en.title"></h2>
+	<div ng-show="$root.currentLang == 'en'" ng-bind-html="article.en.content">
 	</div>
 
 </div>

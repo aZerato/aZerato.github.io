@@ -23,6 +23,37 @@
 
 		this.$get = function() {
 			return {
+				getById: function(id, $http, $q, $sce)
+				{
+					// Promise.
+					var defer = $q.defer();
+
+					$http.get(self.postsEmplacement)
+					.success(function(response) {
+						var article = {};
+
+						for (var j = response.length - 1; j >= 0; j--) {
+							if(response[j].id == id)
+							{
+								$sce.trustAsHtml(response[j].fr.summary);
+								$sce.trustAsHtml(response[j].fr.content);
+								$sce.trustAsHtml(response[j].en.summary);
+								$sce.trustAsHtml(response[j].en.content);
+								
+								article = response[j];
+							}
+						}
+
+						defer.resolve(article);
+					})
+					.error(function(error) {
+						console.log('articlesServiceProvider::$get::getById error(' + error + ')');
+
+						defer.reject(error);
+					});
+
+					return defer.promise;
+				},
 				get: function($http, $q, $sce)
 				{
 					// Promise.

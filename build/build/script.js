@@ -223,7 +223,7 @@
 	 */
 	var appModule = angular.module('app');
 	
-/*
+	/*
 	 * Creation of an instance your Articles Controller.
 	 */
 	var articlesController = function(
@@ -238,6 +238,7 @@
 		$translate
 	) {
 		$scope.articles = [];
+		$scope.articlesLoaded = false;
 
 		//$rootScope.currentLang;
 
@@ -249,6 +250,7 @@
 			articlesService.get($http, $q, $sce)
 			.then(function(response) {
 				$scope.articles = response;
+				$scope.articlesLoaded = true;
 			});
 		}
 	};
@@ -269,9 +271,9 @@
 	];
 
 	/*
-	 * Creation of an article ng component object.
+	 * Creation of an articles ng component object.
 	 */
-	 var articleComponent = {
+	 var articlesComponent = {
 	 	controller: articlesController,
 	 	templateUrl: '/app/articles/articles.list.html'
 	 };
@@ -279,7 +281,63 @@
 	/*
      * Inject your new component to app.
 	 */
-	appModule.component('articlesComponent', articleComponent);
+	appModule.component('articlesComponent', articlesComponent);
+
+	/*
+	 * Creation of an instance your Articles Controller.
+	 */
+	var articleDetailsController = function(
+		$rootScope,
+		$scope,
+		$state,
+		$stateParams,
+		$http,
+		$q,
+		$sce,
+		articlesService,
+		$translate
+	) {
+		$scope.article = {};
+		$scope.articleLoaded = false;
+
+		console.log($stateParams.articleId);
+
+		articlesService.getById($stateParams.articleId, $http, $q, $sce)
+		.then(function(response) {
+			$scope.article = response;
+			$scope.articleLoaded = true;
+		});
+		
+	};
+
+	/*
+	 * Inject depencencies to your controller.
+	 */
+	articleDetailsController.$inject = [
+		'$rootScope',
+		'$scope',
+		'$state',
+		'$stateParams',
+		'$http',
+		'$q',
+		'$sce',
+		'articlesService',
+		'$translate'
+	];
+
+	/*
+	 * Creation of an articles ng component object.
+	 */
+	 var articleDetailsComponent = {
+		controller: articleDetailsController,
+	 	templateUrl: '/app/articles/article.details.html'
+	 };
+
+	 /*
+     * Inject your new component to app.
+	 */
+	appModule.component('articleDetailsComponent', articleDetailsComponent);
+
 
 	/*
 	 * Add personalized config for this component.
@@ -287,7 +345,8 @@
 	var config = function(stateProvider)
 	{
 		// routing state configuration
-		stateProvider.state('root.articles', {
+		stateProvider
+		.state('root.articles', {
 			url:'/home',
 			views: {
 				'main@': {
@@ -295,7 +354,19 @@
 				}
 			}
 		});
+		
+		stateProvider
+		.state('root.details', {
+			url: '/article/:articleId',
+			views: {
+				'main@': {
+					template: '<article-details-component></article-details-component>'
+				}
+			}
+		});
 	};
+
+
 	
 	config.$inject = ['$stateProvider'];
 
@@ -327,6 +398,37 @@
 
 		this.$get = function() {
 			return {
+				getById: function(id, $http, $q, $sce)
+				{
+					// Promise.
+					var defer = $q.defer();
+
+					$http.get(self.postsEmplacement)
+					.success(function(response) {
+						var article = {};
+
+						for (var j = response.length - 1; j >= 0; j--) {
+							if(response[j].id == id)
+							{
+								$sce.trustAsHtml(response[j].fr.summary);
+								$sce.trustAsHtml(response[j].fr.content);
+								$sce.trustAsHtml(response[j].en.summary);
+								$sce.trustAsHtml(response[j].en.content);
+								
+								article = response[j];
+							}
+						}
+
+						defer.resolve(article);
+					})
+					.error(function(error) {
+						console.log('articlesServiceProvider::$get::getById error(' + error + ')');
+
+						defer.reject(error);
+					});
+
+					return defer.promise;
+				},
 				get: function($http, $q, $sce)
 				{
 					// Promise.
