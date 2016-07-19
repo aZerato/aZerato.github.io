@@ -13,6 +13,7 @@
 		$rootScope,
 		$scope,
 		$state,
+		$stateParams,
 		$http,
 		$q,
 		$sce,
@@ -24,36 +25,33 @@
 
 		var pageConfig = undefined;
 		
-		$scope.currentPage = 1;
 		$scope.articles = [];
 		$scope.articlesLoaded = false;
 		$scope.pages = [];
 
-		// first load.
-		if(pageConfig === undefined)
-		{
-			articlesService.readPaginationConfig($http, $q, $sce)
-			.then(function(response) {
-				pageConfig = response;
+		articlesService.readPaginationConfig($http, $q, $sce)
+		.then(function(response) {
+			pageConfig = response;
 
-				articlesService.getFromTo(0, pageConfig.number_per_page, $http, $q, $sce)
-				.then(function(response) {
-					$scope.articles = response;
-					$scope.articlesLoaded = true;
-				});
+			if($stateParams.pageNumber != undefined)
+			{
+				changePage($stateParams.pageNumber);
+			}
+			else
+			{
+				changePage(1);
+			}			
 
-				var numPage = Math.ceil(pageConfig.total / pageConfig.number_per_page);
-				for (var j = 1; j < numPage + 1; j++) {
-					$scope.pages.push({
-						page: j
-					});
-				}
-			});
-		}
+			$scope.pages = pageConfig.pages;
+		});
 
-		$scope.changePage = function(numpage) {
+		var changePage = function(numpage) {
 			$scope.articlesLoaded = false;
-			var from = (numpage * pageConfig.number_per_page) - pageConfig.number_per_page;
+			var from = 0;
+			if(numpage > 1)
+			{
+				from = (numpage * pageConfig.number_per_page) - pageConfig.number_per_page;
+			}
 			var to = from + pageConfig.number_per_page;
 			articlesService.getFromTo(from, to, $http, $q, $sce)
 			.then(function(response) {
@@ -70,6 +68,7 @@
 		'$rootScope',
 		'$scope', 
 		'$state',
+		'$stateParams',
 		'$http',
 		'$q',
 		'$sce',
@@ -108,14 +107,11 @@
 		$scope.article = {};
 		$scope.articleLoaded = false;
 
-		console.log($stateParams.articleId);
-
 		articlesService.getById($stateParams.articleId, $http, $q, $sce)
 		.then(function(response) {
 			$scope.article = response;
 			$scope.articleLoaded = true;
-		});
-		
+		});		
 	};
 
 	/*
@@ -141,7 +137,7 @@
 	 	templateUrl: '/app/articles/article.details.html'
 	 };
 
-	 /*
+	/*
      * Inject your new component to app.
 	 */
 	appModule.component('articleDetailsComponent', articleDetailsComponent);
@@ -155,7 +151,7 @@
 		// routing state configuration
 		stateProvider
 		.state('root.articles', {
-			url:'/home',
+			url:'/',
 			views: {
 				'main@': {
 					template: '<articles-component></articles-component>',
@@ -172,9 +168,17 @@
 				}
 			}
 		});
+
+		stateProvider
+		.state('root.articles.pages', {
+			url: 'pages/:pageNumber',
+			views: {
+				'main@': {
+					template: '<articles-component></articles-component>',
+				}
+			}
+		});
 	};
-
-
 	
 	config.$inject = ['$stateProvider'];
 

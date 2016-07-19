@@ -49,7 +49,7 @@
 		});
 
 		// default url
-		urlRouterProvider.otherwise('/home');
+		urlRouterProvider.otherwise('/');
 
 		dataStoreProvider.setType('sessionStorage');
 
@@ -219,6 +219,54 @@
 	'use strict';
 
 	/*
+	 * Get the main app module.
+	 */
+	var appModule = angular.module('app');
+	
+	/*
+	 * Pagination controller creation.
+	 */
+	var paginationController = function(
+		$state
+	)
+	{
+		this.changePage = function(pageNumber)
+		{
+			$state.go(this.ref, {"pageNumber": pageNumber});
+		};
+	};
+
+	/*
+	 * Dependency injection.
+	 */
+	paginationController.$inject = [
+		'$state'
+	];
+
+	/*
+	 * Pagination component creation.
+	 * @ : get directly text value
+	 * = : able to get object value
+	 */
+	var paginationComponent = {
+		bindings: {
+			ref: '@',
+			pagesArray: '='
+		},
+		controller: paginationController,
+		templateUrl: '/app/common/pagination/pagination.html'
+	};
+
+	/*
+	 * Add to main app module the new pagination component.
+	 */
+	appModule.component('paginationComponent', paginationComponent);
+
+}(window.angular));
+(function (angular) {
+	'use strict';
+
+	/*
 	 * Get the app module.
 	 */
 	var appModule = angular.module('app');
@@ -230,6 +278,7 @@
 		$rootScope,
 		$scope,
 		$state,
+		$stateParams,
 		$http,
 		$q,
 		$sce,
@@ -237,22 +286,44 @@
 		articlesService,
 		$translate
 	) {
-		$scope.articles = [];
-		$scope.articlesLoaded = false;
-
 		//$rootScope.currentLang;
 
-		if($scope.articles === null || 
-			$scope.articles.length === 0)
-		{
-			$scope.articles = [];
-			
-			articlesService.get($http, $q, $sce)
+		var pageConfig = undefined;
+		
+		$scope.articles = [];
+		$scope.articlesLoaded = false;
+		$scope.pages = [];
+
+		articlesService.readPaginationConfig($http, $q, $sce)
+		.then(function(response) {
+			pageConfig = response;
+
+			if($stateParams.pageNumber != undefined)
+			{
+				changePage($stateParams.pageNumber);
+			}
+			else
+			{
+				changePage(1);
+			}			
+
+			$scope.pages = pageConfig.pages;
+		});
+
+		var changePage = function(numpage) {
+			$scope.articlesLoaded = false;
+			var from = 0;
+			if(numpage > 1)
+			{
+				from = (numpage * pageConfig.number_per_page) - pageConfig.number_per_page;
+			}
+			var to = from + pageConfig.number_per_page;
+			articlesService.getFromTo(from, to, $http, $q, $sce)
 			.then(function(response) {
 				$scope.articles = response;
 				$scope.articlesLoaded = true;
 			});
-		}
+		};
 	};
 
 	/*
@@ -262,6 +333,7 @@
 		'$rootScope',
 		'$scope', 
 		'$state',
+		'$stateParams',
 		'$http',
 		'$q',
 		'$sce',
@@ -300,14 +372,11 @@
 		$scope.article = {};
 		$scope.articleLoaded = false;
 
-		console.log($stateParams.articleId);
-
 		articlesService.getById($stateParams.articleId, $http, $q, $sce)
 		.then(function(response) {
 			$scope.article = response;
 			$scope.articleLoaded = true;
-		});
-		
+		});		
 	};
 
 	/*
@@ -333,7 +402,7 @@
 	 	templateUrl: '/app/articles/article.details.html'
 	 };
 
-	 /*
+	/*
      * Inject your new component to app.
 	 */
 	appModule.component('articleDetailsComponent', articleDetailsComponent);
@@ -347,7 +416,7 @@
 		// routing state configuration
 		stateProvider
 		.state('root.articles', {
-			url:'/home',
+			url:'/',
 			views: {
 				'main@': {
 					template: '<articles-component></articles-component>',
@@ -364,9 +433,17 @@
 				}
 			}
 		});
+
+		stateProvider
+		.state('root.articles.pages', {
+			url: 'pages/:pageNumber',
+			views: {
+				'main@': {
+					template: '<articles-component></articles-component>',
+				}
+			}
+		});
 	};
-
-
 	
 	config.$inject = ['$stateProvider'];
 
@@ -395,6 +472,16 @@
 		{
 			this.postsEmplacement = postsEmplacement;
 		};
+
+		// Default folder where i can find the pagination.json file.
+		this.paginationConfigEmplacement = '/blog/content/posts/pagination.json';
+
+		this.setPaginationConfigEmplacement = function(paginationConfigEmplacement)
+		{
+			this.paginationConfigEmplacement = paginationConfigEmplacement;
+		};
+
+		this.PaginationConfig = {};
 
 		this.$get = function() {
 			return {
@@ -429,7 +516,7 @@
 
 					return defer.promise;
 				},
-				get: function($http, $q, $sce)
+				getAll: function($http, $q, $sce)
 				{
 					// Promise.
 					var defer = $q.defer();
@@ -451,6 +538,56 @@
 					})
 					.error(function(error) {
 						console.log('articlesServiceProvider::$get::get error(' + error + ')');
+
+						defer.reject(error);
+					});
+
+					return defer.promise;
+				},
+				readPaginationConfig: function($http, $q, $sce)
+				{
+					// Promise.
+					var defer = $q.defer();
+
+					$http.get(self.paginationConfigEmplacement)
+					.success(function(response) {
+						defer.resolve(response);
+					})
+					.error(function(error) {
+						console.log('articlesServiceProvider::$get::readPaginationConfig error(' + error + ')');
+
+						defer.reject(error);
+					});
+
+					return defer.promise;
+				},
+				getFromTo: function(from, to, $http, $q, $sce)
+				{
+					// Promise.
+					var defer = $q.defer();
+
+					$http.get(self.postsEmplacement)
+					.success(function(response) {
+						var articles = [];
+
+						if (to > response.length)
+						{
+							to = response.length;
+						}
+
+						for (var j = to - 1; j >= from; j--) {
+							$sce.trustAsHtml(response[j].fr.summary);
+							$sce.trustAsHtml(response[j].fr.content);
+							$sce.trustAsHtml(response[j].en.summary);
+							$sce.trustAsHtml(response[j].en.content);
+							
+							articles.push(response[j]);
+						}
+
+						defer.resolve(articles);
+					})
+					.error(function(error) {
+						console.log('articlesServiceProvider::$get::getFromTo error(' + error + ')');
 
 						defer.reject(error);
 					});

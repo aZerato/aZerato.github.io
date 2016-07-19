@@ -2,39 +2,47 @@
 	'use strict';
 
 	/*
-	 * Get the app module.
+	 * Get the main app module.
 	 */
 	var appModule = angular.module('app');
 	
 	/*
-	 * 
+	 * Pagination controller creation.
 	 */
 	var paginationController = function(
-		$scope)
+		$state
+	)
 	{
-		$scope.changePage = function(key) {
-			$translate.use(key);
-			$rootScope.currentLang = key;
-			$cookies.put('favLang', key);
+		this.changePage = function(pageNumber)
+		{
+			$state.go(this.ref, {"pageNumber": pageNumber});
 		};
 	};
 
 	/*
-	 * 
+	 * Dependency injection.
 	 */
 	paginationController.$inject = [
-		'$scope'
+		'$state'
 	];
 
 	/*
-	 * 
+	 * Pagination component creation.
+	 * @ : get directly text value
+	 * = : able to get object value
 	 */
 	var paginationComponent = {
+		bindings: {
+			ref: '@',
+			pagesArray: '='
+		},
 		controller: paginationController,
 		templateUrl: '/app/common/pagination/pagination.html'
 	};
 
-	
+	/*
+	 * Add to main app module the new pagination component.
+	 */
 	appModule.component('paginationComponent', paginationComponent);
 
 }(window.angular));

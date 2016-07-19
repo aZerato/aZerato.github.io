@@ -49,7 +49,7 @@
 		});
 
 		// default url
-		urlRouterProvider.otherwise('/home');
+		urlRouterProvider.otherwise('/');
 
 		dataStoreProvider.setType('sessionStorage');
 

@@ -48,10 +48,20 @@ fs.writeFileSync(postsJsonPath, jsonPostsString, 'utf8');
 // Create pagination object.
 var jsonPagination = {
 	number_per_page: 3,
-	total: jsonPosts.length
+	total_posts: jsonPosts.length,
+	pages: []
 };
+
+var numPage = Math.ceil(jsonPagination.total_posts / jsonPagination.number_per_page);
+for (var j = 1; j < numPage + 1; j++) {
+	jsonPagination.pages.push({
+		page: j
+	});
+}
 
 var paginationJsonPath = path.join(postsPath, 'pagination.json');
 var jsonPaginationString = JSON.stringify(jsonPagination);
 fs.writeFileSync(paginationJsonPath, jsonPaginationString, 'utf8');
+
+
 

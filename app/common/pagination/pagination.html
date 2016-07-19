@@ -1,5 +1,5 @@
-<div class="btn-toolbar" role="toolbar" aria-label="pagination">
-	<div class="btn-group" role="group" aria-label="page-group">
-		<button ng-click="changePage(page.page)" ng-repeat="page in pages" class="btn btn-default" type="button">{{page.page}}</button>
-	</div>
-</div>
+<ul class="pagination">
+	<li ng-click="$ctrl.changePage(page.page)" ui-sref-active="active" ng-repeat="page in $ctrl.pagesArray">
+		<a class="btn btn-default">{{page.page}}</a>
+	</li>
+</ul>
