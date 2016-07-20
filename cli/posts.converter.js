@@ -14,7 +14,7 @@ var allPostsPath = fileHelper.getFilesPathFromDir(postsPath, ['.html']);
 
 var jsonPosts = [];
 
-for(var i = 0; i < allPostsPath.length - 1; i++)
+for(var i = 0; i < allPostsPath.length; i++)
 {
 	if (fileHelper.checkIsFile(allPostsPath[i]))
 	{
@@ -23,7 +23,7 @@ for(var i = 0; i < allPostsPath.length - 1; i++)
 
 		var jsonPost = {
 			id: i,
-			publication_date: new Date().getTime(),
+			publication_date: new Date($('[data-model="publication_date"]').html()).getTime(),
 			img: $('img[data-img]').attr('data-img'),
 			fr: {
 				title: $('[data-lang="fr"] [data-model="title"]').html(),
@@ -40,6 +40,11 @@ for(var i = 0; i < allPostsPath.length - 1; i++)
 		jsonPosts.push(jsonPost);
 	}
 }
+
+// Sort desc.
+jsonPosts = jsonPosts.sort(function(p1, p2) {
+	return  p2.publication_date - p1.publication_date;
+});
 
 var postsJsonPath = path.join(postsPath, 'posts.json');
 var jsonPostsString = JSON.stringify(jsonPosts);

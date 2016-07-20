@@ -73,7 +73,7 @@
 					.success(function(response) {
 						var articles = [];
 
-						for (var j = response.length - 1; j >= 0; j--) {
+						for (var j = from; j < to; j++) {
 							$sce.trustAsHtml(response[j].fr.summary);
 							$sce.trustAsHtml(response[j].fr.content);
 							$sce.trustAsHtml(response[j].en.summary);
@@ -123,7 +123,7 @@
 							to = response.length;
 						}
 
-						for (var j = to - 1; j >= from; j--) {
+						for (var j = from; j < to; j++) {
 							$sce.trustAsHtml(response[j].fr.summary);
 							$sce.trustAsHtml(response[j].fr.content);
 							$sce.trustAsHtml(response[j].en.summary);
