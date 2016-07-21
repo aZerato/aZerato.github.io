@@ -1,7 +1,7 @@
 <div data-model="publication_date">07-20-2016</div>
 
 <div data-lang="fr">
-	<div data-model="title">Chrome / ASP .NET : le favicon ne s'affiche pas</div>
+	<div data-model="title">Chrome / HTML : le favicon ne s'affiche pas</div>
 	<div data-model="summary">
 		<p>
 			Bien que le Favicon s'affiche très bien sur les navigateurs comme Firefox, il ne voulait pas s'afficher sur Chrome.
@@ -16,12 +16,15 @@
 			Pour vérifier j'ai donc passé ma master à la validation <a href="https://validator.w3.org/nu/#textarea" target="_blank">W3C</a>.
 		</p>
 		<p>
-			La balise <code>&lt;html&gt;</code> n'avait pas l'attribut 'lang'.
+			Dans mon cas la balise <code>&lt;html&gt;</code> n'avait pas l'attribut 'lang'.
+		</p>
+		<p>
+			Exemple avec mon cas, masterpage Sharepoint 2007 :
 		</p>
 		<p>
 			<pre>
 				<code>
-					&lt;html dir="&lt;%$Resources:wss,multipages_direction_dir_value%&gt;" runat="server" xmlns:o="urn:schemas-microsoft-com:office:office" __expr-val-dir="ltr" lang="fr-FR"&gt;
+&lt;html dir="&lt;%$Resources:wss,multipages_direction_dir_value%&gt;" runat="server" xmlns:o="urn:schemas-microsoft-com:office:office" __expr-val-dir="ltr" lang="fr-FR"&gt;
 				</code>
 			</pre>
 		</p>
@@ -29,7 +32,7 @@
 </div>
 
 <div data-lang="en">
-	<div data-model="title">Chrome / ASP .NET : favicon not showing up</div>
+	<div data-model="title">Chrome / HTML : favicon not showing up</div>
 	<div data-model="summary">
 		<p>
 			Even if the favicon is showing up on Firefox tab, it's not on Chrome
@@ -44,12 +47,15 @@
 			I check my masterpage code with <a href="https://validator.w3.org/nu/#textarea" target="_blank">W3C</a> validator.
 		</p>
 		<p>
-			The <code>&lt;html&gt;</code> tag doesn't have the 'lang' attribut.
+			In my case, the <code>&lt;html&gt;</code> tag doesn't have the 'lang' attribut.
+		</p>
+		<p>
+			Sample with my Sharepoint 2007 masterpage :
 		</p>
 		<p>
 			<pre>
 				<code>
-					&lt;html dir="&lt;%$Resources:wss,multipages_direction_dir_value%&gt;" runat="server" xmlns:o="urn:schemas-microsoft-com:office:office" __expr-val-dir="ltr" lang="fr-FR"&gt;
+&lt;html dir="&lt;%$Resources:wss,multipages_direction_dir_value%&gt;" runat="server" xmlns:o="urn:schemas-microsoft-com:office:office" __expr-val-dir="ltr" lang="fr-FR"&gt;
 				</code>
 			</pre>
 		</p>

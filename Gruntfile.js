@@ -126,6 +126,13 @@ module.exports = function(grunt){
 					'less:compile'
 				]
 			}
+		},
+		execute: {
+			postsConverter: {
+				src: [
+					'cli/posts.converter.js'
+				]
+			}
 		}
 	});
 
@@ -144,6 +151,7 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-less');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
+	grunt.loadNpmTasks('grunt-execute');
 
 	// Tasks definition
 	grunt.registerTask('default', ['open:debug','connect:server']);
@@ -155,7 +163,12 @@ module.exports = function(grunt){
 		'watch:less'
 	]);
 
+	grunt.registerTask('convert', [
+		'execute:postsConverter'
+	]);
+
 	grunt.registerTask('build', [
+		'execute:postsConverter',
 		'clean:build',
 		'useminPrepare',
 		'concat',

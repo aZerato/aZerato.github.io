@@ -1,4 +1,4 @@
-# aZerato.github.io
+# aZerato.github.io (work in progress)
 
 [My Github.io website](http://aZerato.github.io/)
 
@@ -53,7 +53,7 @@ Run jshint
 
 > grunt check
 
-Concat/minify app files in '/build'
+Concat/minify app files in '/build' & 'convert posts'
 
 > grunt build
 
@@ -69,4 +69,9 @@ When you have terminated, go to 'cli/' folder with your CLI, and run :
 
 > node posts.converter.js
 
-(work in progress)
+Or run :
+
+> grunt convert
+
+> grunt build
+
