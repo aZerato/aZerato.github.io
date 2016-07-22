@@ -80,7 +80,8 @@
 
 	var run = function(
 		$rootScope,
-		$cookies)
+		$cookies,
+		$translate)
 	{
 		var favLang = $cookies.get('favLang');
 		if(favLang === '' || favLang == null)
@@ -90,14 +91,13 @@
 		}
 		$rootScope.currentLang = favLang;
 
-		$rootScope.getCurrentLang = function() {
-			return $rootScope.currentLang;
-		};
+		$translate.use(favLang);
 	};
 
 	run.$inject = [
 		'$rootScope',
-		'$cookies'
+		'$cookies',
+		'$translate'
 	];
 
 	app.run(run);
