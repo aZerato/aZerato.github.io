@@ -13,5 +13,8 @@
 	},
 	"footer": {
 		"content": "Hi ! I'm the footer !"
+	},
+	"article": {
+		"more": "Show more"
 	}
 }

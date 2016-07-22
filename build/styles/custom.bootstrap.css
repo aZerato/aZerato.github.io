@@ -1,8 +1,9 @@
 a {
-  color: #a8a2b4;
+  color: #c2becb;
 }
 a:hover,
 a:focus {
+  text-decoration: none;
   color: #d3e0e9;
 }
 .cst-header.navbar-inverse {
@@ -46,11 +47,34 @@ a:focus {
   margin-top: 20px;
   border: 1px solid #d3e0e9;
   border-radius: 4px;
+  padding: 0;
 }
-.cst-article > img.cst-article-main-img {
+.cst-article > .cst-article-content {
+  position: relative;
+}
+.cst-article > .cst-article-content > img.cst-article-main-img {
   margin-top: 15px;
   width: 100%;
 }
-.cst-article h2 {
+.cst-article > .cst-article-content > h2 {
   text-align: center;
+}
+.cst-article > .cst-article-content > .cst-article-inner-content {
+  padding: 15px;
+}
+.cst-article > .cst-article-footer {
+  background-color: #3097d1;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.cst-article > .cst-article-footer > a {
+  color: white;
+  display: block;
+  text-align: center;
+  height: 30px;
+  padding-top: 5px;
+  font-weight: bold;
+}
+.cst-article > .cst-article-footer:hover {
+  box-shadow: #3f647e 0px 2px 4px;
 }
