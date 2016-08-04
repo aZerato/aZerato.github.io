@@ -1,0 +1,24 @@
+.cst-intro
+{
+    padding: 0;
+    position: relative;
+
+    .cst-intro-img
+    {
+        background-image: url('/blog/files/intro.jpg');
+        display: block;
+        max-height: 1330px;
+        max-width: 2000px;
+        overflow: hidden;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: 50%;
+        margin: 0 auto;
+
+        &:before {
+            content: "";
+            display: block;
+            padding-bottom: 50%;
+        }
+    }
+}

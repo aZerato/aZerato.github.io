@@ -8,12 +8,6 @@
 		"french": "French",
 		"english": "English"
 	},
-	"about": {
-		"content": "Hi ! I'm 'About.html' page"
-	},
-	"footer": {
-		"content": "Hi ! I'm the footer !"
-	},
 	"article": {
 		"more": "Show more"
 	}

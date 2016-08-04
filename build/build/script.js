@@ -418,6 +418,9 @@
 		.state('root.articles', {
 			url:'/',
 			views: {
+				'intro@': {
+					templateUrl: '/blog/content/pages/intro.html',
+				},
 				'main@': {
 					template: '<articles-component></articles-component>',
 				}
@@ -438,6 +441,9 @@
 		.state('root.articles.pages', {
 			url: 'pages/:pageNumber',
 			views: {
+				'intro@': {
+					template: '',
+				},
 				'main@': {
 					template: '<articles-component></articles-component>',
 				}
