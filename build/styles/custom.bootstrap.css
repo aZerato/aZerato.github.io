@@ -8,6 +8,8 @@ a:focus {
 }
 .cst-header {
   margin-bottom: 0;
+  position: fixed;
+  width: 100%;
 }
 .cst-header.navbar-inverse {
   background-color: #3097d1;
@@ -47,7 +49,8 @@ a:focus {
   color: #d3e0e9;
 }
 .cst-intro {
-  padding: 0;
+  padding: 50px 0 0 0;
+  box-sizing: content-box;
   position: relative;
 }
 .cst-intro .cst-intro-img {
