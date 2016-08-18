@@ -4,24 +4,16 @@
 	<div data-model="title">Sharepoint - erreur "SqlSessionState"</div>
 	<div data-model="summary">
 		<p>
-			Vous pouvez obtenir cette erreur si vous tentez d'ouvrir un site Sharepoint directement depuis l'IP du serveur. 
-			On tentait d'ouvrir le site via un mobile sur le même réseau, mais aucune règle de routing/résolution de nom était en place, du 
-			coup on avait tenté directement sur le port 80 du serveur.
+			Vous pouvez obtenir cette erreur si vous ouvrez un site Sharepoint directement depuis l'IP du serveur. Aucune règle de routing/résolution de nom était en place.
 		</p>
 	</div>
 	<div data-model="content">
 		<p>
-			Vous pouvez obtenir cette erreur si vous tentez d'ouvrir un site Sharepoint directement depuis l'IP du serveur. 
-			On tentait d'ouvrir le site via un mobile sur le même réseau, mais aucune règle de routing/résolution de nom était en place, du 
-			coup on avait tenté directement sur le port 80 du serveur.
+			Vous pouvez obtenir cette erreur si vous ouvrez un site Sharepoint directement depuis l'IP du serveur. Aucune règle de routing/résolution de nom était en place.
 		</p>
 		<p>
 			Comme un site Sharepoint (2007 pour le coup) est basé sur son hostname, il y a eu des problèmes de routing, des fichiers devaient être
 			chargés depuis 'http://mon-site-dev' et non depuis http://IP.DU.SERVER:80. 
-		</p>
-		<p>
-			Pourquoi l'IP ? Et bien comme se sont des sites de DEV nous ne créons pas de règles DNS à chaque fois pour tester, et on attendait 
-			de passer notre site en INT car dans ce cas il y avait des règles qui font le boulot.
 		</p>
 		<p>
 			Donc il a été nécessaire d'ajouter une règle au niveau du serveur de DNS, qu'on a du ajouter par la suite dans SP. Pour cela, il faut
@@ -43,12 +35,26 @@
 	<div data-model="title">Sharepoint - erreur "SqlSessionState"</div>
 	<div data-model="summary">
 		<p>
-			Not already translated. 
+			You can have this error when you attempt to open directly a Sharepoint website with server's ip. No resolution name / routing rules are set.
 		</p>
 	</div>
 	<div data-model="content">
 		<p>
-			Not already translated.
+			You can have this error when you attempt to open directly a Sharepoint website with server's ip. No resolution name / routing rules are set.
+		</p>
+		<p>
+			A Sharepoint (in this case 2007) website is based on the hostname. Some files are loaded from 'http://hostname-my-site/' but i'm use 'http://172.12.0.1'.
+		</p>
+			Add new rule to DNS server. After, go to farm settings : '/_admin/AlternateUrlCollections.aspx'.
+		</p>
+		<p>
+			Welcome to 'Alternate Access Mapping' page ! 
+			<ul>
+				<li>The original setted hostname (at webapp/site creation) : 'http://hostname-my-site/'</li>
+				<li>La règle DNS était basé sur le hostname : 'http://hostname-my.site/'</li>
+			</ul>
+			'Edit Publics URLs', then choose 'Alternate Access Mapping Collection', and select : 'http://hostname-my-site'.
+			Add 'Custom' url 'http://hostname-my.site'.
 		</p>
 	</div>
 </div>
