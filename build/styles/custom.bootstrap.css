@@ -42,6 +42,7 @@ a:focus {
   color: rgba(255, 255, 255, 0.8);
 }
 .cst-footer {
+  margin-top: 20px;
   padding-top: 50px;
   padding-bottom: 50px;
   color: #d3e0e9;
