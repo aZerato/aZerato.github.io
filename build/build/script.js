@@ -86,7 +86,7 @@
 		var favLang = $cookies.get('favLang');
 		if(favLang === '' || favLang == null)
 		{
-			favLang = 'en';
+			favLang = 'fr';
 			$cookies.put('favLang', favLang);
 		}
 		$rootScope.currentLang = favLang;
