@@ -1,5 +1,7 @@
 <ul class="cst-pagination pagination">
-	<li ng-click="$ctrl.changePage(page.page)" ui-sref-active="active" ng-repeat="page in $ctrl.pagesArray">
+	<li ng-click="$ctrl.changePage(page.page)" 
+		ng-class="{active: ($ctrl.$state.is('root.articles.pages') && $ctrl.$state.params.pageNumber == page.page) || ($ctrl.$state.is('root.articles') && page.page == 1)}" 
+		ng-repeat="page in $ctrl.pagesArray">
 		<a class="btn btn-default">{{page.page}}</a>
 	</li>
 </ul>

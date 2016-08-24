@@ -234,6 +234,8 @@
 		$state
 	)
 	{
+		this.$state = $state;
+		
 		this.changePage = function(pageNumber)
 		{
 			$state.go(this.ref, {"pageNumber": pageNumber});
