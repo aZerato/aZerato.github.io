@@ -161,8 +161,11 @@
 		$rootScope,
 		$scope,
 		$translate,
-		$cookies)
+		$cookies,
+		$state)
 	{
+		$scope.$state = $state;
+
 		$scope.changeLang = function(key) {
 			$translate.use(key);
 			$rootScope.currentLang = key;
@@ -177,7 +180,8 @@
 		'$rootScope',
 		'$scope',
 		'$translate',
-		'$cookies'
+		'$cookies',
+		'$state'
 	];
 
 	/*
