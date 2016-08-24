@@ -1,0 +1,53 @@
+<div data-model="publication_date">08-24-2016</div>
+
+<img data-img="http://stpo.free.fr/forum-junk/context-please.jpg" />
+
+<div data-lang="fr">
+	<div data-model="title">ASP .NET - HttpHandler & HttpContext/Session</div>
+	<div data-model="summary">
+		<p>
+			Lors d'une requête ajax sur un <i>HttpHandler</i> je n'avais pas accès côté ASP à mon objet <i>Session</i>. 
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			Lors d'une requête ajax sur un <i>HttpHandler</i> je n'avais pas accès côté ASP à mon objet <i>Session</i>.
+		</p>
+		<p>
+			Le HttpHandler par défaut ne se base pas sur le même <b>Context</b> que le reste de l'application, il est indépendant. 
+		</p>
+		<p>
+			Pour qu'il hérite de la même <b>Session</b>, il faut faire hériter notre HttpHandler de : <a href="https://msdn.microsoft.com/fr-fr/library/system.web.sessionstate.irequiressessionstate(v=vs.110).aspx"><b>IRequiresSession</b></a>
+		</p>
+		<p>
+			<code>
+				public class MyHandler : IHttpHandler, IRequiresSessionState
+			</code>
+		</p>
+	</div>
+</div>
+
+<div data-lang="en">
+	<div data-model="title">ASP .NET - HttpHandler & HttpContext/Session</div>
+	<div data-model="summary">
+		<p>
+			My ASP .NET <i>Session</i> object is null in my <i>HttpHandler</i>.
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			My ASP .NET <i>Session</i> object is null in my <i>HttpHandler</i>.
+		</p>
+		<p>
+			Initially, the HttpHandler doesn't use the same <b>Context</b> than the application.
+		</p>
+		<p>
+			For using the same <i>Session</i> object than the entire application, your HttpHandler has need to inherit from <a href="https://msdn.microsoft.com/en-us/library/system.web.sessionstate.irequiressessionstate(v=vs.110).aspx"><b>IRequiresSession</b></a>.
+		</p>
+		<p>
+			<code>
+				public class MyHandler : IHttpHandler, IRequiresSessionState
+			</code>
+		</p>
+	</div>
+</div>

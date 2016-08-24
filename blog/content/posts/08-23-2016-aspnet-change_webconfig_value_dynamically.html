@@ -1,0 +1,183 @@
+<div data-model="publication_date">08-23-2016</div>
+
+<img data-img="https://cdn.meme.am/instances/500x/38545570.jpg" />
+
+<div data-lang="fr">
+	<div data-model="title">ASP.NET - Changer dynamiquement la valeur d'une propriété du web.config & le statut d'un fichier TFS [debug only]</div>
+	<div data-model="summary">
+		<p>
+			Pour une raison certaine, dans un context de debug, on souhaitait modifier dynamiquement la valeur d'une propriété du web.config.
+		</p>
+		<p>
+			[c'est une vieille note & c'était pour debug !!! ☺]
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			Pour une raison certaine, dans un context de debug, on souhaitait modifier dynamiquement la valeur d'une propriété du web.config.
+		</p>
+		<p>
+			Nous avions une option super admin sur une application web (un vieux machin), et il fallait ajouter un menu pour switcher de user pour voir facilement les différents affichages des pages.
+		</p>
+		<p>
+			Bien évidemment, notre code était versionné avec TFS, et donc il était nécessaire que l'on force le changement à 'modifié' du web.config, pour être pris en compte.
+		</p>
+		<p>
+			Il faut ajouter ces dépendences à notre projet (le chemin peut varier selon les environnements) :
+			<ul>
+				<li>
+					d:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\ReferenceAssemblies\v2.0\Microsoft.TeamFoundation.dll
+				</li>
+				<li>
+					d:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\ReferenceAssemblies\v2.0\Microsoft.TeamFoundation.Client.dll
+				</li>
+				<li>
+					d:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\ReferenceAssemblies\v2.0\Microsoft.TeamFoundation.VersionControl.Client.dll
+				</li>
+			</ul>
+		</p>
+		<p>
+			Nous avions donc une action dans un controller 'Administration' dédié :
+			
+			<pre>
+/// &lt;summary&gt;
+/// Action if you want change dynamically current user.
+/// &lt;/summary&gt;
+/// &lt;param name="userrole"&gt;Lastname of user that you want.&lt;/param&gt;
+/// &lt;returns&gt;Redirection to Homepage or restart app.&lt;/returns&gt;
+public ActionResult ChangeUser(string userrole)
+{
+	Domain.Entities.Security.User fuser = FUsers.FList.SingleOrDefault(fu => fu.LastName == userrole);
+	if (fuser != null)
+	{
+		// Open web.config
+		Configuration configuration = WebConfigurationManager.OpenWebConfiguration("~");
+
+		// Check out for edit in first.
+		string fileName = configuration.FilePath;
+		var workspaceInfo = Workstation.Current.GetLocalWorkspaceInfo(fileName);
+		if (workspaceInfo != null)
+		{
+			using (var server = new TfsTeamProjectCollection(workspaceInfo.ServerUri))
+			{
+				var workspace = workspaceInfo.GetWorkspace(server);
+				workspaceInfo.
+				workspace.PendEdit(fileName);
+			}
+		}
+
+		// Edit value
+		AppSettingsSection section = (AppSettingsSection)configuration.GetSection("appSettings");
+		if (section != null)
+		{
+			// Change dynamically value
+			section.Settings["fakeAppContextUsername"].Value = @"DOMAIN\" + fuser.LastName;
+			configuration.Save(ConfigurationSaveMode.Full, true);
+			// Restart application with new web.config (reinit cache, ...)
+			System.Web.HttpRuntime.UnloadAppDomain();
+		}
+	}
+
+	return RedirectToAction("Index");
+}
+			</pre>
+		</p>
+		<p>
+			Bon je redis que c'était pour debug !!! ☺
+		</p>
+		<p>
+			Mais, on a pu voir qu'il est impossible de modifier une valeur d'une propriété du web.config sans reload l'application 
+			et que l'on peut modifier le statut d'un fichier versionné sur TFS. 
+		</p>
+	</div>
+</div>
+
+<div data-lang="en">
+	<div data-model="title">ASP.NET - Dynamically change the value of web.config property and the versioned TFS file status [debug only]</div>
+	<div data-model="summary">
+		<p>
+			In debug context, we wanted to change dynamically the value of a web.config property.
+		</p>
+		<p>
+			[old note & it's for debug !!! ☺]
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			In debug context, we want to change dynamically the value of a web.config property.
+		</p>
+		<p>
+			This request was for an old application. We had a super admin menu and they wanted a menu for switching the current user.
+		</p>
+		<p>
+			By the way, the application used TFS versioning. We needed to change web.config file status before each modification.
+		</p>
+		<p>
+			Add this new references (paths can be different) :
+			<ul>
+				<li>
+					d:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\ReferenceAssemblies\v2.0\Microsoft.TeamFoundation.dll
+				</li>
+				<li>
+					d:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\ReferenceAssemblies\v2.0\Microsoft.TeamFoundation.Client.dll
+				</li>
+				<li>
+					d:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\ReferenceAssemblies\v2.0\Microsoft.TeamFoundation.VersionControl.Client.dll
+				</li>
+			</ul>
+		</p>
+		<p>
+			we had a dedicated action :
+			
+			<pre>
+/// &lt;summary&gt;
+/// Action if you want change dynamically current user.
+/// &lt;/summary&gt;
+/// &lt;param name="userrole"&gt;Lastname of user that you want.&lt;/param&gt;
+/// &lt;returns&gt;Redirection to Homepage or restart app.&lt;/returns&gt;
+public ActionResult ChangeUser(string userrole)
+{
+	Domain.Entities.Security.User fuser = FUsers.FList.SingleOrDefault(fu => fu.LastName == userrole);
+	if (fuser != null)
+	{
+		// Open web.config
+		Configuration configuration = WebConfigurationManager.OpenWebConfiguration("~");
+
+		// Check out for edit in first.
+		string fileName = configuration.FilePath;
+		var workspaceInfo = Workstation.Current.GetLocalWorkspaceInfo(fileName);
+		if (workspaceInfo != null)
+		{
+			using (var server = new TfsTeamProjectCollection(workspaceInfo.ServerUri))
+			{
+				var workspace = workspaceInfo.GetWorkspace(server);
+				workspaceInfo.
+				workspace.PendEdit(fileName);
+			}
+		}
+
+		// Edit value
+		AppSettingsSection section = (AppSettingsSection)configuration.GetSection("appSettings");
+		if (section != null)
+		{
+			// Change dynamically value
+			section.Settings["fakeAppContextUsername"].Value = @"DOMAIN\" + fuser.LastName;
+			configuration.Save(ConfigurationSaveMode.Full, true);
+			// Restart application with new web.config (reinit cache, ...)
+			System.Web.HttpRuntime.UnloadAppDomain();
+		}
+	}
+
+	return RedirectToAction("Index");
+}
+			</pre>
+		</p>
+		<p>
+			It's only for debug !!! ☺
+		</p>
+		<p>
+			To conclude, it's impossible to change the value of a web.config property dynamically without reload entire the app 
+			and you can change a file versioned status with TFS.. 
+		</p>
+	</div>
+</div>
