@@ -1,3 +1,7 @@
+<div class="cst-loader" ng-show="!articlesLoaded">
+	<div class="loader"></div>
+</div>
+
 <div ng-show="articlesLoaded">
 	
 	<div ng-repeat="article in articles" class="container cst-article">
@@ -24,4 +28,4 @@
 
 </div>
 
-<pagination-component ref="root.articles.pages" pages-array="pages"></pagination-component>
+<pagination-component ng-show="articlesLoaded" ref="root.articles.pages" pages-array="pages"></pagination-component>
