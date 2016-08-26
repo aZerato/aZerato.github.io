@@ -348,6 +348,10 @@ a:focus {
   text-align: center;
   font-family: 'Intro';
 }
+.cst-article > .cst-article-content > .cst-article-date {
+  text-align: center;
+  font-family: 'Intro';
+}
 .cst-article > .cst-article-content > .cst-article-inner-content {
   padding: 15px;
 }
