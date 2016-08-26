@@ -17,7 +17,7 @@
 			Le HttpHandler par défaut ne se base pas sur le même <b>Context</b> que le reste de l'application, il est indépendant. 
 		</p>
 		<p>
-			Pour qu'il hérite de la même <b>Session</b>, il faut faire hériter notre HttpHandler de : <a href="https://msdn.microsoft.com/fr-fr/library/system.web.sessionstate.irequiressessionstate(v=vs.110).aspx"><b>IRequiresSession</b></a>
+			Pour qu'il hérite de la même <b>Session</b>, il faut faire hériter notre HttpHandler de : <a href="https://msdn.microsoft.com/fr-fr/library/system.web.sessionstate.irequiressessionstate(v=vs.110).aspx"><b>IRequiresSessionState</b></a>
 		</p>
 		<p>
 			<code>
@@ -42,7 +42,7 @@
 			Initially, the HttpHandler doesn't use the same <b>Context</b> than the application.
 		</p>
 		<p>
-			For using the same <i>Session</i> object than the entire application, your HttpHandler has need to inherit from <a href="https://msdn.microsoft.com/en-us/library/system.web.sessionstate.irequiressessionstate(v=vs.110).aspx"><b>IRequiresSession</b></a>.
+			For using the same <i>Session</i> object than the entire application, your HttpHandler has need to inherit from <a href="https://msdn.microsoft.com/en-us/library/system.web.sessionstate.irequiressessionstate(v=vs.110).aspx"><b>IRequiresSessionState</b></a>.
 		</p>
 		<p>
 			<code>

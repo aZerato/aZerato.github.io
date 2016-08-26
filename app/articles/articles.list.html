@@ -18,10 +18,15 @@
 			<h2 ng-show="$root.currentLang == 'en'" ng-bind-html="article.en.title"></h2>
 			<div class="cst-article-inner-content" ng-show="$root.currentLang == 'en'" ng-bind-html="article.en.summary">
 			</div>
+			
 		</div>
 
 		<div class="cst-article-footer">
-			<a ui-sref="root.details({articleId : article.id})">{{'article.more' | translate}}</a>
+			<div class="cst-article-footer-link">
+				<a ui-sref="root.details({articleId : article.id})">{{'article.more' | translate}} - </a>
+				<a ui-sref="root.details({articleId : article.id})" data-disqus-identifier="{{'article_' + article.id}}"></a>
+				<a ui-sref="root.details({articleId : article.id})">{{'article.comments' | translate}}</a>
+			</div>
 		</div>
 
 	</div>

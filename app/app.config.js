@@ -9,7 +9,8 @@
 		'ui.router',
 		'ngSanitize',
 		'ngCookies',
-		'pascalprecht.translate'
+		'pascalprecht.translate',
+		'ngDisqus'
 	];
 
 	/*
@@ -26,7 +27,9 @@
 		urlRouterProvider, 
 		stateProvider,
 		translateProvider,
-		articlesServiceProvider)
+		articlesServiceProvider,
+		disqusProvider,
+		locationProvider)
 	{
 		stateProvider.state('root', {
 			views: {
@@ -66,6 +69,8 @@
 		// Param the url for getting posts.
 		articlesServiceProvider.setPostsEmplacement('/blog/content/posts/posts.json');
 
+		disqusProvider.setShortname('azerato-github-io');
+		locationProvider.hashPrefix('!');
 	};
 
 	config.$inject = [
@@ -73,7 +78,9 @@
 		'$urlRouterProvider', 
 		'$stateProvider',
 		'$translateProvider',
-		'articlesServiceProvider'
+		'articlesServiceProvider',
+		'$disqusProvider',
+		'$locationProvider'
 	];
 
 	app.config(config);

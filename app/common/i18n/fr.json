@@ -9,6 +9,7 @@
 		"english": "Anglais"
 	},
 	"article": {
-		"more": "Voir l'article"
+		"more": "Voir l'article",
+		"comments": "commentaire(s)"
 	}
 }
