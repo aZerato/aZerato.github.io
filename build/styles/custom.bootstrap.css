@@ -2425,6 +2425,9 @@ a:focus {
   text-decoration: none;
   color: #d3e0e9;
 }
+ul.cst-list-nodecoration {
+  list-style: outside none none;
+}
 .cst-header-margin {
   width: 100%;
   height: 50px;
