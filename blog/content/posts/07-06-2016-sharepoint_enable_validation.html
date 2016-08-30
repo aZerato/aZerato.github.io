@@ -6,18 +6,18 @@
 	<div data-model="title">Sharepoint 2007 : 'Enable Validation' error</div>
 	<div data-model="summary">
 		<p>
-			Attention quand vous créez un element via C# tel qu'un "DropDownList" (soit un <code>&lt;select&gt;</code>), il y a un 'binding' entre son état initial (au chargement de la page) et son état à l'envoie du formulaire. Par conséquent, si vous effectuez des modifications via du JavaScript sur le contenu du "select", vous risquez bien de rencontrer une telle erreur.
+			Attention quand vous créez un élément  via C# tel qu'un "DropDownList" (soit un <code>&lt;select&gt;</code>), il y a un 'binding' entre son état initial (au chargement de la page) et son état à l'envoie du formulaire. Par conséquent, si vous effectuez des modifications via du JavaScript sur le contenu du "select", vous risquez bien de rencontrer une telle erreur.
 		</p>
 	</div>
 	<div data-model="content">
 		<p>
-			Attention quand vous créez un element via C# tel qu'un "DropDownList" (soit un <code>&lt;select&gt;</code>), il y a un 'binding' entre son état initial (au chargement de la page) et son état à l'envoie du formulaire. Par conséquent, si vous effectuez des modifications via du JavaScript sur le contenu du "select", vous risquez bien de rencontrer une telle erreur.
+			Attention quand vous créez un élément  via C# tel qu'un "DropDownList" (soit un <code>&lt;select&gt;</code>), il y a un 'binding' entre son état initial (au chargement de la page) et son état à l'envoie du formulaire. Par conséquent, si vous effectuez des modifications via du JavaScript sur le contenu du "select", vous risquez bien de rencontrer une telle erreur.
 		</p>
 		<p>
-			Si vous avez des elements html que vous risquez de modifier via JavaScript utiliser plutôt l'objet HtmlGenericControl pour le créer.
+			Si vous avez des éléments html que vous risquez de modifier via JavaScript utiliser plutôt l'objet HtmlGenericControl pour le créer.
 		</p>
 		<p>
-			Par exemple, j'avais un  <code>&lt;select&gt;</code> que j'allais à remplir à la suite d'un appel ajax, donc côté C# :
+			Par exemple, j'avais un  <code>&lt;select&gt;</code> que je remplie à la suite d'un appel ajax, donc côté C# :
 			
 			<pre>
 // globals

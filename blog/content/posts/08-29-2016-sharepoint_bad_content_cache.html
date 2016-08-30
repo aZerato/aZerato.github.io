@@ -1,0 +1,52 @@
+<div data-model="publication_date">08-29-2016</div>
+
+<img data-img="http://s2.quickmeme.com/img/62/62bb14331b7f4dc7ca0c4ea73f25c2df69361bd2b12425e752b3f55dbad69db2.jpg" />
+
+<div data-lang="fr">
+	<div data-model="title">Sharepoint 2007 : Le contenu de certaine page n'est pas cohérent</div>
+	<div data-model="summary">
+		<p>
+			Une fonctionnalité intéressante de Sharepoint 2007 est la gestion de la mise en cache de certains contenus HTML.
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			Une fonctionnalité intéressante de Sharepoint 2007 est la gestion de la mise en cache de certains contenus HTML.
+		</p>
+        <p>
+            Pour cela, il faut se rendre sur la page d'administration de votre site (_layouts/settings.aspx). Puis dans la partie 'Cache de sortie "collection de site"' et 'Cache de sortie'. 
+            Ce système de cache est utile pour du contenu statique. 
+            Comme il n'est paramétrable que par rapport à un site, il faut séparer via sous sites, le contenu dynamique du statique.
+		</p>
+        <p>
+            Donc attention, si vous activez cette fonctionnalité sur du contenu dynamique vous risquez de faire afficher du contenu non désiré. 
+            Comme l'objectif de cette option et d'éviter de générer à chaque fois la page HTML demandée et donc cette dernière est mise en cache 
+            pour être plus immédiatement transféré aux utilisateurs qui la demande. Seulement, si nous sommes avec du contenu dynamique, 
+            il est possible que ça soit une version du contenu dynamique non à jour (voir l'affichage de données sensibles) qui soit mis en cache 
+            et transmis par la suite.
+        </p>
+	</div>
+</div>
+
+<div data-lang="en">
+	<div data-model="title">Sharepoint 2007 : Incorrect HTML content</div>
+	<div data-model="summary">
+		<p>
+			The 'site output cache' an interesting Sharepoint feature. It's used for put in cache the HTML content.
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			The 'site output cache' an interesting Sharepoint feature. It's used for put in cache the HTML content.
+		</p>
+        <p>
+            Go to the Sharepoint administration (_layouts/settings.aspx) and check 'Site output cache' and 'Site collection output cache'. 
+            This feature depends from site scope, you need to separate the dynamic content from static with sub sites.
+        </p>
+        <p>
+            Be careful, if you activate this feature for dynamic content you can have some problems.
+            This option is to limit server treatments, thus Sharepoint save in the cache the generated HTML. 
+            With dynamic content, you can see an outdated post or a form with incorrect values.
+        </p>
+	</div>
+</div>
