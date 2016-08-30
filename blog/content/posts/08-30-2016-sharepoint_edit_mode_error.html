@@ -1,0 +1,81 @@
+<div data-model="publication_date">08-30-2016</div>
+
+<img data-img="http://s2.quickmeme.com/img/a4/a46c4888c9bcd8cd10caba71cd13840d2acb426879304fc42c1a2396cb4eb401.jpg" />
+
+<div data-lang="fr">
+	<div data-model="title">Sharepoint 2007 : Erreur en passant en mode 'Edition'</div>
+	<div data-model="summary">
+		<p>
+			Lorsque l'on passe au mode 'Edition' d'une page contenant des webparts 'masquées' vous pouvez rencontrer une erreur.
+			Une Webpart masquée avec '<code>this.Visible = false;</code>' peut poser problème.
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			Lorsque l'on passe au mode 'Edition' d'une page contenant des webparts 'masquées' vous pouvez rencontrer une erreur.
+			Une Webpart masquée avec '<code>this.Visible = false;</code>' peut poser problème.
+		</p>
+        <p>
+            En utilisant l'astuce d'afficher les erreurs avec la stack trace, on obtenait le message suivant : 
+			"The Visible property cannot be set on Web Part ...  It can only be set on a standalone Web Part."
+		</p>
+        <p>
+            Donc si vous souhaitez cacher une WP utilisez :
+			<ul>
+				<li>
+					1. <code>this.Style.Add(HtmlTextWriterStyle.Display, "none");</code>
+				</li>
+				<li>
+					2. <code>
+						Panel container = new Panel();
+						this.Controls.Add(container);
+
+						if(why_i_want_hide) {
+							container.Visible = false;
+						}
+					</code>
+				</li>
+			</ul>
+			Je vote pour la seconde solution. ☺
+        </p>
+	</div>
+</div>
+
+<div data-lang="en">
+	<div data-model="title">Sharepoint 2007 : Error in Edit page mode</div>
+	<div data-model="summary">
+		<p>
+			When you switch to 'Edit page' mode with hidden webparts you can have an error.
+			Don't use '<code>this.Visible = false;</code>'.
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			When you switch to 'Edit page' mode with hidden webparts you can have an error.
+			Don't use '<code>this.Visible = false;</code>'.
+		</p>
+        <p>
+            Use the trick for show error with stack trace. I've got this error : 
+			"The Visible property cannot be set on Web Part ...  It can only be set on a standalone Web Part."
+		</p>
+        <p>
+            If you want hide webpart content :
+			<ul>
+				<li>
+					1. <code>this.Style.Add(HtmlTextWriterStyle.Display, "none");</code>
+				</li>
+				<li>
+					2. <code>
+						Panel container = new Panel();
+						this.Controls.Add(container);
+
+						if(why_i_want_hide) {
+							container.Visible = false;
+						}
+					</code>
+				</li>
+			</ul>
+			Maybe the best is the second solution. ☺
+        </p>
+	</div>
+</div>
