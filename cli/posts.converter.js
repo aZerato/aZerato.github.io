@@ -1,8 +1,14 @@
 #!/usr/bin/env node
+/*
+ * Modules dependencies.
+ */
 var fs = require('fs');
 var path = require('path');
 var cheerio = require('cheerio');
 
+/*
+ * Internals dependencies.
+ */
 var FileHelper = require('./helpers/fileHelper');
 
 var fileHelper = new FileHelper(true);

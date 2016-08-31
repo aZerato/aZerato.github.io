@@ -1,13 +1,23 @@
 module.exports = FileHelper = (function(){
 
+    /*
+     * Modules dependencies.
+     */
     var fs = require('fs');
     var path = require('path');
 
+    /*
+     * Constructor.
+     */
     var FileHelper = function(debug)
     {
         this.debug = debug;
     };
 
+    /*
+     * Return current path of the file where you exec this method
+     * @return String
+     */
     FileHelper.prototype.currentPath = function() {
 		try 
         {
@@ -20,6 +30,10 @@ module.exports = FileHelper = (function(){
 		}
 	};
 
+    /*
+     * Return current path of the file where you exec this method
+     * @return Boolean
+     */
 	FileHelper.prototype.checkIsFile = function(file)
 	{
 		try 
@@ -34,6 +48,12 @@ module.exports = FileHelper = (function(){
 		}
 	};
 
+    /*
+     * Return all files for a specific directory path.
+     * @param String : dirPath - directory path.
+     * @param String : extnames - array of file extensions (filtering). 
+     * @return Array[File] : Array of files.
+     */
 	FileHelper.prototype.getFilesPathFromDir = function(dirPath, extnames) {
 		var checkExtension = false;
 		var self = this;
@@ -80,6 +100,10 @@ module.exports = FileHelper = (function(){
         return filesPaths;
 	};
 
+    /*
+     * Internal logger error.
+     * @param String : error - message.
+     */
     var logger = function(error)
     {
         if(this.debug == true)
