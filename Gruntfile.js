@@ -131,7 +131,15 @@ module.exports = function(grunt){
 			postsConverter: {
 				src: [
 					'cli/posts.converter.js'
-				]
+				],
+				options: {
+					args: [
+						'convert', 
+						'-d',
+						'-p',
+						'blog/content/posts/'
+					],
+				}
 			}
 		}
 	});
