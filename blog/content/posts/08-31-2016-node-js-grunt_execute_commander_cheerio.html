@@ -1,0 +1,285 @@
+<div data-model="publication_date">08-31-2016</div>
+
+<img data-img="http://s2.quickmeme.com/img/16/16ee02d6facf514ce07fba9a17cc3404b2fd7c56a5e8e5df869c12df0983914e.jpg" />
+
+<div data-lang="fr">
+	<div data-model="title">Node JS - cheerio.js && commander.js && grunt-execute</div>
+	<div data-model="summary">
+		<p>
+			Pour réaliser un petit tool en ligne de commande (celui qui permet de "convertir" mes posts), 
+			j'ai utilisé des libs bien sympathiques.
+		</p>
+		<p>
+			Petit tour de trois libs :
+			<ul>
+				<li>
+					<b>cheerio</b>
+				</li>
+				<li>
+					<b>commander</b>
+				</li>
+				<li>
+					<b>grunt-execute</b>
+				</li>
+			</ul>
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			Pour réaliser un petit tool en ligne de commande (celui qui permet de "convertir" mes posts pour ce site), 
+			j'ai utilisé des libs bien sympathiques.
+		</p>
+		<p>
+			Petit tour de trois libs :
+			<ul>
+				<li>
+					<b>cheerio</b>
+				</li>
+				<li>
+					<b>commander</b>
+				</li>
+				<li>
+					<b>grunt-execute</b>
+				</li>
+			</ul>
+		</p>
+		
+		<h2>Cheerio.js <a href="https://github.com/cheeriojs/cheerio"><i class="fa fa-github-square" aria-hidden="true"></i>
+ lien</a></h2>
+		<p>
+			Rien à voir avec des céréales, là on parle d'une lib permettant d'utiliser "jQuery" côté back.
+		</p>
+		<p>
+			Pour "créer mes posts" j'utilise un script js (node) pour "compiler/convertir" en un gros fichier '.json'.
+			Chacun de mes posts sont rédigés en HTML avec une structure particulière (data-annotation).
+			Le script stream le contenu d'un fichier HTML et avec Cheerio je peux récupérer les parties que je souhaite avec l'écriture jQuery.
+		</p>
+		<p>
+			Mon fichier 'post.html' :
+		</p>
+		<p>
+			<pre>
+				<code>
+&lt;div data-model="publication_date"&gt;08-31-2016&lt;/div&gt;
+
+&lt;div data-lang="fr"&gt;
+	&lt;div data-model="title"&gt;Node JS - cheerio.js && commander.js && grunt-execute&lt;/div&gt;
+&lt;/div&gt;
+				</code>
+			</pre>
+		</p>
+		<p>
+			Mon script node :
+		</p>
+		<p>
+			<pre>
+				<code>
+var $ = cheerio.load(htmlFilePath);
+
+var jsonPost = {
+	publication_date: new Date($('[data-model="publication_date"]').html()).getTime(),
+	fr: {
+		title: $('[data-lang="fr"] [data-model="title"]').html(),
+	}
+};
+				</code>
+			</pre>
+		</p>
+
+		<h2>Commander.js <a href="https://github.com/tj/commander.js/"><i class="fa fa-github-square" aria-hidden="true"></i>
+ lien</a></h2>
+		<p>
+			Toujours pour "créer mes posts" avec mon script js (node) maison, j'ai voulu l'améliorer.
+			Commander permet alors d'organiser au mieux son script, de gérer des paramètres, générer un -help par défaut, ... pour en faire une véritable CLI.
+		</p>
+		<p>
+			Exemple avec paramètres :
+		</p>
+		<p>
+			<pre>
+				<code>
+program
+	.version('0.0.1')
+	.option('-d, --debug', 'Show trace')
+	.option('-p --path &lt;string&gt;', 'Specify the posts path', path, 'blog/content/posts/');
+				</code>
+			</pre>
+		</p>
+
+				<h2>Grunt-Execute <a href="https://github.com/Bartvds/grunt-execute"><i class="fa fa-github-square" aria-hidden="true"></i>
+ lien</a></h2>
+		<p>
+			Bon après avoir créé mon script,
+			je voulais que ce dernier soit lancé au milieu d'autres tâches grunt et on peut le faire grâce à cette librairie. 
+		</p>
+		<p>
+			Exemple du paramètrage de la tâche (il faut bien séparer chacun des paramètres) :
+		</p>
+		<p>
+			<pre>
+				<code>
+grunt.initConfig({
+	[...],
+	execute: {
+		postsConverter: {
+			src: [
+				'cli/posts.converter.js'
+			],
+			options: {
+				args: [
+					'convert', 
+					'-d',
+					'-p',
+					'blog/content/posts/'
+				],
+			}
+		}
+	}
+});
+				</code>
+			</pre>
+		</p>
+		<p>
+			Si vous le souhaitez, l'ensemble du code est disponible <a href="https://github.com/aZerato/aZerato.github.io">ici</a>, 
+			et plus précisément <a href="https://github.com/aZerato/aZerato.github.io/blob/master/cli/posts.converter.js">le script js pour la converstion des posts</a>, 
+			et le <a href="https://github.com/aZerato/aZerato.github.io/blob/master/Gruntfile.js">Gruntfile.js</a>.
+		</p>
+	</div>
+</div>
+
+<div data-lang="en">
+	<div data-model="title">Node JS - cheerio.js && commander.js && grunt-execute</div>
+	<div data-model="summary">
+		<p>
+			For a little CLI tool is use three cool libraries.
+		</p>
+		<p>
+			<ul>
+				<li>
+					<b>cheerio</b>
+				</li>
+				<li>
+					<b>commander</b>
+				</li>
+				<li>
+					<b>grunt-execute</b>
+				</li>
+			</ul>
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			For a little CLI tool is use three cool libraries.
+		</p>
+		<p>
+			<ul>
+				<li>
+					<b>cheerio</b>
+				</li>
+				<li>
+					<b>commander</b>
+				</li>
+				<li>
+					<b>grunt-execute</b>
+				</li>
+			</ul>
+		</p>
+
+				<h2>Cheerio.js <a href="https://github.com/cheeriojs/cheerio"><i class="fa fa-github-square" aria-hidden="true"></i>
+ link</a></h2>
+		<p>
+			Cheerio ? Cereal ? Nop, this lib like "jQuery" for backend.
+		</p>
+		<p>
+			For this website, I use a specific HTML template with <b>data-annotations</b>,  for the posts generation.
+		</p>
+		<p>
+			Sample 'post.html' file :
+		</p>
+		<p>
+			<pre>
+				<code>
+&lt;div data-model="publication_date"&gt;08-31-2016&lt;/div&gt;
+
+&lt;div data-lang="fr"&gt;
+	&lt;div data-model="title"&gt;Node JS - cheerio.js && commander.js && grunt-execute&lt;/div&gt;
+&lt;/div&gt;
+				</code>
+			</pre>
+		</p>
+		<p>
+			My node script for get values :
+		</p>
+		<p>
+			<pre>
+				<code>
+var $ = cheerio.load(htmlFilePath);
+
+var jsonPost = {
+	publication_date: new Date($('[data-model="publication_date"]').html()).getTime(),
+	fr: {
+		title: $('[data-lang="fr"] [data-model="title"]').html(),
+	}
+};
+				</code>
+			</pre>
+		</p>
+
+		<h2>Commander.js <a href="https://github.com/tj/commander.js/"><i class="fa fa-github-square" aria-hidden="true"></i>
+ link</a></h2>
+		<p>
+			To improve my CLI tool I add 'commander.js', with, you can have parameters management, automatic -help generation, ...
+		</p>
+		<p>
+			Sample with params :
+		</p>
+		<p>
+			<pre>
+				<code>
+program
+	.version('0.0.1')
+	.option('-d, --debug', 'Show trace')
+	.option('-p --path &lt;string&gt;', 'Specify the posts path', path, 'blog/content/posts/');
+				</code>
+			</pre>
+		</p>
+
+				<h2>Grunt-Execute <a href="https://github.com/Bartvds/grunt-execute"><i class="fa fa-github-square" aria-hidden="true"></i>
+ link</a></h2>
+		<p>
+			After that, i would to launch my new node script between some others grunt tasks. 
+		</p>
+		<p>
+			Sample task config for my script (split each params !) :
+		</p>
+		<p>
+			<pre>
+				<code>
+grunt.initConfig({
+	[...],
+	execute: {
+		postsConverter: {
+			src: [
+				'cli/posts.converter.js'
+			],
+			options: {
+				args: [
+					'convert', 
+					'-d',
+					'-p',
+					'blog/content/posts/'
+				],
+			}
+		}
+	}
+});
+				</code>
+			</pre>
+		</p>
+		<p>
+			The complete code is <a href="https://github.com/aZerato/aZerato.github.io">here</a>, 
+			the <a href="https://github.com/aZerato/aZerato.github.io/blob/master/cli/posts.converter.js">posts.converter.js script</a>, 
+			and the <a href="https://github.com/aZerato/aZerato.github.io/blob/master/Gruntfile.js">Gruntfile.js</a>.
+		</p>
+	</div>
+</div>
