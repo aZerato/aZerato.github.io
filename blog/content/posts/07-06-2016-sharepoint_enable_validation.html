@@ -6,18 +6,18 @@
 	<div data-model="title">Sharepoint 2007 : 'Enable Validation' error</div>
 	<div data-model="summary">
 		<p>
-			Attention quand vous créez un élément  via C# tel qu'un "DropDownList" (soit un <code>&lt;select&gt;</code>), il y a un 'binding' entre son état initial (au chargement de la page) et son état à l'envoie du formulaire. Par conséquent, si vous effectuez des modifications via du JavaScript sur le contenu du "select", vous risquez bien de rencontrer une telle erreur.
+			Attention quand vous créez un élément  via C# tel qu'un "DropDownList" (soit un <code><select></code>), il y a un 'binding' entre son état initial (au chargement de la page) et son état à l'envoie du formulaire. Par conséquent, si vous effectuez des modifications via du JavaScript sur le contenu du "select", vous risquez bien de rencontrer une telle erreur.
 		</p>
 	</div>
 	<div data-model="content">
 		<p>
-			Attention quand vous créez un élément  via C# tel qu'un "DropDownList" (soit un <code>&lt;select&gt;</code>), il y a un 'binding' entre son état initial (au chargement de la page) et son état à l'envoie du formulaire. Par conséquent, si vous effectuez des modifications via du JavaScript sur le contenu du "select", vous risquez bien de rencontrer une telle erreur.
+			Attention quand vous créez un élément  via C# tel qu'un "DropDownList" (soit un <code><select></code>), il y a un 'binding' entre son état initial (au chargement de la page) et son état à l'envoie du formulaire. Par conséquent, si vous effectuez des modifications via du JavaScript sur le contenu du "select", vous risquez bien de rencontrer une telle erreur.
 		</p>
 		<p>
 			Si vous avez des éléments html que vous risquez de modifier via JavaScript utiliser plutôt l'objet HtmlGenericControl pour le créer.
 		</p>
 		<p>
-			Par exemple, j'avais un  <code>&lt;select&gt;</code> que je remplie à la suite d'un appel ajax, donc côté C# :
+			Par exemple, j'avais un  <code><select></code> que je remplie à la suite d'un appel ajax, donc côté C# :
 			
 			<pre>
 // globals
@@ -80,7 +80,7 @@ void OnSaveButtonClick(object sender, EventArgs e)
 		<div data-model="title">Sharepoint 2007 : 'Enable Validation' error</div>
 		<div data-model="summary">
 			<p>
-				Caution when you create an "DropDownList" control (equi html : <code>&lt;select&gt;</code>), a 'binding' is created between initial state (when page is loaded) & the state when you submit the form. Consequently, if you use JavaScript for edit the content of the "select", you can face at this problem.
+				Caution when you create an "DropDownList" control (equi html : <code><select></code>), a 'binding' is created between initial state (when page is loaded) & the state when you submit the form. Consequently, if you use JavaScript for edit the content of the "select", you can face at this problem.
 			</p>
 			<p>
 				If you have a html element that you may edit via JavaScript, use the HtmlGenericControl object.
@@ -88,13 +88,13 @@ void OnSaveButtonClick(object sender, EventArgs e)
 		</div>
 		<div data-model="content">
 			<p>
-				Caution when you create an "DropDownList" control (equi html : <code>&lt;select&gt;</code>), a 'binding' is created between initial state (when page is loaded) & the state when you submit the form. Consequently, if you use JavaScript for edit the content of the "select", you can face at this problem.
+				Caution when you create an "DropDownList" control (equi html : <code><select></code>), a 'binding' is created between initial state (when page is loaded) & the state when you submit the form. Consequently, if you use JavaScript for edit the content of the "select", you can face at this problem.
 			</p>
 			<p>
 				If you have a html element that you may edit via JavaScript, use the HtmlGenericControl object.
 			</p>
 			<p>
-				Sample, i've got a <code>&lt;select&gt;</code> that i want to edit with an ajax request :
+				Sample, i've got a <code><select></code> that i want to edit with an ajax request :
 				
 				<pre>
 	// globals

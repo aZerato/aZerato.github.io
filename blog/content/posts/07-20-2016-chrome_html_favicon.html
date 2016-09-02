@@ -14,11 +14,11 @@
 			Mon Favicon s'affiche très bien sur les navigateurs comme Firefox, il ne voulait pas s'afficher sur Chrome.
 		</p>
 		<p>
-			Après recherches et tests, j'ai remarqué que la balise <code>&lt;head&gt;</code> était vide sur Chrome. 
+			Après recherches et tests, j'ai remarqué que la balise <code><head></code> était vide sur Chrome. 
 			Pour vérifier j'ai donc passé ma master à la validation <a href="https://validator.w3.org/nu/#textarea" target="_blank">W3C</a>.
 		</p>
 		<p>
-			Dans mon cas, la balise <code>&lt;html&gt;</code> n'avait pas l'attribut 'lang'.
+			Dans mon cas, la balise <code><html></code> n'avait pas l'attribut 'lang'.
 		</p>
 		<p>
 			Exemple avec mon cas, masterpage Sharepoint 2007 :
@@ -26,7 +26,7 @@
 		<p>
 			<pre>
 				<code>
-&lt;html dir="&lt;%$Resources:wss,multipages_direction_dir_value%&gt;" runat="server" xmlns:o="urn:schemas-microsoft-com:office:office" __expr-val-dir="ltr" lang="fr-FR"&gt;
+<html dir="<%$Resources:wss,multipages_direction_dir_value%>" runat="server" xmlns:o="urn:schemas-microsoft-com:office:office" __expr-val-dir="ltr" lang="fr-FR">
 				</code>
 			</pre>
 		</p>
@@ -45,11 +45,11 @@
 			My favicon is showing up on Firefox tab, it's not on Chrome
 		</p>
 		<p>
-			The <code>&lt;head&gt;</code> tag is empty on Chrome. 
+			The <code><head></code> tag is empty on Chrome. 
 			I check my masterpage code with <a href="https://validator.w3.org/nu/#textarea" target="_blank">W3C</a> validator.
 		</p>
 		<p>
-			In my case, the <code>&lt;html&gt;</code> tag doesn't have the 'lang' attribut.
+			In my case, the <code><html></code> tag doesn't have the 'lang' attribut.
 		</p>
 		<p>
 			Sample with my Sharepoint 2007 masterpage :
@@ -57,7 +57,7 @@
 		<p>
 			<pre>
 				<code>
-&lt;html dir="&lt;%$Resources:wss,multipages_direction_dir_value%&gt;" runat="server" xmlns:o="urn:schemas-microsoft-com:office:office" __expr-val-dir="ltr" lang="fr-FR"&gt;
+<html dir="<%$Resources:wss,multipages_direction_dir_value%>" runat="server" xmlns:o="urn:schemas-microsoft-com:office:office" __expr-val-dir="ltr" lang="fr-FR">
 				</code>
 			</pre>
 		</p>

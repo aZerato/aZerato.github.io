@@ -11,6 +11,7 @@ var cheerio = require('cheerio');
  * Internals dependencies.
  */
 var FileHelper = require('./helpers/fileHelper');
+var CheerioHelper = require('./helpers/cheerioHelper');
 
 /*
  * Commander Program : Posts converter.
@@ -28,6 +29,10 @@ program.on('convert', function(args) {
 	// init FileHelper.
 	var fileHelper = new FileHelper(program.debug);
 	var currentPath = fileHelper.currentPath();
+
+	var cheerioHelper = new CheerioHelper();
+	cheerioHelper.invalidChars = ['<', '>'];
+    cheerioHelper.correctChars = ['&lt;', '&gt;'];
 
 	if(!program.path)
 	{
@@ -65,14 +70,14 @@ program.on('convert', function(args) {
 				publication_date: new Date($('[data-model="publication_date"]').html()).getTime(),
 				img: $('img[data-img]').attr('data-img'),
 				fr: {
-					title: $('[data-lang="fr"] [data-model="title"]').html(),
-					summary: $('[data-lang="fr"] [data-model="summary"]').html(),
-					content: $('[data-lang="fr"] [data-model="content"]').html()
+					title: cheerioHelper.replaceCharsInnerCodeTags($, $('[data-lang="fr"] [data-model="title"]')).html(),
+					summary: cheerioHelper.replaceCharsInnerCodeTags($, $('[data-lang="fr"] [data-model="summary"]')).html(),
+					content: cheerioHelper.replaceCharsInnerCodeTags($, $('[data-lang="fr"] [data-model="content"]')).html()
 				},
 				en: {
-					title: $('[data-lang="en"] [data-model="title"]').html(),
-					summary: $('[data-lang="en"] [data-model="summary"]').html(),
-					content: $('[data-lang="en"] [data-model="content"]').html()
+					title: cheerioHelper.replaceCharsInnerCodeTags($, $('[data-lang="en"] [data-model="title"]')).html(),
+					summary: cheerioHelper.replaceCharsInnerCodeTags($, $('[data-lang="en"] [data-model="summary"]')).html(),
+					content: cheerioHelper.replaceCharsInnerCodeTags($, $('[data-lang="en"] [data-model="content"]')).html()
 				}
 			};
 

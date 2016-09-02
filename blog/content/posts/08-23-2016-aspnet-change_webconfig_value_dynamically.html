@@ -40,11 +40,11 @@
 			Nous avions donc une action dans un controller 'Administration' dédié :
 			
 			<pre>
-/// &lt;summary&gt;
+/// <summary>
 /// Action if you want change dynamically current user.
-/// &lt;/summary&gt;
-/// &lt;param name="userrole"&gt;Lastname of user that you want.&lt;/param&gt;
-/// &lt;returns&gt;Redirection to Homepage or restart app.&lt;/returns&gt;
+/// </summary>
+/// <param name="userrole">Lastname of user that you want.</param>
+/// <returns>Redirection to Homepage or restart app.</returns>
 public ActionResult ChangeUser(string userrole)
 {
 	Domain.Entities.Security.User fuser = FUsers.FList.SingleOrDefault(fu => fu.LastName == userrole);
@@ -130,11 +130,11 @@ public ActionResult ChangeUser(string userrole)
 			we had a dedicated action :
 			
 			<pre>
-/// &lt;summary&gt;
+/// <summary>
 /// Action if you want change dynamically current user.
-/// &lt;/summary&gt;
-/// &lt;param name="userrole"&gt;Lastname of user that you want.&lt;/param&gt;
-/// &lt;returns&gt;Redirection to Homepage or restart app.&lt;/returns&gt;
+/// </summary>
+/// <param name="userrole">Lastname of user that you want.</param>
+/// <returns>Redirection to Homepage or restart app.</returns>
 public ActionResult ChangeUser(string userrole)
 {
 	Domain.Entities.Security.User fuser = FUsers.FList.SingleOrDefault(fu => fu.LastName == userrole);
