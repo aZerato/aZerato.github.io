@@ -7,8 +7,7 @@ module.exports = CheerioHelper = (function(){
      */
     var CheerioHelper = function()
     {
-        this.invalidChars = [];
-        this.correctChars = [];
+        this.arrayInvalidCorrectChar = [];
     };
 
     /*
@@ -30,11 +29,10 @@ module.exports = CheerioHelper = (function(){
                     var $code = $(codeTags[i]);
                     var codeTagContent = $code.html();
 
-                    for(var j = 0; j < this.invalidChars.length; j++)
+                    for(var j = 0; j < this.arrayInvalidCorrectChar.length; j++)
                     {
-                        var reg = RegExp(this.invalidChars[j], 'g')
                         codeTagContent = codeTagContent
-                                            .replace(reg, this.correctChars[j]);
+                                            .replace(this.arrayInvalidCorrectChar[j].regex, this.arrayInvalidCorrectChar[j].correctChar);
                     }
                     
                     $code.html(codeTagContent);
@@ -50,6 +48,28 @@ module.exports = CheerioHelper = (function(){
     };
 
     /*
+    * Add combo invalid/correct chars in array.
+    * @param String : invalidChar - the char that needs to be replaced - direclty converted to regex object.
+    * @param String : correctChar - the replacement char.
+    */
+    CheerioHelper.prototype.addInvalidCorrectChar = function(invalidChar, correctChar)
+    {
+        try
+        {
+            var reg = RegExp(invalidChar, 'g');
+            this.arrayInvalidCorrectChar.push({
+                invalidChar: invalidChar,
+                regex: reg,
+                correctChar: correctChar
+            });
+        }
+        catch (error)
+        {
+            throw new Error('CheerioHelper::addInvalidCorrectChar error(' + error + ')');
+        }
+    };
+
+    /*
     * Check if CheerioHelper is correctly configurate.
     * @throw error.
     */
@@ -57,16 +77,14 @@ module.exports = CheerioHelper = (function(){
     {
         try
         {
-            if (this.invalidChars.length == 0 ||
-                this.correctChars.length == 0 ||
-                this.invalidChars.length != this.correctChars.length)
+            if (this.arrayInvalidCorrectChar.length == 0)
             {
                 throw new Error('CheerioHelper::Global error(Please set correctly CheerioHelper params (array of invalid chars & array of correct char, same length))');
             }
         }
         catch (error)
         {
-            throw new Error('CheerioHelper::Global error(Please set correctly CheerioHelper params (array of invalid chars & array of correct char, same length))');
+            throw new Error('CheerioHelper::checkCheerioHelperConfiguration error(' + error + ')');
         }
     };
 

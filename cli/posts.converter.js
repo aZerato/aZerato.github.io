@@ -31,8 +31,8 @@ program.on('convert', function(args) {
 	var currentPath = fileHelper.currentPath();
 
 	var cheerioHelper = new CheerioHelper();
-	cheerioHelper.invalidChars = ['<', '>'];
-    cheerioHelper.correctChars = ['&lt;', '&gt;'];
+	cheerioHelper.addInvalidCorrectChar('<', '&lt;');
+	cheerioHelper.addInvalidCorrectChar('>', '&gt;');
 
 	if(!program.path)
 	{
