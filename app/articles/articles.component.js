@@ -23,7 +23,7 @@
 	) {
 		//$rootScope.currentLang;
 
-		var pageConfig = undefined;
+		var pageConfig;
 		
 		$scope.articles = [];
 		$scope.articlesLoaded = false;
@@ -33,7 +33,7 @@
 		.then(function(response) {
 			pageConfig = response;
 
-			if($stateParams.pageNumber != undefined)
+			if($stateParams.pageNumber !== undefined)
 			{
 				changePage($stateParams.pageNumber);
 			}

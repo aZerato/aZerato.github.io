@@ -91,7 +91,7 @@
 		$translate)
 	{
 		var favLang = $cookies.get('favLang');
-		if(favLang === '' || favLang == null)
+		if(favLang === '' || favLang === null)
 		{
 			favLang = 'fr';
 			$cookies.put('favLang', favLang);
