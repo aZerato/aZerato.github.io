@@ -2776,6 +2776,12 @@ ul.cst-list-nodecoration {
   text-align: center;
   font-family: 'Intro';
 }
+.cst-article > .cst-article-content > h2 > a {
+  color: #333;
+}
+.cst-article > .cst-article-content > h2 > a:hover {
+  color: #c2becb;
+}
 .cst-article > .cst-article-content > .cst-article-date {
   text-align: center;
   font-family: 'Intro';

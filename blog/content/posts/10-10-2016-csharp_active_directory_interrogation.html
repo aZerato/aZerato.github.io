@@ -106,7 +106,7 @@ public JArray InformationsAD(String username, String password, String[] matricul
 
 	// toujours ce fameux nom qui correspond à la propriété "matricule" à matcher.
 	String matriculeElementName = this.settingsProvider.ApplicationSettings.ADSettings.MatriculeElementName;
-	// une liste de "propriétés" AD à retourner pour chaque utilisateur (matricule trouve) (ex: "userId;telephone;mail;...").
+	// une liste de "propriétés" AD à retourner pour chaque utilisateur (matricule trouvé) (ex: "userId;telephone;mail;...").
 	String expectedElementsNames = this.settingsProvider.ApplicationSettings.ADSettings.InformationsElementsNames;
 
 	if(
