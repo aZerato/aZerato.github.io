@@ -1,0 +1,185 @@
+<div data-model="publication_date">10-10-2016</div>
+
+<img data-img="https://i.imgflip.com/xyrde.jpg" />
+	
+<div data-lang="fr">
+	<div data-model="title">C# : interroger un "Active Directory" & objet dynamique "JObject"</div>
+	<div data-model="summary">
+		<p>
+			Pour un projet je devais réaliser une "authentification" sur un AD.
+			Ce projet permet à l'utilisateur de passer son nom et son mot de passe du domaine sur lequel est le Web service et lui dire s'il existe.
+		</p>
+		<p>
+			Pour réaliser cela j'ai utilisé <b>System.DirectoryServices</b>.
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			Pour un projet je devais réaliser une "authentification" sur un AD.
+			Ce projet permet à l'utilisateur de passer son nom et son mot de passe du domaine sur lequel est le Web service et lui dire s'il existe.
+		</p>
+		<p>
+			Pour réaliser cela j'ai utilisé <b>System.DirectoryServices</b>.
+		</p>
+		<h2>Idée de base</h2>
+		<p>
+			Comme un utilisateur va entrer son nom et son mot de passe, j'ai seulement à vérifier qu'il soit capable d'ouvrir l'AD.
+			Ensuite, vérifier qu'il existe bien dans l'AD (par précaution).
+		</p>
+		<h2>Le code dans tout ça</h2>
+		<p>
+			Exemple avec cette méthode, dans ce cas je retourne en même temps la valeur de la propriété "MatriculeElementName" :
+			<pre>
+				<code>
+/// <summary>
+/// "Authenticate" user with AD informations (check if is able to open AD).
+/// </summary>
+/// <param name="username"></param>
+/// <param name="password"></param>
+/// <returns>AD Value equi matriculeElementName in Web.config</returns>
+public AuthenticationAD AuthenticateUserAD(String username, String password)
+{
+	// Je devais retourner la valeur d'un "matricule" mais je ne connaissais pas le nom sur l'AD 
+	// qui devrait être interrogé dans le projet, donc j'ai rendu ça modifiable.
+	String matriculeElementName = this.settingsProvider.ApplicationSettings.ADSettings.MatriculeElementName;
+	
+	// c'est une classe custom, qui devait juste avoir la propriété 'Exist' et 'Id'.
+	AuthenticationAD auth = new AuthenticationAD { Exist = false };
+	
+	try
+	{
+		using (DirectoryEntry de = new DirectoryEntry(this.ADConnection, username, password))
+		{
+			// Bind to the native AdsObject to force authentication.
+			Object obj = de.NativeObject;
+			DirectorySearcher ds = new DirectorySearcher(de);
+
+			ds.SearchRoot = de;
+			ds.Filter = "(sAMAccountName=" + username + ")";
+
+			SearchResult result = ds.FindOne();
+
+			if (result != null)
+			{
+				auth.Exist = true;
+				
+				// je tente de voir si le user à ce fameux "matricule".
+				ResultPropertyValueCollection value = result.Properties[matriculeElementName];
+				if (value.Count > 0)
+				{
+					auth.Id = value[0].ToString();
+				}
+			}
+			else
+			{
+				// no user with this username
+				auth.Exist = false;
+			}
+		}
+	}
+	catch (Exception ex)
+	{
+		throw new UnknowUserException("AD connection problem. " + ex.Message);
+	}
+
+	return auth;
+}
+				</code>
+			</pre>
+		</p>
+		<p>
+			Ensuite, je suis allé plus loin, j'avais plusieurs informations a retrouver sauf que cela devait être entièrement dynamique.
+			Il est donc possible de créer des collections d'objets dynamiques en C#. 
+			La méthode suivante recherche à retourner des propriétés d'utilisateurs (via ces fameux "matricules") dans l'AD. 
+			<pre>
+				<code>
+/// <summary>
+/// Return for specific user matricules AD informations.
+/// </summary>
+/// <param name="username"></param>
+/// <param name="password"></param>
+/// <param name="matricules"></param>
+/// <returns></returns>
+public JArray InformationsAD(String username, String password, String[] matricules) 
+{
+	JArray informations = new JArray();
+
+	// toujours ce fameux nom qui correspond à la propriété "matricule" à matcher.
+	String matriculeElementName = this.settingsProvider.ApplicationSettings.ADSettings.MatriculeElementName;
+	// une liste de "propriétés" AD à retourner pour chaque utilisateur (matricule trouve) (ex: "userId;telephone;mail;...").
+	String expectedElementsNames = this.settingsProvider.ApplicationSettings.ADSettings.InformationsElementsNames;
+
+	if(
+		String.IsNullOrEmpty(matriculeElementName) 
+		|| 
+		String.IsNullOrEmpty(expectedElementsNames)
+	)
+	{
+		throw new ConfigurationException("Web.config : AD informations (matricules or expectedElementsNames) empty.");
+	}
+
+	try
+	{
+		using (DirectoryEntry de = new DirectoryEntry(this.ADConnection, username, password))
+		{
+			// Bind to the native AdsObject to force authentication.
+			Object obj = de.NativeObject;
+			DirectorySearcher ds = new DirectorySearcher(de);
+
+			ds.SearchRoot = de;
+			ds.Filter = this.GenerateFilterOR(matriculeElementName, matricules);
+
+			SearchResultCollection results = ds.FindAll();
+
+			if (results.Count > 0)
+			{
+				String[] expectedSplit = expectedElementsNames.Split(';');
+				foreach (SearchResult result in results)
+				{
+					// le Json object est dynamique !
+					JObject jsonItem = new JObject();
+
+					// add only if one or more properties matched
+					Boolean state = false;
+					foreach (String propKey in expectedSplit)
+					{
+						ResultPropertyValueCollection value = result.Properties[propKey];
+						if (value.Count > 0)
+						{
+							// Ajout d'une nouvelle propriété pour le Json Object courant. 
+							// L'utilsateur suivant n'aura peut être pas la propriété demandé mais ça ne posera aucun problème.
+							jsonItem.Add(propKey, value[0].ToString());
+							state = true;
+						}
+					}
+
+					if (state == true)
+					{
+						informations.Add(jsonItem);
+					}
+				}
+			}
+		}
+	}
+	catch (Exception ex)
+	{
+		throw new UnknowUserException("AD connection problem. " + ex.Message);
+	}
+
+	return informations;
+}	
+				</code>
+			</pre>
+		</p>
+	</div>
+</div>
+
+<div data-lang="en">
+	<div data-model="title">C# : Active Directory interrogation</div>
+	<div data-model="summary">
+		No already translated
+	</div>
+	<div data-model="content">
+		No already translated
+	</div>
+</div>
