@@ -21,7 +21,7 @@ module.exports = CheerioHelper = (function(){
         {
             this.checkCheerioHelperConfiguration();
 
-            var codeTags = $cheerioEl.find('code');
+            var codeTags = $cheerioEl.find('code, prism-component');
             if(codeTags.length > 0)
             {
                 for(var i = 0; i < codeTags.length; i++)

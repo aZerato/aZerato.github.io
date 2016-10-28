@@ -58,22 +58,19 @@
 			Mon fichier 'post.html' :
 		</p>
 		<p>
-			<pre>
-				<code>
+			<prism-component class="language-markup line-numbers">
 <div data-model="publication_date">08-31-2016</div>
 
 <div data-lang="fr">
 	<div data-model="title">Node JS - cheerio.js, commander.js && grunt-execute</div>
 </div>
-				</code>
-			</pre>
+			</prism-component>
 		</p>
 		<p>
 			Mon script node :
 		</p>
 		<p>
-			<pre>
-				<code>
+			<prism-component class="language-javascript line-numbers">
 var $ = cheerio.load(htmlFilePath);
 
 var jsonPost = {
@@ -82,8 +79,7 @@ var jsonPost = {
 		title: $('[data-lang="fr"] [data-model="title"]').html(),
 	}
 };
-				</code>
-			</pre>
+			</prism-component>
 		</p>
 
 		<h2>Commander.js <a href="https://github.com/tj/commander.js/"><i class="fa fa-github-square" aria-hidden="true"></i>
@@ -96,14 +92,12 @@ var jsonPost = {
 			Exemple avec paramètres de la création d'un "program" en CLI :
 		</p>
 		<p>
-			<pre>
-				<code>
+			<prism-component class="language-javascript line-numbers">
 program
 	.version('0.0.1')
 	.option('-d, --debug', 'Show trace')
 	.option('-p --path <string>', 'Specify the posts path', path, 'blog/content/posts/');
-				</code>
-			</pre>
+			</prism-component>
 		</p>
 
 				<h2>Grunt-Execute <a href="https://github.com/Bartvds/grunt-execute"><i class="fa fa-github-square" aria-hidden="true"></i>
@@ -116,8 +110,7 @@ program
 			Exemple du paramètrage de la tâche (il faut bien séparer chacun des paramètres) :
 		</p>
 		<p>
-			<pre>
-				<code>
+			<prism-component class="language-javascript line-numbers">
 grunt.initConfig({
 	[...],
 	execute: {
@@ -136,8 +129,7 @@ grunt.initConfig({
 		}
 	}
 });
-				</code>
-			</pre>
+			</prism-component>
 		</p>
 		<p>
 			Si vous le souhaitez, l'ensemble du code est disponible <a href="https://github.com/aZerato/aZerato.github.io">ici</a>, 
@@ -197,22 +189,19 @@ grunt.initConfig({
 			Sample 'post.html' file :
 		</p>
 		<p>
-			<pre>
-				<code>
+			<prism-component class="language-markup line-numbers">
 <div data-model="publication_date">08-31-2016</div>
 
 <div data-lang="fr">
 	<div data-model="title">Node JS - cheerio.js, commander.js && grunt-execute</div>
 </div>
-				</code>
-			</pre>
+			</prism-component>
 		</p>
 		<p>
 			My node script for get values :
 		</p>
 		<p>
-			<pre>
-				<code>
+			<prism-component class="language-javascript line-numbers">
 var $ = cheerio.load(htmlFilePath);
 
 var jsonPost = {
@@ -221,8 +210,7 @@ var jsonPost = {
 		title: $('[data-lang="fr"] [data-model="title"]').html(),
 	}
 };
-				</code>
-			</pre>
+			</prism-component>
 		</p>
 
 		<h2>Commander.js <a href="https://github.com/tj/commander.js/"><i class="fa fa-github-square" aria-hidden="true"></i>
@@ -234,14 +222,12 @@ var jsonPost = {
 			Sample with params :
 		</p>
 		<p>
-			<pre>
-				<code>
+			<prism-component class="language-javascript line-numbers">
 program
 	.version('0.0.1')
 	.option('-d, --debug', 'Show trace')
 	.option('-p --path <string>', 'Specify the posts path', path, 'blog/content/posts/');
-				</code>
-			</pre>
+			</prism-component>
 		</p>
 
 				<h2>Grunt-Execute <a href="https://github.com/Bartvds/grunt-execute"><i class="fa fa-github-square" aria-hidden="true"></i>
@@ -253,8 +239,7 @@ program
 			Sample task config for my script (split each params !) :
 		</p>
 		<p>
-			<pre>
-				<code>
+			<prism-component class="language-javascript line-numbers">
 grunt.initConfig({
 	[...],
 	execute: {
@@ -273,8 +258,7 @@ grunt.initConfig({
 		}
 	}
 });
-				</code>
-			</pre>
+			</prism-component>
 		</p>
 		<p>
 			The complete code is <a href="https://github.com/aZerato/aZerato.github.io">here</a>, 

@@ -13,14 +13,14 @@
 		<div ng-show="$root.currentLang == 'fr'" class="cst-article-date">
 			{{article.publication_date | date: 'dd/MM/yyyy'}}
 		</div>		
-		<div class="cst-article-inner-content" ng-show="$root.currentLang == 'fr'" ng-bind-html="article.fr.content">
+		<div class="cst-article-inner-content" ng-show="$root.currentLang == 'fr'" compile="article.fr.content">
 		</div>
 
 		<h2 ng-show="$root.currentLang == 'en'" ng-bind-html="article.en.title"></h2>
 		<div ng-show="$root.currentLang == 'en'" class="cst-article-date">
 			{{article.publication_date | date: 'MM/dd/yyyy'}}
 		</div>
-		<div class="cst-article-inner-content" ng-show="$root.currentLang == 'en'" ng-bind-html="article.en.content">
+		<div class="cst-article-inner-content" ng-show="$root.currentLang == 'en'" compile="article.en.content">
 		</div>
 	
 	</div>

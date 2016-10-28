@@ -29,8 +29,7 @@
 		<h2>Le code dans tout ça</h2>
 		<p>
 			Exemple avec cette méthode (dans ce cas je retourne en même temps la valeur de la propriété "MatriculeElementName") :
-			<pre>
-				<code>
+				<prism-component class="language-csharp line-numbers">
 /// <summary>
 /// "Authenticate" user with AD informations (check if is able to open AD).
 /// </summary>
@@ -86,15 +85,13 @@ public AuthenticationAD AuthenticateUserAD(String username, String password)
 
 	return auth;
 }
-				</code>
-			</pre>
+			</prism-component>
 		</p>
 		<p>
 			J'ai souhaité aller plus loin, j'avais plusieurs informations à retrouver sauf que cela devait être entièrement dynamique.
 			Il est donc possible de créer des collections d'objets dynamiques en C#. 
 			La méthode suivante cherche à retourner des propriétés d'utilisateurs dans l'AD (toujours en prenant compte du "matricule"). 
-			<pre>
-				<code>
+			<prism-component class="language-csharp line-numbers">
 /// <summary>
 /// Return for specific user matricules AD informations.
 /// </summary>
@@ -170,8 +167,7 @@ public JArray InformationsAD(String username, String password, String[] matricul
 
 	return informations;
 }	
-				</code>
-			</pre>
+			</prism-component>
 		</p>
 	</div>
 </div>
@@ -201,8 +197,7 @@ public JArray InformationsAD(String username, String password, String[] matricul
 		<h2>The Code</h2>
 		<p>
 			Sample :
-			<pre>
-				<code>
+				<prism-component class="language-csharp line-numbers">
 /// <summary>
 /// "Authenticate" user with AD informations (check if is able to open AD).
 /// </summary>
@@ -258,14 +253,12 @@ public AuthenticationAD AuthenticateUserAD(String username, String password)
 
 	return auth;
 }
-				</code>
-			</pre>
+			</prism-component>
 		</p>
 		<p>
 			With C# you are able to create a dynamic object. 
 			This sample method gets back for a "matricule" a list of values for specifics AD properties. 
-			<pre>
-				<code>
+			<prism-component class="language-csharp line-numbers">
 /// <summary>
 /// Return for specific user matricules AD informations.
 /// </summary>
@@ -341,8 +334,7 @@ public JArray InformationsAD(String username, String password, String[] matricul
 
 	return informations;
 }	
-				</code>
-			</pre>
+			</prism-component>
 		</p>
 	</div>
 </div>

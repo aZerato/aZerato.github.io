@@ -279,6 +279,66 @@
 (function (angular) {
 	'use strict';
 
+	var appModule = angular.module('app');
+
+	/*
+	 * 
+	 */
+	var prismController = function (
+		$scope,
+		$element
+	) 
+	{
+		$scope.$evalAsync(function() { 
+			var prismEl = $element[0].getElementsByTagName('pre')[0].getElementsByTagName('code')[0];
+
+			Prism.highlightElement(prismEl);
+		});
+	};
+
+	prismController.$inject = [
+		'$scope',
+		'$element'
+	];
+
+	/*
+	 * 
+	 */
+	var prismComponent = {
+		bindings: {
+			class: '@'
+		},
+		transclude: true,
+		controller: prismController,
+		template: '<pre class="{{$ctrl.class}}"><code ng-transclude></code></pre>'
+	};
+
+	appModule.component('prismComponent', prismComponent);
+
+}(window.angular));
+(function (angular) {
+	'use strict';
+
+	var appModule = angular.module('app');
+
+	appModule.directive('compile', ['$compile', function ($compile) {
+        return function(scope, element, attrs) {
+            scope.$watch(
+                function(scope) {
+                    return scope.$eval(attrs.compile);
+                },
+                function(value) {
+                    element.html(value);
+                    $compile(element.contents())(scope);
+                }
+            )
+        }
+    }]);
+
+}(window.angular));
+(function (angular) {
+	'use strict';
+
 	/*
 	 * Get the app module.
 	 */
@@ -380,7 +440,8 @@
 		$q,
 		$sce,
 		articlesService,
-		$translate
+		$translate,
+		$compile
 	) {
 		$scope.article = {};
 		$scope.articleLoaded = false;
@@ -389,7 +450,7 @@
 		.then(function(response) {
 			$scope.article = response;
 			$scope.articleLoaded = true;
-		});		
+		});
 	};
 
 	/*
@@ -404,7 +465,8 @@
 		'$q',
 		'$sce',
 		'articlesService',
-		'$translate'
+		'$translate',
+		'$compile'
 	];
 
 	/*

@@ -102,7 +102,8 @@
 		$q,
 		$sce,
 		articlesService,
-		$translate
+		$translate,
+		$compile
 	) {
 		$scope.article = {};
 		$scope.articleLoaded = false;
@@ -111,7 +112,7 @@
 		.then(function(response) {
 			$scope.article = response;
 			$scope.articleLoaded = true;
-		});		
+		});
 	};
 
 	/*
@@ -126,7 +127,8 @@
 		'$q',
 		'$sce',
 		'articlesService',
-		'$translate'
+		'$translate',
+		'$compile'
 	];
 
 	/*
