@@ -70,8 +70,10 @@
 		// Param the url for getting posts.
 		articlesServiceProvider.setPostsEmplacement('/blog/content/posts/posts.json');
 
-		flickrServiceProvider.setFlickrApiKey('5f6bb312769bc7366f4e284a9115f6fe'); // TODO change api key.
+		// Flickr component service settings. 
+		flickrServiceProvider.setFlickrApiKey('ae778d76cb4455923168dcab2bfd7135');
 		flickrServiceProvider.setFlickrUserId('78474683@N07');
+		flickrServiceProvider.setFlickrUsername('azerato');
 
 		disqusProvider.setShortname('azerato-github-io');
 		locationProvider.hashPrefix('!');

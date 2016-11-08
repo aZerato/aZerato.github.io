@@ -28,6 +28,7 @@
 		stateProvider,
 		translateProvider,
 		articlesServiceProvider,
+		flickrServiceProvider,
 		disqusProvider,
 		locationProvider)
 	{
@@ -69,6 +70,11 @@
 		// Param the url for getting posts.
 		articlesServiceProvider.setPostsEmplacement('/blog/content/posts/posts.json');
 
+		// Flickr component service settings. 
+		flickrServiceProvider.setFlickrApiKey('ae778d76cb4455923168dcab2bfd7135');
+		flickrServiceProvider.setFlickrUserId('78474683@N07');
+		flickrServiceProvider.setFlickrUsername('azerato');
+
 		disqusProvider.setShortname('azerato-github-io');
 		locationProvider.hashPrefix('!');
 	};
@@ -79,6 +85,7 @@
 		'$stateProvider',
 		'$translateProvider',
 		'articlesServiceProvider',
+		'flickrServiceProvider',
 		'$disqusProvider',
 		'$locationProvider'
 	];
@@ -331,8 +338,8 @@
                     element.html(value);
                     $compile(element.contents())(scope);
                 }
-            )
-        }
+            );
+        };
     }]);
 
 }(window.angular));
@@ -547,24 +554,24 @@
 		var self = this;
 
 		// Default folder where i can find the posts.json file.
-		this.postsEmplacement = '/blog/content/posts/posts.json';
+		self.postsEmplacement = '/blog/content/posts/posts.json';
 
-		this.setPostsEmplacement = function(postsEmplacement)
+		self.setPostsEmplacement = function(postsEmplacement)
 		{
-			this.postsEmplacement = postsEmplacement;
+			self.postsEmplacement = postsEmplacement;
 		};
 
 		// Default folder where i can find the pagination.json file.
-		this.paginationConfigEmplacement = '/blog/content/posts/pagination.json';
+		self.paginationConfigEmplacement = '/blog/content/posts/pagination.json';
 
-		this.setPaginationConfigEmplacement = function(paginationConfigEmplacement)
+		self.setPaginationConfigEmplacement = function(paginationConfigEmplacement)
 		{
-			this.paginationConfigEmplacement = paginationConfigEmplacement;
+			self.paginationConfigEmplacement = paginationConfigEmplacement;
 		};
 
-		this.PaginationConfig = {};
+		self.PaginationConfig = {};
 
-		this.$get = function() {
+		self.$get = function() {
 			return {
 				getById: function(id, $http, $q, $sce)
 				{
@@ -618,7 +625,7 @@
 						defer.resolve(articles);
 					})
 					.error(function(error) {
-						console.log('articlesServiceProvider::$get::get error(' + error + ')');
+						console.log('articlesServiceProvider::$get::getAll error(' + error + ')');
 
 						defer.reject(error);
 					});
@@ -683,5 +690,172 @@
      * Inject your new provider to app module.
 	 */
 	appModule.provider('articlesService', articlesServiceProvider);
+
+})(window.angular);
+(function (angular) {
+	'use strict';
+
+	/*
+	 * Get the app module.
+	 */
+	var appModule = angular.module('app');
+	
+	/*
+	 * Flickr Controller.
+	 */
+	var flickrController = function(
+		$scope,
+		$http,
+		$q,
+		$sce,
+		flickrService
+    ) {
+		$scope.imgs = [];
+		$scope.imgsLoaded = false;
+
+		flickrService.get($http, $q, $sce)
+        .then(function(flickrObj) {
+			$scope.username = flickrObj.username;
+            $scope.imgs = flickrObj.photos;
+            $scope.imgsLoaded = true;
+        });
+	};
+
+	/*
+	 * Inject depencencies to your controller.
+	 */
+	flickrController.$inject = [
+		'$scope',
+		'$http',
+		'$q',
+		'$sce',
+		'flickrService'
+	];
+
+	/*
+	 * Creation of an articles ng component object.
+	 */
+	 var flickrComponent = {
+	 	controller: flickrController,
+	 	templateUrl: '/app/flickr/flickr.list.html'
+	 };
+
+	/*
+     * Inject your new component to app.
+	 */
+	appModule.component('flickrComponent', flickrComponent);
+
+})(window.angular);
+(function (angular) {
+	'use strict';
+
+	/*
+	 * Get the app module.
+	 */
+	var appModule = angular.module('app');
+	
+	/*
+	 * Create an Flickr Provider.
+	 */
+	var flickrServiceProvider = function()
+	{
+		var self = this;
+
+		self.apiKey = null;
+		self.userId = null;
+		self.username = null;
+
+		self.setFlickrApiKey = function(apiKey)
+		{
+			self.apiKey = apiKey;
+		};
+		self.setFlickrUserId = function(userId)
+		{
+			self.userId = userId;
+		};
+		self.setFlickrUsername = function(username)
+		{
+			self.username = username;
+		};
+
+		self.$get = function() {
+			return {
+				get: function($http, $q, $sce)
+				{
+					var error = false;
+
+					if(self.apiKey === null)
+					{
+						console.log('flickrServiceProvider::$get::get no api key specified');
+						error = true;
+					}
+
+					if(self.userId === null)
+					{
+						console.log('flickrServiceProvider::$get::get no user id specified (use : http://idgettr.com/)');
+						error = true;
+					}
+
+					if(self.username === null)
+					{
+						console.log('flickrServiceProvider::$get::get no username specified');
+						error = true;
+					}
+
+					if(error)
+					{
+						return;
+					}
+
+					// Promise.
+					var defer = $q.defer();
+
+					$http.get('https://api.flickr.com/services/rest/?api_key=' + self.apiKey + '&nojsoncallback=1&format=json&user_id=' + self.userId + '&method=flickr.people.getPublicPhotos&per_page=4')
+					.success(function(response) {
+						var flickrObj = {
+							username: self.username,
+							photos: []
+						};
+
+						for (var j = response.photos.photo.length - 1; j >= 0; j--)
+						{
+							var curPhoto = response.photos.photo[j];
+							// https://farm6.staticflickr.com/5566/30797468755_95e65ae1b6.jpg
+							
+							var url = 
+								'https://farm' + curPhoto.farm + 
+								'.staticflickr.com/' + curPhoto.server + 
+								'/' + curPhoto.id + 
+								'_' + curPhoto.secret + '_q.jpg';
+							
+							var publicUrl = 
+								'https://www.flickr.com/photos/' + self.username + 
+								'/' + curPhoto.id + '/in/dateposted-public/';
+
+							flickrObj.photos.push({ 
+								title: curPhoto.title,
+								url: url,
+								publicUrl: publicUrl
+							});
+						}
+
+						defer.resolve(flickrObj);
+					})
+					.error(function(error) {
+						console.log('flickrServiceProvider::$get::get error(' + error + ')');
+
+						defer.reject(error);
+					});
+
+					return defer.promise;
+				}
+			};
+		};
+	};
+
+	/*
+     * Inject your new provider to app module.
+	 */
+	appModule.provider('flickrService', flickrServiceProvider);
 
 })(window.angular);

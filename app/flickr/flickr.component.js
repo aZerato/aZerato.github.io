@@ -20,8 +20,9 @@
 		$scope.imgsLoaded = false;
 
 		flickrService.get($http, $q, $sce)
-        .then(function(response) {
-            $scope.imgs = response;
+        .then(function(flickrObj) {
+			$scope.username = flickrObj.username;
+            $scope.imgs = flickrObj.photos;
             $scope.imgsLoaded = true;
         });
 	};
