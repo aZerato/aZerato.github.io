@@ -14,24 +14,24 @@
 		var self = this;
 
 		// Default folder where i can find the posts.json file.
-		this.postsEmplacement = '/blog/content/posts/posts.json';
+		self.postsEmplacement = '/blog/content/posts/posts.json';
 
-		this.setPostsEmplacement = function(postsEmplacement)
+		self.setPostsEmplacement = function(postsEmplacement)
 		{
-			this.postsEmplacement = postsEmplacement;
+			self.postsEmplacement = postsEmplacement;
 		};
 
 		// Default folder where i can find the pagination.json file.
-		this.paginationConfigEmplacement = '/blog/content/posts/pagination.json';
+		self.paginationConfigEmplacement = '/blog/content/posts/pagination.json';
 
-		this.setPaginationConfigEmplacement = function(paginationConfigEmplacement)
+		self.setPaginationConfigEmplacement = function(paginationConfigEmplacement)
 		{
-			this.paginationConfigEmplacement = paginationConfigEmplacement;
+			self.paginationConfigEmplacement = paginationConfigEmplacement;
 		};
 
-		this.PaginationConfig = {};
+		self.PaginationConfig = {};
 
-		this.$get = function() {
+		self.$get = function() {
 			return {
 				getById: function(id, $http, $q, $sce)
 				{
@@ -85,7 +85,7 @@
 						defer.resolve(articles);
 					})
 					.error(function(error) {
-						console.log('articlesServiceProvider::$get::get error(' + error + ')');
+						console.log('articlesServiceProvider::$get::getAll error(' + error + ')');
 
 						defer.reject(error);
 					});

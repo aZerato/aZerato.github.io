@@ -13,8 +13,8 @@
                     element.html(value);
                     $compile(element.contents())(scope);
                 }
-            )
-        }
+            );
+        };
     }]);
 
 }(window.angular));

@@ -28,6 +28,7 @@
 		stateProvider,
 		translateProvider,
 		articlesServiceProvider,
+		flickrServiceProvider,
 		disqusProvider,
 		locationProvider)
 	{
@@ -69,6 +70,9 @@
 		// Param the url for getting posts.
 		articlesServiceProvider.setPostsEmplacement('/blog/content/posts/posts.json');
 
+		flickrServiceProvider.setFlickrApiKey('5f6bb312769bc7366f4e284a9115f6fe'); // TODO change api key.
+		flickrServiceProvider.setFlickrUserId('78474683@N07');
+
 		disqusProvider.setShortname('azerato-github-io');
 		locationProvider.hashPrefix('!');
 	};
@@ -79,6 +83,7 @@
 		'$stateProvider',
 		'$translateProvider',
 		'articlesServiceProvider',
+		'flickrServiceProvider',
 		'$disqusProvider',
 		'$locationProvider'
 	];
