@@ -74,6 +74,7 @@
 		flickrServiceProvider.setFlickrApiKey('ae778d76cb4455923168dcab2bfd7135');
 		flickrServiceProvider.setFlickrUserId('78474683@N07');
 		flickrServiceProvider.setFlickrUsername('azerato');
+		flickrServiceProvider.setMaxPhotos(10);
 
 		disqusProvider.setShortname('azerato-github-io');
 		locationProvider.hashPrefix('!');
@@ -708,17 +709,62 @@
 		$http,
 		$q,
 		$sce,
-		flickrService
+		flickrService,
+		$cookies
     ) {
 		$scope.imgs = [];
 		$scope.imgsLoaded = false;
 
-		flickrService.get($http, $q, $sce)
-        .then(function(flickrObj) {
-			$scope.username = flickrObj.username;
-            $scope.imgs = flickrObj.photos;
-            $scope.imgsLoaded = true;
-        });
+		try
+		{
+			var flickrPhotos = $cookies.get('flickr-photos');
+			if(flickrPhotos === '' || flickrPhotos === undefined)
+			{
+				flickrService.get($http, $q, $sce)
+				.then(function(flickrObj) {
+					$scope.username = flickrObj.username;
+					$scope.imgs = flickrObj.photos;
+					$scope.imgsLoaded = true;
+
+					flickrPhotos = {
+						lastUpdated: Date.now(),
+						photos: flickrObj.photos,
+						username: flickrObj.username
+					};
+					$cookies.put('flickr-photos', JSON.stringify(flickrPhotos));
+				});
+			}
+			else
+			{
+				flickrPhotos = JSON.parse(flickrPhotos);
+				var now = Date.now();
+				if(flickrPhotos.lastUpdated + 30 * 1000 > now)
+				{
+					flickrService.get($http, $q, $sce)
+					.then(function(flickrObj) {
+						$scope.username = flickrObj.username;
+						$scope.imgs = flickrObj.photos;
+						$scope.imgsLoaded = true;
+
+						flickrPhotos.lastUpdated = now;
+						flickrPhotos.photos = flickrObj.photos;
+						flickrPhotos.username = flickrObj.username;
+						$cookies.put('flickr-photos', JSON.stringify(flickrPhotos));
+					});
+				}
+				else
+				{
+					$scope.username = flickrPhotos.username;
+					$scope.imgs = flickrPhotos.photos;
+					$scope.imgsLoaded = true;
+				}
+			}
+		}
+		catch(error)
+		{
+			console.log('flickrComponent::flickrController::Error (' + error + ')');
+			$scope.imgsLoaded = false;
+		}		
 	};
 
 	/*
@@ -729,7 +775,8 @@
 		'$http',
 		'$q',
 		'$sce',
-		'flickrService'
+		'flickrService',
+		'$cookies'
 	];
 
 	/*
@@ -764,6 +811,7 @@
 		self.apiKey = null;
 		self.userId = null;
 		self.username = null;
+		self.maxPhotos = 5;
 
 		self.setFlickrApiKey = function(apiKey)
 		{
@@ -776,6 +824,10 @@
 		self.setFlickrUsername = function(username)
 		{
 			self.username = username;
+		};
+		self.setMaxPhotos = function(maxPhotos)
+		{
+			self.maxPhotos = maxPhotos;
 		};
 
 		self.$get = function() {
@@ -810,7 +862,7 @@
 					// Promise.
 					var defer = $q.defer();
 
-					$http.get('https://api.flickr.com/services/rest/?api_key=' + self.apiKey + '&nojsoncallback=1&format=json&user_id=' + self.userId + '&method=flickr.people.getPublicPhotos&per_page=4')
+					$http.get('https://api.flickr.com/services/rest/?api_key=' + self.apiKey + '&nojsoncallback=1&format=json&user_id=' + self.userId + '&method=flickr.people.getPublicPhotos&per_page=' + self.maxPhotos)
 					.success(function(response) {
 						var flickrObj = {
 							username: self.username,
