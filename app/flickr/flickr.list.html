@@ -8,8 +8,8 @@
 
 	<div class="cst-flickr-imgs" ng-show="imgsLoaded">
 
-		<a href="{{img.publicUrl}}" target="_blank" ng-repeat="img in imgs">
-			<img class="col-xs-2 col-md-2 cst-flickr-img" src="{{img.url}}" alt="{{img.title}}" />
+		<a ng-repeat="img in imgs" title="Photo Flickr by {{username}} - {{img.title}}" href="{{img.publicUrl}}" class="col-xs-2 col-md-4 cst-flickr-img" target="_blank">
+			<img src="{{img.url}}" alt="{{img.title}}" />
 		</a>
 
 	</div>
