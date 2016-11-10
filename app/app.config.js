@@ -74,6 +74,7 @@
 		flickrServiceProvider.setFlickrApiKey('ae778d76cb4455923168dcab2bfd7135');
 		flickrServiceProvider.setFlickrUserId('78474683@N07');
 		flickrServiceProvider.setFlickrUsername('azerato');
+		flickrServiceProvider.setMaxPhotos(10);
 
 		disqusProvider.setShortname('azerato-github-io');
 		locationProvider.hashPrefix('!');

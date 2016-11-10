@@ -16,6 +16,7 @@
 		self.apiKey = null;
 		self.userId = null;
 		self.username = null;
+		self.maxPhotos = 5;
 
 		self.setFlickrApiKey = function(apiKey)
 		{
@@ -28,6 +29,10 @@
 		self.setFlickrUsername = function(username)
 		{
 			self.username = username;
+		};
+		self.setMaxPhotos = function(maxPhotos)
+		{
+			self.maxPhotos = maxPhotos;
 		};
 
 		self.$get = function() {
@@ -62,7 +67,7 @@
 					// Promise.
 					var defer = $q.defer();
 
-					$http.get('https://api.flickr.com/services/rest/?api_key=' + self.apiKey + '&nojsoncallback=1&format=json&user_id=' + self.userId + '&method=flickr.people.getPublicPhotos&per_page=4')
+					$http.get('https://api.flickr.com/services/rest/?api_key=' + self.apiKey + '&nojsoncallback=1&format=json&user_id=' + self.userId + '&method=flickr.people.getPublicPhotos&per_page=' + self.maxPhotos)
 					.success(function(response) {
 						var flickrObj = {
 							username: self.username,
