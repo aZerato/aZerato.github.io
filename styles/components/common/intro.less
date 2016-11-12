@@ -3,6 +3,7 @@
     padding: 0;
     position: relative;
     margin-top: -50px;
+    //overflow: n
 
     .cst-intro-img
     {
@@ -36,6 +37,165 @@
                 display: block;
                 vertical-align: bottom;
             }
+        }
+    }
+
+    .cst-intro-para {
+        text-align: center;
+        color: white;
+        font-family: 'IntroInline';
+
+        > .cst-intro-para-1 {
+            font-size: 1.8em;
+            .text-shadow(0 0 20px rgba(0,0,0,0.6));
+
+            position: absolute;
+            top: 65%;
+            left: 50%;
+            .transform(translate(-50%, -35%));
+            z-index: 4;    
+        }
+        > .cst-intro-para-2 {
+            font-size: 1.5em;
+            .text-shadow(0 0 20px rgba(0,0,0,0.6));
+            color: @azure;
+
+            position: absolute;
+            top: 75%;
+            left: 50%;
+            .transform(translate(-50%, -25%));
+            z-index: 3;    
+        }
+    }
+
+    .hexagon-container {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        z-index: 2;
+        .transform(translate(-50%, -60%));
+
+        .hexagon {
+            position: relative;
+            width: 200px; 
+            height: 115.47px;
+            margin: 57.74px 0;
+            background-image: url(/blog/files/pizza-cat.gif);
+            background-size: auto 219.3931px;
+            background-position: center;
+            box-shadow: 0 0 20px rgba(0,0,0,0.6);
+            border-left: solid 5px #ffffff;
+            border-right: solid 5px #ffffff;
+        }
+
+        .hexTop,
+        .hexBottom {
+            position: absolute;
+            z-index: 1;
+            width: 141.42px;
+            height: 141.42px;
+            overflow: hidden;
+            .transform(scaleY(0.5774) rotate(-45deg));
+            background: inherit;
+            left: 24.29px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.6);
+        }
+
+        /*counter transform the bg image on the caps*/
+        .hexTop:after,
+        .hexBottom:after {
+            content: "";
+            position: absolute;
+            width: 190.0000px;
+            height: 109.69655114602891px;
+            .transform(rotate(45deg) scaleY(1.7321) translateY(-54.8483px));
+            .transform-origin(0, 0);
+            background: inherit;
+        }
+
+        .hexTop {
+            top: -70.7107px;
+            border-top: solid 7.0711px #ffffff;
+            border-right: solid 7.0711px #ffffff;
+        }
+
+        .hexTop:after {
+            background-position: center top;
+        }
+
+        .hexBottom {
+            bottom: -70.7107px;
+            border-bottom: solid 7.0711px #ffffff;
+            border-left: solid 7.0711px #ffffff;
+        }
+
+        .hexBottom:after {
+            background-position: center bottom;
+        }
+
+        .hexagon:after {
+            content: "";
+            position: absolute;
+            top: 2.8868px;
+            left: 0;
+            width: 190.0000px;
+            height: 109.6966px;
+            z-index: 2;
+            background: inherit;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+	.cst-intro
+    {
+        .hexagon-container {
+            
+            .hexagon {
+                width: 100px;
+                height: 57.74px;
+                background-size: auto 103.9230px;
+                margin: 28.87px 0;
+            }
+            .hexTop,
+            .hexBottom {
+                width: 70.71px;
+                height: 70.71px;
+                left: 9.64px;
+                .transform(scaleY(0.5774) rotate(-45deg));
+            }
+            .hexTop:after,
+            .hexBottom:after {
+                width: 90.0000px;
+                height: 51.96152422706633px;
+                .transform(rotate(45deg) scaleY(1.7321) translateY(-25.9808px));
+            }
+            .hexTop {
+                top: -35.3553px;
+                border-top: solid 7.0711px #ffffff;
+                border-right: solid 7.0711px #ffffff;
+            }
+            .hexBottom {
+                bottom: -35.3553px;
+                border-bottom: solid 7.0711px #ffffff;
+                border-left: solid 7.0711px #ffffff;
+            }
+            .hexagon:after {
+                top: 2.8868px;
+                left: 0;
+                width: 90.0000px;
+                height: 51.9615px;
+            }
+        }
+
+        .cst-intro-para {
+
+            .cst-intro-para-2 {
+                top: 88%;
+                left: 50%;
+                .transform(translate(-50%, -12%));
+            }
+
         }
     }
 }
