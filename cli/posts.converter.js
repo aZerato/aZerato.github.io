@@ -102,7 +102,7 @@ program.on('convert', function(args) {
 
 	// Create pagination object.
 	var jsonPagination = {
-		number_per_page: 3,
+		number_per_page: 4,
 		total_posts: jsonPosts.length,
 		pages: []
 	};
