@@ -1,0 +1,76 @@
+<div data-model="publication_date">11-11-2016</div>
+
+<img data-img="https://cdn.meme.am/cache/instances/folder468/65606468.jpg" />
+	
+<div data-lang="fr">
+	<div data-model="title">ASP .NET : "The requested resource does not support http method GET/POST/PUT/..."</div>
+	<div data-model="summary">
+		<p>
+			L'application jongle entre des APIs controller et des controller "normaux" ; et c'est sur ce point qu'il faut faire attention.
+			Les actions doivent avoir des "data annotations", pour préciser le verb, cohérentes avec le traitement qui doit être réalisé dans la couche métier.
+		</p>
+		<h4>
+			Mais il arrive que l'on rencontre cette erreur : "The requested resource does not support http method GET/POST/PUT/..." !
+		</h4>
+		<p>
+			C'est curieux car l'action que je tente de requeter en PUT a bien la "data annotation" [HttpPut]. Il faut faire attention aux 'assemblies' que 
+			l'on utilise !
+		</p>
+		<p>
+			Si vous êtes au niveau d'une WEB API utiliser "System.Web.Http" si vous êtes au niveau MVC prendre "System.Web.Mvc".
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			L'application jongle entre des APIs controller et des controller "normaux" ; et c'est sur ce point qu'il faut faire attention.
+			Les actions doivent avoir des "data annotations", pour préciser le verb, cohérentes avec le traitement qui doit être réalisé dans la couche métier.
+		</p>
+		<h4>
+			Mais il arrive que l'on rencontre cette erreur : "The requested resource does not support http method GET/POST/PUT/..." !
+		</h4>
+		<p>
+			C'est curieux car l'action que je tente de requeter en PUT a bien la "data annotation" [HttpPut]. Il faut faire attention aux 'assemblies' que 
+			l'on utilise !
+		</p>
+		<p>
+			Si vous êtes au niveau d'une WEB API utiliser "System.Web.Http" si vous êtes au niveau MVC prendre "System.Web.Mvc".
+		</p>
+	</div>
+</div>
+
+<div data-lang="en">
+	<div data-model="title">ASP .NET : "The requested resource does not support http method GET/POST/PUT/..."</div>
+	<div data-model="summary">
+		<p>
+			When you working on a MVC & an API application you need to be careful.
+			When you describ a new action in your controller you can use the "data annotation" to precise the Http Verb. 
+			A Http Verb need to be coherent with the data treatment in sub layers.
+		</p>
+		<h2>
+			You can encounter this error : "The requested resource does not support http method GET/POST/PUT/..." !
+		</h2>
+		<p>
+			But why ? I'm sure that my action has the [HttpPut] "data annotation" !
+		</p>
+		<p>
+			If you work in WEB API, you need to use the "System.Web.Http" assembly, otherwise "System.Web.Mvc" in MVC part.
+		</p>
+	</div>
+	</div>
+	<div data-model="content">
+		<p>
+			When you working on a MVC & an API application you need to be careful.
+			When you describ a new action in your controller you can use the "data annotation" to precise the Http Verb. 
+			A Http Verb need to be coherent with the data treatment in sub layers.
+		</p>
+		<h2>
+			You can encounter this error : "The requested resource does not support http method GET/POST/PUT/..." !
+		</h2>
+		<p>
+			But why ? I'm sure that my action has the [HttpPut] "data annotation" !
+		</p>
+		<p>
+			If you work in WEB API, you need to use the "System.Web.Http" assembly, otherwise "System.Web.Mvc" in MVC part.
+		</p>
+	</div>
+</div>

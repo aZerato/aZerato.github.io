@@ -1,0 +1,235 @@
+<div data-model="publication_date">12-07-2016</div>
+
+<img data-img="https://cdn.meme.am/instances/69129463.jpg" />
+	
+<div data-lang="fr">
+	<div data-model="title">C# : Vieux projets ADO .NET et LINQ (LINQ TO SQL)</div>
+	<div data-model="summary">
+		<p>
+			Je sors du développement d'une application où j'ai pu plonger dans un code utilisant des librairies récentes. Mais voilà toutes les bonnes choses ont une
+			fin ... Je retombe sur un projet où EntityFramework n'a jamais existé, et certaines "bonnes pratiques" n'étaient pas encore appliquées.
+		</p>
+		<p>
+			Adieu les patterns Repository/SelectBuilder/Specifications/ ... Non là ça date ... On est sur du EntityObject avec des ObjectQuery ... 
+			What ??? mince où je suis ... Pour faire simple notre EntityObject est tout simplement notre objet qui est persisté en base, et 
+			l'ObjectQuery est son "Repository". <a href="https://msdn.microsoft.com/fr-fr/library/ff477605(v=vs.100).aspx" target="_blank">Bienvenue sur ADO.NET</a> l'ancètre d'EntityFramework.
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			Je sors du développement d'une application où j'ai pu plonger dans un code utilisant des librairies récentes. Mais voilà toutes les bonnes choses ont une
+			fin ... Je retombe sur un projet où EntityFramework n'a jamais existé, et certaines "bonnes pratiques" n'étaient pas encore appliquées.
+		</p>
+		<p>
+			Adieu les patterns Repository/SelectBuilder/Specifications/ ... Non là ça date ... On est sur du EntityObject avec des ObjectQuery ... 
+			What ??? mince où je suis ... Pour faire simple notre EntityObject est tout simplement notre objet qui est persisté en base, et 
+			l'ObjectQuery est son "Repository". <a href="https://msdn.microsoft.com/fr-fr/library/ff477605(v=vs.100).aspx" target="_blank">Bienvenue sur ADO.NET</a> l'ancètre d'EntityFramework.
+		</p>
+		<p>
+			Bon après chaque projet a une histoire, et j'ai déduis ces "choses là" au travers de cette expérience et je me trompe peut être sur certains aspects,
+			du coup il ne faut hésiter à me corriger si je me trompe.
+		</p>
+		<p>
+			L'architecture de la solution est assez bien découpée, et donc nous pouvons retrouver notre "MyAppDBContext" qui regroupe nos différents "ObjectQuery".
+			Pas d'injection de dépendance ici, nous avons une méthode "GetList&lt;T&gt;' qui ressemble à ça :
+			<prism-component class="language-csharp line-numbers">
+			
+class MyAppDBContext : ContainerContext
+{
+	private QueryObject&lt;PostLike&gt; PostLikes;
+
+	[...]
+
+	public Context Current {
+		...
+	}
+
+	public IList&lt;T&gt; GetList&lt;T&gt;()
+	{
+		var type = typeof(T);
+		var typeName = type.Name;
+		var setName = typeName.EndsWith("y")
+			? string.Concat(typeName.Substring(0, typeName.Length - 1), "ies")
+			: string.Concat(typeName, "s");
+		
+		var request = string.replace("SELECT * FROM {0}", setName);
+
+		var result = MyAppDBContext.Current.Execute(request);
+
+		return result.toList();
+	}
+
+	[...]
+}
+			
+			</prism-component>
+		</p>
+		<p>
+			Donc avec cet exemple on peut voir que l'existant n'était pas "performant" et ni évolutif car :
+			<ul>
+				<li>- On retourne une liste de toutes les colonnes ("SELECT *") alors que je voudrais peut être limité</li>
+				<li>- On fait un toList() mais si on veut faire des traitements on refiltre la liste ???</li>
+			</ul>
+			Pour dire, une page devait afficher une liste d'utilisateurs qui avaient "aimés" un post. Donc nous avions un EntityObject "PostLike" qui a un
+			"PostLikes ObjectQuery&lt;PostLike&gt;", et pour s'afficher avec l'actuel on attendait 4-5 secondes pour 150-200 enregistrements à parcourir.
+			On faisait un truc (moche) comme ça pour récupérer tous les ID des utilisateurs : "GetList&lt;PostLike&gt;().Where(f => f.PostID == postID).Select(s => s.UserID);"
+		</p>
+		<p>
+			Bon il faut améliorer ça ! il faut au moins faire notre "Where" avant le "toList()". J'ai regardé en faisant le where via une simple "string" en paramètre
+			d'une méthode GetList&lt;T&gt;(string mywhere)' mais à l'utilisation c'est (méga) risquée. 
+			Il faut se dire que l'on a LINQ et qu'il faut jouer avec des IQueryable ou des IEnumerable pour pas que 
+			notre requete soit interprétée. J'ai cherché et j'ai vu que nos ObjectQuery ont la méthode "asQueryable" !
+		</p>
+
+		<h2>Récupérer mes "QueryObject" pour un objet T</h2>
+		
+		<p>
+			Bon j'ai une méthode GetList avec un EntityObject T, cet objet T est en relation avec un QueryObject (qui a le même nom au pluriel).
+			Nous n'avons pas de moyen de récupérer à la voler l'ObjectQuery en rapport à un EntityObject.
+		</p>
+		<p>
+			Les QueryObject sont des propriétés de notre "MyAppDBContext", l'idéal serait de se baser sur ces propriétés pour récupérer le bon QueryObject, c'est pas jolie
+			mais via cette méthode on peut récupérer pour une Class la valeurs des objet pour un type d'attribut donné.
+			<prism-component class="language-csharp line-numbers">
+/// <summary>
+/// Query contexts.
+/// </summary>
+private IDictionary&lt;string, ObjectQuery&gt; queryContexts = new Dictionary&lt;string, ObjectQuery&gt;();
+
+/// <summary>
+/// Find for a T object the ObjectQuery concerned.
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <returns></returns>
+private ObjectQuery FindObjectQuery&lt;T&gt;()
+{
+	var type = typeof(T);
+	var typeName = type.Name;
+	var setName = typeName.EndsWith("y")
+		? string.Concat(typeName.Substring(0, typeName.Length - 1), "ies")
+		: string.Concat(typeName, "s");
+
+	if (queryContexts.Count == 0)
+	{
+		PropertyInfo[] props = typeof(MyAppDBContext).GetProperties();
+		foreach (var prop in props)
+		{
+			if (prop.DeclaringType.BaseType == typeof(ObjectContext))
+			{
+				var value = prop.GetValue(MyAppDBContext.Current, null);
+				queryContexts.Add(prop.Name, (ObjectQuery)value);
+			}
+		}
+	}
+
+	ObjectQuery query = null;
+	var state = queryContexts.TryGetValue(setName, out query);
+	if (!state)
+	{
+		queryContexts.TryGetValue(typeName, out query);
+	}
+
+	return query;
+}		
+			</prism-component>
+			Par cette méthode je récupere toutes les propriétés de ma class MyAppDBContext qui sont de type ObjectQuery 
+			(j'aurais pu faire un singleton ...) et je récupère la valeur de l'objet pour cette propriété.
+		</p>
+
+		<h2>Passer un ObjectQuery à un Queryable (LINQ to SQL)</h2>
+		
+		<p>
+			Maintenant que nous avons la posibilité de récuperer un ObjectQuery pour un EntityObjet T, il faut pouvoir utiliser
+			les méthodes LINQ :
+			<prism-component class="language-csharp line-numbers">
+/// <summary>
+/// Return list.
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="predicate"></param>
+/// <returns></returns>
+public List&lt;T&gt; GetList&lt;T&gt;(Expression&lt;Func&lt;T, bool&gt;&gt; predicate)
+{
+	var provider = this.GetQueryable&lt;T&gt;(predicate);
+
+	return provider.ToList();
+}
+
+/// <summary>
+/// Return IQueryable.
+/// Never propose this Queryable object to sub layer !.
+/// </summary>
+/// <typeparam name="T"></typeparam>
+/// <param name="predicate"></param>
+/// <returns></returns>
+private IQueryable&lt;T&gt; GetQueryable&lt;T&gt;(Expression&lt;Func&lt;T, bool&gt;&gt; predicate)
+{
+	var queryContext = this.FindObjectQuery&lt;T&gt;();
+
+	var provider = ((IQueryable&lt;T&gt;)queryContext.AsQueryable()).Where(predicate);
+
+	return provider;
+}
+			</prism-component>
+			Je cast mon ObjectQuery en "Queryable" en plus du "AsQueryable" et j'en profite pour passer mon predicat dans mon Where.
+			Je passe par deux méthodes, une méthode pour retourner une IQueryable, que j'ai en privée, et après la méthode public qui retourne la List<T>.
+		</p>
+
+		<h2>On améliore encore avec les "SelectBuilder"</h2>
+		
+		<p>
+			Un SelectBuilder est une lambda expression permetant de limiter "le nombre de colonnes" que l'on va récuperer d'un enregistrement.
+			<prism-component class="language-csharp line-numbers">
+/// <summary>
+/// Return list.
+/// </summary>
+/// <typeparam name="T">Object that you want to use to interrogate the linked ObjectQuery.</typeparam>
+/// <typeparam name="TResult">Type object that you want to return thanks to the selectbuilder.</typeparam>
+/// <param name="predicate"></param>
+/// <param name="builder">Select builder.</param>
+/// <returns></returns>
+public List&lt;TResult&gt; GetList&lt;T, TResult&gt;(Expression&lt;Func&lt;T, bool&gt;&gt; predicate, Expression&lt;Func&lt;T, TResult&gt;&gt; builder)
+{
+	var provider = this.GetQueryable&lt;T&gt;(predicate).Select(builder);
+
+	return provider.ToList();
+}
+			</prism-component> 
+		</p>
+
+		<h2>Final</h2>
+
+		<p>
+			Je passe de ça : "GetList&lt;PostLike&gt;().Where(f => f.PostID == postID).Select(s => s.UserID);" à ça : 
+			<prism-component class="language-csharp line-numbers">
+class MyView 
+{		
+	public void Render()
+	{
+		List&lt;long&gt; userIDs = MyAppDBContext
+			.GetList&lt;PostLike, long&gt;(
+				f => f.PostID == postID, 
+				MyView.SelectUserIDsBuilder());
+	}
+
+	public static Expression&lt;Func&lt;PostLike, long&gt;&gt; SelectUserIDsBuilder()
+	{
+		return postlike => postlike.userID;	
+	}
+}				
+			</prism-component>
+			Et niveau temps de 4-5 sec à 450ms.
+		</p>
+	</div>
+</div>
+
+<div data-lang="en">
+	<div data-model="title">C# : ADO .NET && LINQ (LINQ TO SQL)</div>
+	<div data-model="summary">
+		Not already translated.
+	</div>
+	</div>
+	<div data-model="content">
+		Not already translated.
+	</div>
+</div>
