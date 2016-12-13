@@ -24,14 +24,12 @@
 			<a href="https://msdn.microsoft.com/fr-fr/library/ff477605(v=vs.100).aspx" target="_blank">Bienvenue sur ADO.NET</a>.
 		</p>
 		<p>
-			L'architecture de la solution est assez bien découpée, et donc nous pouvons retrouver notre "MyAppDBContext" qui regroupe nos différents "ObjectQuery".
-			Pas d'injection de dépendance ici, nous avons une méthode "GetList&lt;T&gt;' qui ressemble à ça :
+			L'architecture de la solution est assez bien découpée, et donc nous pouvons retrouver notre "MyAppDBContext".
+			Nous avons une méthode "GetList&lt;T&gt;' qui ressemble à ça :
 			<prism-component class="language-csharp line-numbers">
 			
 class MyAppDBContext : ContainerContext
 {
-	private QueryObject&lt;PostLike&gt; PostLikes;
-
 	[...]
 
 	public Context Current {
@@ -57,6 +55,35 @@ class MyAppDBContext : ContainerContext
 }
 			
 			</prism-component>
+			Et le "ContainerContext" qui est la classe autogénérée qui regroupe nos différents "ObjectQuery" :
+			<prism-component class="language-csharp line-numbers">
+			
+class ContainerContext : ObjectContext
+{
+	[...]
+
+	/// <summary>
+	/// There are no comments for PostLikes in the schema.
+	/// </summary>
+	[global::System.CodeDom.Compiler.GeneratedCode("System.Data.Entity.Design.EntityClassGenerator", "4.0.0.0")]
+	public global::System.Data.Objects.ObjectQuery&lt;PostLike&gt; PostLikes
+	{
+		get
+		{
+			if ((this._PostLikes == null))
+			{
+				this._PostLikes = base.CreateQuery&lt;PostLike&gt;("[PostLikes]");
+			}
+			return this._PostLikes;
+		}
+	}
+	[global::System.CodeDom.Compiler.GeneratedCode("System.Data.Entity.Design.EntityClassGenerator", "4.0.0.0")]
+	private global::System.Data.Objects.ObjectQuery&lt;PostLike&gt; _PostLikes;
+
+	[...]
+}
+			
+			</prism-component>
 		</p>
 		<p>
 			Donc avec cet exemple on peut voir que l'existant n'était pas "performant" et ni évolutif car :
@@ -75,14 +102,14 @@ class MyAppDBContext : ContainerContext
 			notre requete soit interprétée. J'ai cherché et j'ai vu que nos ObjectQuery ont la méthode "asQueryable" !
 		</p>
 
-		<h2>Récupérer mes "QueryObject" pour un objet T</h2>
+		<h2>Récupérer mes "ObjectQuery" pour un objet T</h2>
 		
 		<p>
-			Bon j'ai une méthode GetList avec un EntityObject T, cet objet T est en relation avec un QueryObject (qui a le même nom au pluriel).
+			Bon j'ai une méthode GetList avec un EntityObject T, cet objet T est en relation avec un ObjectQuery (qui a le même nom au pluriel).
 			Nous n'avons pas de moyen de récupérer à la volé l'ObjectQuery en rapport à un EntityObject.
 		</p>
 		<p>
-			Les QueryObject sont des propriétés de notre "MyAppDBContext", l'idéal serait de se baser sur ces propriétés pour récupérer le bon QueryObject, <b>ce n'est pas jolie</b>
+			Les ObjectQuery sont des propriétés de notre "MyAppDBContext", l'idéal serait de se baser sur ces propriétés pour récupérer le bon ObjectQuery, <b>ce n'est pas jolie</b>
 			mais via cette méthode on peut récupérer pour une Class la valeurs des objet pour un type d'attribut donné.
 			<prism-component class="language-csharp line-numbers">
 /// <summary>
@@ -212,7 +239,43 @@ class MyView
 	}
 }				
 			</prism-component>
-			Et niveau temps de 4-5 sec à 450ms.
+			Et niveau temps de traitement on passe de 4-5 sec à 450ms.
+		</p>
+
+		<h2>En plus</h2>
+
+		<p>
+			On devait récupérer le nombre d'éléments pour un certain objet "Page". Donc dans l'idée était de créer une méthode Count&lt;T&gt; avec T notre objet.
+			Mais ceci est possible si notre GetQueryable ne tente pas seulement de récupérer les ObjectQuery.
+		</p>
+		<p>
+			L'objet "Page"" hérité de notre objet "Post".
+			Dans le "ContainerContext" notre héritage ce présenté de la sorte :
+			<prism-component class="language-csharp line-numbers">
+			
+class ContainerContext : ObjectContext
+{
+	[...]
+
+	[global::System.Data.Objects.DataClasses.EdmEntityTypeAttribute(NamespaceName="MyAppModel", Name="Page")]
+    [global::System.Runtime.Serialization.DataContractAttribute(IsReference=true)]
+    [global::System.Serializable()]
+    public partial class Page : Post
+    {
+		[...]
+	}
+
+	[...]
+}
+			
+			</prism-component>
+			Pour pouvoir réaliser notre Count voici ce qu'il faut faire :
+			<prism-component class="language-csharp line-numbers">
+public int CountPages(Expression&lt;Func&lt;Page, bool&gt;&gt; predicate)
+{
+	return MyAppDBContext.Current.Posts.OfType&lt;Page&gt;().Count(predicate);
+}
+			</prism-component>
 		</p>
 	</div>
 </div>
