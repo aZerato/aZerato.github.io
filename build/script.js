@@ -580,28 +580,30 @@
 					var defer = $q.defer();
 
 					$http.get(self.postsEmplacement)
-					.success(function(response) {
-						var article = {};
+					.then(
+						function(response) {
+							var article = {};
 
-						for (var j = response.length - 1; j >= 0; j--) {
-							if(response[j].id == id)
-							{
-								$sce.trustAsHtml(response[j].fr.summary);
-								$sce.trustAsHtml(response[j].fr.content);
-								$sce.trustAsHtml(response[j].en.summary);
-								$sce.trustAsHtml(response[j].en.content);
-								
-								article = response[j];
+							for (var j = response.data.length - 1; j >= 0; j--) {
+								if(response.data[j].id == id)
+								{
+									$sce.trustAsHtml(response.data[j].fr.summary);
+									$sce.trustAsHtml(response.data[j].fr.content);
+									$sce.trustAsHtml(response.data[j].en.summary);
+									$sce.trustAsHtml(response.data[j].en.content);
+									
+									article = response.data[j];
+								}
 							}
+
+							defer.resolve(article);
+						},
+						function(error) {
+							console.log('articlesServiceProvider::$get::getById error(' + error + ')');
+
+							defer.reject(error);
 						}
-
-						defer.resolve(article);
-					})
-					.error(function(error) {
-						console.log('articlesServiceProvider::$get::getById error(' + error + ')');
-
-						defer.reject(error);
-					});
+					);
 
 					return defer.promise;
 				},
@@ -611,25 +613,27 @@
 					var defer = $q.defer();
 
 					$http.get(self.postsEmplacement)
-					.success(function(response) {
-						var articles = [];
+					.then(
+						function(response) {
+							var articles = [];
 
-						for (var j = from; j < to; j++) {
-							$sce.trustAsHtml(response[j].fr.summary);
-							$sce.trustAsHtml(response[j].fr.content);
-							$sce.trustAsHtml(response[j].en.summary);
-							$sce.trustAsHtml(response[j].en.content);
-							
-							articles.push(response[j]);
+							for (var j = from; j < to; j++) {
+								$sce.trustAsHtml(response.data[j].fr.summary);
+								$sce.trustAsHtml(response.data[j].fr.content);
+								$sce.trustAsHtml(response.data[j].en.summary);
+								$sce.trustAsHtml(response.data[j].en.content);
+								
+								articles.push(response.data[j]);
+							}
+
+							defer.resolve(articles);
+						},
+						function(error) {
+							console.log('articlesServiceProvider::$get::getAll error(' + error + ')');
+
+							defer.reject(error);
 						}
-
-						defer.resolve(articles);
-					})
-					.error(function(error) {
-						console.log('articlesServiceProvider::$get::getAll error(' + error + ')');
-
-						defer.reject(error);
-					});
+					);
 
 					return defer.promise;
 				},
@@ -639,14 +643,16 @@
 					var defer = $q.defer();
 
 					$http.get(self.paginationConfigEmplacement)
-					.success(function(response) {
-						defer.resolve(response);
-					})
-					.error(function(error) {
-						console.log('articlesServiceProvider::$get::readPaginationConfig error(' + error + ')');
+					.then(
+						function(response) {
+							defer.resolve(response.data);
+						},
+						function(error) {
+							console.log('articlesServiceProvider::$get::readPaginationConfig error(' + error + ')');
 
-						defer.reject(error);
-					});
+							defer.reject(error);
+						}
+					);
 
 					return defer.promise;
 				},
@@ -656,30 +662,32 @@
 					var defer = $q.defer();
 
 					$http.get(self.postsEmplacement)
-					.success(function(response) {
-						var articles = [];
+					.then(
+						function(response) {
+							var articles = [];
 
-						if (to > response.length)
-						{
-							to = response.length;
+							if (to > response.data.length)
+							{
+								to = response.data.length;
+							}
+
+							for (var j = from; j < to; j++) {
+								$sce.trustAsHtml(response.data[j].fr.summary);
+								$sce.trustAsHtml(response.data[j].fr.content);
+								$sce.trustAsHtml(response.data[j].en.summary);
+								$sce.trustAsHtml(response.data[j].en.content);
+								
+								articles.push(response.data[j]);
+							}
+
+							defer.resolve(articles);
+						},
+						function(error) {
+							console.log('articlesServiceProvider::$get::getFromTo error(' + error + ')');
+
+							defer.reject(error);
 						}
-
-						for (var j = from; j < to; j++) {
-							$sce.trustAsHtml(response[j].fr.summary);
-							$sce.trustAsHtml(response[j].fr.content);
-							$sce.trustAsHtml(response[j].en.summary);
-							$sce.trustAsHtml(response[j].en.content);
-							
-							articles.push(response[j]);
-						}
-
-						defer.resolve(articles);
-					})
-					.error(function(error) {
-						console.log('articlesServiceProvider::$get::getFromTo error(' + error + ')');
-
-						defer.reject(error);
-					});
+					);
 
 					return defer.promise;
 				}
@@ -863,41 +871,43 @@
 					var defer = $q.defer();
 
 					$http.get('https://api.flickr.com/services/rest/?api_key=' + self.apiKey + '&nojsoncallback=1&format=json&user_id=' + self.userId + '&method=flickr.people.getPublicPhotos&per_page=' + self.maxPhotos)
-					.success(function(response) {
-						var flickrObj = {
-							username: self.username,
-							photos: []
-						};
+					.then(
+						function(response) {
+							var flickrObj = {
+								username: self.username,
+								photos: []
+							};
 
-						for (var j = response.photos.photo.length - 1; j >= 0; j--)
-						{
-							var curPhoto = response.photos.photo[j];
-							// https://farm6.staticflickr.com/5566/30797468755_95e65ae1b6.jpg
-							
-							var url = 
-								'https://farm' + curPhoto.farm + 
-								'.staticflickr.com/' + curPhoto.server + 
-								'/' + curPhoto.id + 
-								'_' + curPhoto.secret + '_q.jpg';
-							
-							var publicUrl = 
-								'https://www.flickr.com/photos/' + self.username + 
-								'/' + curPhoto.id + '/in/dateposted-public/';
+							for (var j = response.data.photos.photo.length - 1; j >= 0; j--)
+							{
+								var curPhoto = response.data.photos.photo[j];
+								// https://farm6.staticflickr.com/5566/30797468755_95e65ae1b6.jpg
+								
+								var url = 
+									'https://farm' + curPhoto.farm + 
+									'.staticflickr.com/' + curPhoto.server + 
+									'/' + curPhoto.id + 
+									'_' + curPhoto.secret + '_q.jpg';
+								
+								var publicUrl = 
+									'https://www.flickr.com/photos/' + self.username + 
+									'/' + curPhoto.id + '/in/dateposted-public/';
 
-							flickrObj.photos.push({ 
-								title: curPhoto.title,
-								url: url,
-								publicUrl: publicUrl
-							});
+								flickrObj.photos.push({ 
+									title: curPhoto.title,
+									url: url,
+									publicUrl: publicUrl
+								});
+							}
+
+							defer.resolve(flickrObj);
+						},
+						function(error) {
+							console.log('flickrServiceProvider::$get::get error(' + error + ')');
+
+							defer.reject(error);
 						}
-
-						defer.resolve(flickrObj);
-					})
-					.error(function(error) {
-						console.log('flickrServiceProvider::$get::get error(' + error + ')');
-
-						defer.reject(error);
-					});
+					);
 
 					return defer.promise;
 				}

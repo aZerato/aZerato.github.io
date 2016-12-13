@@ -68,41 +68,43 @@
 					var defer = $q.defer();
 
 					$http.get('https://api.flickr.com/services/rest/?api_key=' + self.apiKey + '&nojsoncallback=1&format=json&user_id=' + self.userId + '&method=flickr.people.getPublicPhotos&per_page=' + self.maxPhotos)
-					.success(function(response) {
-						var flickrObj = {
-							username: self.username,
-							photos: []
-						};
+					.then(
+						function(response) {
+							var flickrObj = {
+								username: self.username,
+								photos: []
+							};
 
-						for (var j = response.photos.photo.length - 1; j >= 0; j--)
-						{
-							var curPhoto = response.photos.photo[j];
-							// https://farm6.staticflickr.com/5566/30797468755_95e65ae1b6.jpg
-							
-							var url = 
-								'https://farm' + curPhoto.farm + 
-								'.staticflickr.com/' + curPhoto.server + 
-								'/' + curPhoto.id + 
-								'_' + curPhoto.secret + '_q.jpg';
-							
-							var publicUrl = 
-								'https://www.flickr.com/photos/' + self.username + 
-								'/' + curPhoto.id + '/in/dateposted-public/';
+							for (var j = response.data.photos.photo.length - 1; j >= 0; j--)
+							{
+								var curPhoto = response.data.photos.photo[j];
+								// https://farm6.staticflickr.com/5566/30797468755_95e65ae1b6.jpg
+								
+								var url = 
+									'https://farm' + curPhoto.farm + 
+									'.staticflickr.com/' + curPhoto.server + 
+									'/' + curPhoto.id + 
+									'_' + curPhoto.secret + '_q.jpg';
+								
+								var publicUrl = 
+									'https://www.flickr.com/photos/' + self.username + 
+									'/' + curPhoto.id + '/in/dateposted-public/';
 
-							flickrObj.photos.push({ 
-								title: curPhoto.title,
-								url: url,
-								publicUrl: publicUrl
-							});
+								flickrObj.photos.push({ 
+									title: curPhoto.title,
+									url: url,
+									publicUrl: publicUrl
+								});
+							}
+
+							defer.resolve(flickrObj);
+						},
+						function(error) {
+							console.log('flickrServiceProvider::$get::get error(' + error + ')');
+
+							defer.reject(error);
 						}
-
-						defer.resolve(flickrObj);
-					})
-					.error(function(error) {
-						console.log('flickrServiceProvider::$get::get error(' + error + ')');
-
-						defer.reject(error);
-					});
+					);
 
 					return defer.promise;
 				}
