@@ -2728,6 +2728,7 @@ ul.cst-list-nodecoration {
   padding: 0;
   position: relative;
   margin-top: -50px;
+  min-height: 290px;
 }
 .cst-intro .cst-intro-img {
   background-image: url('/blog/files/intro.jpg');
@@ -2739,6 +2740,7 @@ ul.cst-list-nodecoration {
   background-size: cover;
   background-position: 50%;
   margin: 0 auto;
+  min-height: 290px;
 }
 .cst-intro .cst-intro-img:before {
   content: "";

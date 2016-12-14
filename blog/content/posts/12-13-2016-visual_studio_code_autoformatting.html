@@ -1,0 +1,63 @@
+<div data-model="publication_date">12-13-2016</div>
+
+<img data-img="http://www.windowsphoneaddict.fr/wp-content/uploads/2015/11/VisualStudioCode-e1447935140166.png" />
+	
+<div data-lang="fr">
+	<div data-model="title">Visual Studio Code : Problème mon code est automatiquement formaté quand je sauvegarde</div>
+	<div data-model="summary">
+		<p>
+			Lorsque j'édite du code HTML avec <b>Visual Studio Code</b> et que met "du code copié-collé" d'un autre langage dans 
+			un component angular, à la sauvegarde mon "code copié-collé" était automatiquement formaté.
+		</p>	
+	</div>
+	<div data-model="content">
+		<p>
+			Lorsque j'édite du code HTML avec <b>Visual Studio Code</b> et que met "du code copié-collé" d'un autre langage dans 
+			un component angular, à la sauvegarde mon "code copié-collé" était automatiquement formaté.
+		</p>
+		<p>
+			Lorsque que je rédige mes "articles" pour ce site j'utilise un component angular basé sur la lib <a href="http://prismjs.com/" target="_blank">Prism.js</a> pour mettre en forme
+			mon code. Comme mon code "copié" est "collé" dans un component "&lt;prism-component&gt;" et non dans un "&lt;code&gt;" ; Visual Studio Code
+			joue un script de mise en forme supprimant les espaces inutiles ce qui casse la structure de mon code.
+		</p>
+		<p>
+			<div class="well">
+				RQ : Si je garde "&lt;code&gt;" au lieu de mon component angular il n'y a pas de problème.
+			</div>
+		</p>
+		<p>
+			Pour désactiver cette option il faut faire "CTRL + SHIFT + P" / "CMD + SHIFT + P", il faut taper ensuite "formatter" et séléctionner "Formatter Config",
+			et changer la valeur de "onSave" à false.
+		</p>
+	</div>
+</div>
+
+<div data-lang="en">
+	<div data-model="title">Visual Studio Code : Disable auto formatting code</div>
+	<div data-model="summary">
+		<p>
+			When I edit my HTML code with <b>Visual Studio Code</b> some spaces are deleted when i save. My HTML code is automatically
+			formatted that break "cut & past" text structure.
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			When I edit my HTML code with <b>Visual Studio Code</b> some spaces are deleted when i save. My HTML code is automatically
+			formatted that break "cut & past" text structure.
+		</p>
+		<p>
+			When I write a new post with "code samples", I use a custom angular component. "&lt;prism-component&gt;" is based on <a href="http://prismjs.com/" target="_blank">Prism.js</a>
+			library, and create automatically "&lt;pre&gt;&lt;code&gt;" tags.
+		</p>
+		<p>
+			<div class="well">
+				If I save my file with "&lt;code&gt;" tag, the inner text is not formatted,
+				but if I use my "&lt;prism-component&gt;" that inner text is formatted.
+			</div>
+		</p>
+		<p>
+			To deactivate this feature : "CTRL + SHIFT + P" / "CMD + SHIFT + P". After that, type "formatter" and select "Formatter Config",
+			in formatter.json file change "onSave" value to false.
+		</p>
+	</div>
+</div>
