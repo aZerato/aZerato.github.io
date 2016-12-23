@@ -98,11 +98,24 @@
 		$cookies,
 		$translate)
 	{
+		// Cookies.
+		var acceptCookies = $cookies.get('acceptCookies');
+		$rootScope.acceptCookies = false;
+		if(acceptCookies)
+		{
+			$rootScope.acceptCookies = true;
+		}
+
+		// Default language.
 		var favLang = $cookies.get('favLang');
 		if(favLang === '' || favLang === undefined)
 		{
 			favLang = 'fr';
-			$cookies.put('favLang', favLang);
+			
+			if($rootScope.acceptCookies)
+			{
+				$cookies.put('favLang', favLang);
+			}
 		}
 		$rootScope.currentLang = favLang;
 

@@ -10,73 +10,85 @@
 	 * Flickr Controller.
 	 */
 	var flickrController = function(
-		$scope,
 		$http,
 		$q,
 		$sce,
 		flickrService,
 		$cookies
     ) {
-		$scope.imgs = [];
-		$scope.imgsLoaded = false;
-
-		try
+		var self = this;
+		
+		self.$onInit= function()
 		{
-			var flickrPhotos = $cookies.get('flickr-photos');
-			if(flickrPhotos === '' || flickrPhotos === undefined)
-			{
-				flickrService.get($http, $q, $sce)
-				.then(function(flickrObj) {
-					$scope.username = flickrObj.username;
-					$scope.imgs = flickrObj.photos;
-					$scope.imgsLoaded = true;
+			self.imgs = [];
+			self.imgsLoaded = false;
 
-					flickrPhotos = {
-						lastUpdated: Date.now(),
-						photos: flickrObj.photos,
-						username: flickrObj.username
-					};
-					$cookies.put('flickr-photos', JSON.stringify(flickrPhotos));
-				});
-			}
-			else
+			try
 			{
-				flickrPhotos = JSON.parse(flickrPhotos);
-				var now = Date.now();
-				if(flickrPhotos.lastUpdated + 30 * 1000 > now)
+				var flickrPhotos = $cookies.get('flickr-photos');
+				if(flickrPhotos === '' || flickrPhotos === undefined)
 				{
 					flickrService.get($http, $q, $sce)
 					.then(function(flickrObj) {
-						$scope.username = flickrObj.username;
-						$scope.imgs = flickrObj.photos;
-						$scope.imgsLoaded = true;
+						self.username = flickrObj.username;
+						self.imgs = flickrObj.photos;
+						self.imgsLoaded = true;
 
-						flickrPhotos.lastUpdated = now;
-						flickrPhotos.photos = flickrObj.photos;
-						flickrPhotos.username = flickrObj.username;
-						$cookies.put('flickr-photos', JSON.stringify(flickrPhotos));
+						flickrPhotos = {
+							lastUpdated: Date.now(),
+							photos: flickrObj.photos,
+							username: flickrObj.username
+						};
+
+						if(self.useCookies)
+						{
+							$cookies.put('flickr-photos', JSON.stringify(flickrPhotos));
+						}
 					});
 				}
 				else
 				{
-					$scope.username = flickrPhotos.username;
-					$scope.imgs = flickrPhotos.photos;
-					$scope.imgsLoaded = true;
+					flickrPhotos = JSON.parse(flickrPhotos);
+					var now = Date.now();
+					if(flickrPhotos.lastUpdated + 30 * 1000 > now)
+					{
+						flickrService.get($http, $q, $sce)
+						.then(function(flickrObj) {
+							self.username = flickrObj.username;
+							self.imgs = flickrObj.photos;
+							self.imgsLoaded = true;
+
+							flickrPhotos.lastUpdated = now;
+							flickrPhotos.photos = flickrObj.photos;
+							flickrPhotos.username = flickrObj.username;
+							
+							if(self.useCookies)
+							{
+								$cookies.put('flickr-photos', JSON.stringify(flickrPhotos));
+							}
+						});
+					}
+					else
+					{
+						self.username = flickrPhotos.username;
+						self.imgs = flickrPhotos.photos;
+						self.imgsLoaded = true;
+					}
 				}
 			}
-		}
-		catch(error)
-		{
-			console.log('flickrComponent::flickrController::Error (' + error + ')');
-			$scope.imgsLoaded = false;
-		}		
+			catch(error)
+			{
+				console.log('flickrComponent::flickrController::Error (' + error + ')');
+				self.imgsLoaded = false;
+			}
+		};
+
 	};
 
 	/*
 	 * Inject depencencies to your controller.
 	 */
 	flickrController.$inject = [
-		'$scope',
 		'$http',
 		'$q',
 		'$sce',
@@ -88,6 +100,9 @@
 	 * Creation of an articles ng component object.
 	 */
 	 var flickrComponent = {
+		bindings: {
+			useCookies: '='
+		},
 	 	controller: flickrController,
 	 	templateUrl: '/app/flickr/flickr.list.html'
 	 };

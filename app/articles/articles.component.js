@@ -11,7 +11,6 @@
 	 */
 	var articlesController = function(
 		$rootScope,
-		$scope,
 		$state,
 		$stateParams,
 		$http,
@@ -21,42 +20,44 @@
 		articlesService,
 		$translate
 	) {
-		//$rootScope.currentLang;
+		var self = this;
 
-		var pageConfig;
+		self.$onInit = function() {
+			self.pageConfig = undefined;
 		
-		$scope.articles = [];
-		$scope.articlesLoaded = false;
-		$scope.pages = [];
+			self.articles = [];
+			self.articlesLoaded = false;
+			self.pages = [];
 
-		articlesService.readPaginationConfig($http, $q, $sce)
-		.then(function(response) {
-			pageConfig = response;
+			articlesService.readPaginationConfig($http, $q, $sce)
+			.then(function(response) {
+				self.pageConfig = response;
 
-			if($stateParams.pageNumber !== undefined)
-			{
-				changePage($stateParams.pageNumber);
-			}
-			else
-			{
-				changePage(1);
-			}			
+				if($stateParams.pageNumber !== undefined)
+				{
+					self.changePage($stateParams.pageNumber);
+				}
+				else
+				{
+					self.changePage(1);
+				}			
 
-			$scope.pages = pageConfig.pages;
-		});
-
-		var changePage = function(numpage) {
-			$scope.articlesLoaded = false;
+				self.pages = self.pageConfig.pages;
+			});
+		};
+		
+		self.changePage = function(numpage) {
+			self.articlesLoaded = false;
 			var from = 0;
 			if(numpage > 1)
 			{
-				from = (numpage * pageConfig.number_per_page) - pageConfig.number_per_page;
+				from = (numpage * self.pageConfig.number_per_page) - self.pageConfig.number_per_page;
 			}
-			var to = from + pageConfig.number_per_page;
+			var to = from + self.pageConfig.number_per_page;
 			articlesService.getFromTo(from, to, $http, $q, $sce)
 			.then(function(response) {
-				$scope.articles = response;
-				$scope.articlesLoaded = true;
+				self.articles = response;
+				self.articlesLoaded = true;
 			});
 		};
 	};
@@ -66,7 +67,6 @@
 	 */
 	articlesController.$inject = [
 		'$rootScope',
-		'$scope', 
 		'$state',
 		'$stateParams',
 		'$http',
@@ -95,7 +95,6 @@
 	 */
 	var articleDetailsController = function(
 		$rootScope,
-		$scope,
 		$state,
 		$stateParams,
 		$http,
@@ -105,14 +104,19 @@
 		$translate,
 		$compile
 	) {
-		$scope.article = {};
-		$scope.articleLoaded = false;
+		var self = this;
 
-		articlesService.getById($stateParams.articleId, $http, $q, $sce)
-		.then(function(response) {
-			$scope.article = response;
-			$scope.articleLoaded = true;
-		});
+		self.$onInit = function()
+		{
+			self.article = {};
+			self.articleLoaded = false;
+
+			articlesService.getById($stateParams.articleId, $http, $q, $sce)
+			.then(function(response) {
+				self.article = response;
+				self.articleLoaded = true;
+			});
+		};
 	};
 
 	/*
@@ -120,7 +124,6 @@
 	 */
 	articleDetailsController.$inject = [
 		'$rootScope',
-		'$scope',
 		'$state',
 		'$stateParams',
 		'$http',

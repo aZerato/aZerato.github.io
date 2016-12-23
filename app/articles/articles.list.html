@@ -1,10 +1,10 @@
-<div class="cst-loader" ng-show="!articlesLoaded">
+<div class="cst-loader" ng-show="!$ctrl.articlesLoaded">
 	<div class="loader"></div>
 </div>
 
-<div ng-show="articlesLoaded" class="container">
+<div ng-show="$ctrl.articlesLoaded" class="container">
 	
-	<div ng-repeat="article in articles" class="cst-articles">
+	<div ng-repeat="article in $ctrl.articles" class="cst-articles">
 		
 		<div ng-class="{ 'row' : $index  % 2 == 1 }">
 
@@ -17,7 +17,7 @@
 							class="cst-article-main-img" 
 							ng-src="{{article.img}}" />
 
-						<h2 ng-show="$root.currentLang == 'fr'" ui-sref="root.details({articleId : article.id})"><a href="" ng-bind-html="article.fr.title"></a></h2>
+						<h2 ng-show="$root.currentLang == 'fr'" ui-sref="ctrl.details({articleId : article.id})"><a href="" ng-bind-html="article.fr.title"></a></h2>
 						<div ng-show="$root.currentLang == 'fr'" class="cst-article-date">
 							{{article.publication_date | date: 'dd/MM/yyyy'}}
 						</div>	
@@ -51,4 +51,4 @@
 
 </div>
 
-<pagination-component ng-show="articlesLoaded" ref="root.articles.pages" pages-array="pages"></pagination-component>
+<pagination-component ng-show="$ctrl.articlesLoaded" ref="root.articles.pages" pages-array="$ctrl.pages"></pagination-component>

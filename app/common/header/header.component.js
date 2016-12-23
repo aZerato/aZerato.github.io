@@ -7,37 +7,43 @@
 	var appModule = angular.module('app');
 	
 	/*
-	 * 
+	 * Controller.
 	 */
 	var headerController = function(
 		$rootScope,
-		$scope,
 		$translate,
 		$cookies,
 		$state)
 	{
-		$scope.$state = $state;
+		var self = this;
 
-		$scope.changeLang = function(key) {
+		self.$onInit = function() {
+			self.$state = $state;
+		};		
+
+		self.changeLang = function(key) {
 			$translate.use(key);
 			$rootScope.currentLang = key;
-			$cookies.put('favLang', key);
+			
+			if($rootScope.acceptCookies == true)
+			{
+				$cookies.put('favLang', key);
+			}			
 		};
 	};
 
 	/*
-	 * 
+	 * Injection.
 	 */
 	headerController.$inject = [
 		'$rootScope',
-		'$scope',
 		'$translate',
 		'$cookies',
 		'$state'
 	];
 
 	/*
-	 * 
+	 * Component.
 	 */
 	var headerComponent = {
 		controller: headerController,

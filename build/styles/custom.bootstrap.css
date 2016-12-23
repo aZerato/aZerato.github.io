@@ -2493,6 +2493,38 @@ ul.cst-list-nodecoration {
 .cst-footer a:focus {
   color: #d3e0e9;
 }
+.cst-footer .cst-loader .loader::before,
+.cst-footer .cst-loader .loader::after {
+  background-color: #2a2730;
+}
+.cst-cookies {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  background: #3097d1;
+  border-top: 2px solid #1c73a5;
+}
+.cst-cookies .cst-cookies-logo {
+  background-image: url("/blog/files/cookies.png");
+  width: 64px;
+  height: 64px;
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cst-cookies .cst-cookies-informations {
+  text-align: center;
+  margin-top: 30px;
+}
+.cst-cookies .cst-cookies-copyrights {
+  font-size: 10px;
+  text-align: center;
+}
+@media screen and (max-width: 768px) {
+  .cst-cookies .cst-cookies-informations {
+    margin-top: 5px;
+  }
+}
 .cst-pagination {
   padding-left: inherit;
   text-align: center;

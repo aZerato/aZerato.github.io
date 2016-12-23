@@ -13,11 +13,15 @@
 		$state
 	)
 	{
-		this.$state = $state;
+		var self = this;
+
+		self.$onInit = function() {
+			self.$state = $state;
+		};	
 		
-		this.changePage = function(pageNumber)
+		self.changePage = function(pageNumber)
 		{
-			$state.go(this.ref, {"pageNumber": pageNumber});
+			self.$state.go(self.ref, {"pageNumber": pageNumber});
 		};
 	};
 

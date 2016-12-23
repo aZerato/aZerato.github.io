@@ -1,4 +1,4 @@
-<nav class="cst-header navbar navbar-inverse navbar-static-top" ng-class="{transparency: $state.is('root.articles')}">
+<nav class="cst-header navbar navbar-inverse navbar-static-top" ng-class="{transparency: $ctrl.$state.is('root.articles')}">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collaspe-navbar" aria-expanded="false">
@@ -23,10 +23,10 @@
         <li class="dropdown">
           <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{'header.languages' | translate}}<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li ng-click="changeLang('fr')">
+            <li ng-click="$ctrl.changeLang('fr')">
               <a href="">{{'header.french' | translate}}</a>
             </li>
-            <li ng-click="changeLang('en')">
+            <li ng-click="$ctrl.changeLang('en')">
               <a href="">{{'header.english' | translate}}</a>
             </li>
           </ul>

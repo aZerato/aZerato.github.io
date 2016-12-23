@@ -11,5 +11,9 @@
 	"article": {
 		"more": "Voir l'article",
 		"comments": "commentaire(s)"
+	},
+	"cookies": {
+		"informations": "Pour une meilleur expérience, ce site utilise des cookies",
+		"button": "Ok ?"
 	}
 }

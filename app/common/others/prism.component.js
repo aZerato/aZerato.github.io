@@ -4,7 +4,7 @@
 	var appModule = angular.module('app');
 
 	/*
-	 * 
+	 * Controller.
 	 */
 	var prismController = function (
 		$scope,
@@ -18,13 +18,16 @@
 		});
 	};
 
+	/*
+	 * Injection.
+	 */
 	prismController.$inject = [
 		'$scope',
 		'$element'
 	];
 
 	/*
-	 * 
+	 * Component. 
 	 */
 	var prismComponent = {
 		bindings: {

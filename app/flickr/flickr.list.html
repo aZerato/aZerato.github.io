@@ -1,14 +1,14 @@
 <div class="cst-flickr">
 
-	<h4><a href="https://www.flickr.com/photos/{{username}}/"><i class="fa fa-flickr"></i> Flickr</a></h4>
+	<h4><a href="https://www.flickr.com/photos/{{$ctrl.username}}/"><i class="fa fa-flickr"></i> Flickr</a></h4>
 
-	<div class="cst-loader" ng-show="!imgsLoaded">
+	<div class="cst-loader" ng-show="!$ctrl.imgsLoaded">
 		<div class="loader"></div>
 	</div>
 
-	<div class="cst-flickr-imgs" ng-show="imgsLoaded">
+	<div class="cst-flickr-imgs" ng-show="$ctrl.imgsLoaded">
 
-		<a ng-repeat="img in imgs" title="Photo Flickr by {{username}} - {{img.title}}" href="{{img.publicUrl}}" class="col-xs-2 col-md-4 cst-flickr-img" target="_blank">
+		<a ng-repeat="img in $ctrl.imgs" title="Photo Flickr by {{$ctrl.username}} - {{img.title}}" href="{{img.publicUrl}}" class="col-xs-2 col-md-4 cst-flickr-img" target="_blank">
 			<img src="{{img.url}}" alt="{{img.title}}" />
 		</a>
 

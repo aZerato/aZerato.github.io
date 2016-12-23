@@ -1,0 +1,34 @@
+.cst-cookies {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background: @azure;
+    border-top: 2px solid @azure-darker;
+
+    .cst-cookies-logo {
+        background-image: url("/blog/files/cookies.png");
+        width: 64px;
+        height: 64px;
+        margin-top: 15px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .cst-cookies-informations {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .cst-cookies-copyrights {
+        font-size: 10px;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .cst-cookies {
+        .cst-cookies-informations {
+            margin-top: 5px;
+        }
+    }
+}
