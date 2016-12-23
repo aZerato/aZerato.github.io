@@ -35,45 +35,23 @@
 						self.imgsLoaded = true;
 
 						flickrPhotos = {
-							lastUpdated: Date.now(),
 							photos: flickrObj.photos,
 							username: flickrObj.username
 						};
 
 						if(self.useCookies)
 						{
-							$cookies.put('flickr-photos', JSON.stringify(flickrPhotos));
+							var expireDate = new Date();
+							expireDate.setMinutes(expireDate.getMinutes() + 5);
+							$cookies.put('flickr-photos', JSON.stringify(flickrPhotos), {'expires': expireDate});
 						}
 					});
 				}
 				else
 				{
-					flickrPhotos = JSON.parse(flickrPhotos);
-					var now = Date.now();
-					if(flickrPhotos.lastUpdated + 30 * 1000 > now)
-					{
-						flickrService.get($http, $q, $sce)
-						.then(function(flickrObj) {
-							self.username = flickrObj.username;
-							self.imgs = flickrObj.photos;
-							self.imgsLoaded = true;
-
-							flickrPhotos.lastUpdated = now;
-							flickrPhotos.photos = flickrObj.photos;
-							flickrPhotos.username = flickrObj.username;
-							
-							if(self.useCookies)
-							{
-								$cookies.put('flickr-photos', JSON.stringify(flickrPhotos));
-							}
-						});
-					}
-					else
-					{
-						self.username = flickrPhotos.username;
-						self.imgs = flickrPhotos.photos;
-						self.imgsLoaded = true;
-					}
+					self.username = flickrPhotos.username;
+					self.imgs = flickrPhotos.photos;
+					self.imgsLoaded = true;
 				}
 			}
 			catch(error)

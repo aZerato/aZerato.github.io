@@ -18,7 +18,9 @@
 		{
 			$scope.state = true;
 			$rootScope.acceptCookies = true;
-			$cookies.put('acceptCookies', true);
+			var expireDate = new Date();
+			expireDate.setMonth(expireDate.getMonth() + 5);
+			$cookies.put('acceptCookies', true, {'expires': expireDate });
 		};
 	};
 
