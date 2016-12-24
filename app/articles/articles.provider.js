@@ -13,7 +13,7 @@
 	{
 		var self = this;
 
-		// Default folder where i can find the posts.json file.
+		// Default file where i can find the posts.json file.
 		self.postsEmplacement = '/blog/content/posts/posts.json';
 
 		self.setPostsEmplacement = function(postsEmplacement)
@@ -21,12 +21,28 @@
 			self.postsEmplacement = postsEmplacement;
 		};
 
-		// Default folder where i can find the pagination.json file.
+		// Default file where i can find the pagination.json file.
 		self.paginationConfigEmplacement = '/blog/content/posts/pagination.json';
 
 		self.setPaginationConfigEmplacement = function(paginationConfigEmplacement)
 		{
 			self.paginationConfigEmplacement = paginationConfigEmplacement;
+		};
+
+		// Default file where i can find the indexer.fr.json file.
+		self.indexerFREmplacement = '/blog/content/posts/indexer.fr.json';
+
+		self.setIndexerFREmplacement = function(indexerEmplacement)
+		{
+			self.indexerFREmplacement = indexerEmplacement;
+		};
+
+		// Default file where i can find the indexer.en.json file.
+		self.indexerENEmplacement = '/blog/content/posts/indexer.en.json';
+
+		self.setIndexerENEmplacement = function(indexerEmplacement)
+		{
+			self.indexerENEmplacement = indexerEmplacement;
 		};
 
 		self.PaginationConfig = {};
@@ -143,6 +159,97 @@
 						},
 						function(error) {
 							console.log('articlesServiceProvider::$get::getFromTo error(' + error + ')');
+
+							defer.reject(error);
+						}
+					);
+
+					return defer.promise;
+				},
+				search: function(stringSearch, lang, $http, $q, $sce)
+				{
+					// Promise.
+					var defer = $q.defer();
+
+					var emplacement = '';
+					if(lang == 'fr')
+					{
+						emplacement = self.indexerFREmplacement;
+					}
+					if(lang == 'en')
+					{
+						emplacement = self.indexerENEmplacement;
+					}
+
+					stringSearch = stringSearch.split(' ');
+
+					$http.get(emplacement)
+					.then(
+						function(response) {
+							var articleIds = [];
+
+							for (var j = response.data.length - 1; j >= 0; j--) {
+								for (var k = stringSearch.length - 1; k >= 0; k--) {
+									if(response.data[j].word != undefined && response.data[j].word.indexOf(stringSearch[k]) != -1)
+									{
+										var state = false;
+										articleIds = articleIds.map(function(post) {
+											response.data[j].posts.map(function(cpost) {
+												if(cpost.id == post.id)
+												{
+													post.force += cpost.force;
+													state = true;
+												}
+											});
+
+											return post;
+										});
+
+										if(state == false)
+										{
+											articleIds = articleIds.concat(response.data[j].posts);
+										}
+									}
+								}
+							}
+
+							defer.resolve(articleIds);
+						},
+						function(error) {
+							console.log('articlesServiceProvider::$get::search error(' + error + ')');
+
+							defer.reject(error);
+						}
+					);
+
+					return defer.promise;
+				},
+				getAllBySearchObject: function(searchObject, $http, $q, $sce)
+				{
+					var defer = $q.defer();
+
+					$http.get(self.postsEmplacement)
+					.then(
+						function(response) {
+							var articles = [];
+
+							for (var j = response.data.length - 1; j >= 0; j--) {
+								for(var k = searchObject.length - 1; k >= 0; k--)
+								{
+									if(response.data[j].id == searchObject[k].id)
+									{
+										$sce.trustAsHtml(response.data[j].fr.summary);
+										$sce.trustAsHtml(response.data[j].en.summary);
+								
+										articles.push(response.data[j]);
+									}
+								}
+							}
+
+							defer.resolve(articles);
+						},
+						function(error) {
+							console.log('articlesServiceProvider::$get::search error(' + error + ')');
 
 							defer.reject(error);
 						}

@@ -15,5 +15,9 @@
 	"cookies": {
 		"informations": "Pour une meilleur expérience, ce site utilise des cookies",
 		"button": "Ok ?"
+	},
+	"search": {
+		"placeholder": "Rechercher ...",
+		"noResult": "Aucun resultat ..."
 	}
 }

@@ -60,7 +60,7 @@ module.exports = PostsIndexer = (function(){
 	{
 		// Starting conversion.
 		var jsonWordsIndexers = [];
-		for(var i = 0; i < this.allPostsPath.length; i++)
+		for (var i = this.allPostsPath.length - 1; i >= 0; i--)		
 		{
 			if (this.fileHelper.checkIsFile(this.allPostsPath[i]))
 			{

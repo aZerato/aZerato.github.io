@@ -7,27 +7,53 @@
 	 * Search Controller.
 	 */
 	var searchController = function(
-		$rootScope
+		$rootScope,
+		$translate,
+		$http,
+		$q,
+		$sce,
+		articlesService
 	) {
 		var self = this;
 		self.searchForm = false;
-		
+		self.noResult = false;
+
 		self.$onInit = function()
 		{
-			self.$body = $('body');
 		};
 
 		self.research = function()
 		{
 			self.searchForm = true;
-			window.scrollTo(0, 0);
-			self.$body.css({'overflow': 'hidden'});
+		};
+
+		self.search = function() {
+			self.articles = [];
+			self.noResult = false;
+
+			if(self.stringSearch != '' && self.stringSearch.trim() != '')
+			{
+				articlesService.search(self.stringSearch, $rootScope.currentLang, $http, $q, $sce)
+				.then(function(response) {
+					if(response.length > 0)
+					{
+						articlesService.getAllBySearchObject(response, $http, $q, $sce)
+						.then(function(finalResponse)
+						{
+							self.articles = finalResponse;
+						});					
+					}
+					else
+					{
+						self.noResult = true;
+					}
+				});
+			}
 		};
 
 		self.hideResearch = function()
 		{
 			self.searchForm = false;
-			self.$body.css({'overflow': 'inherit'});
 		};
 	};
 
@@ -35,7 +61,12 @@
 	 * Injections.
 	 */
 	searchController.$inject = [
-		'$rootScope'
+		'$rootScope',
+		'$translate',
+		'$http',
+		'$q',
+		'$sce',
+		'articlesService'
 	];
 
 	/*

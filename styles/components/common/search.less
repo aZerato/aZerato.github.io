@@ -18,19 +18,71 @@
             z-index: 1003;
         }
 
-        > input {
-            margin-top: 50%;
-            font-size: 5.1em;
-            width: 80%;
-            height: 75px;
-            display: block;
-            margin-left: 10%;
+        > form {
+
+            > input[type="text"] 
+            {                
+                font-size: 5.1em;
+                width: 80%;
+                height: 75px;
+                display: block;
+                margin-left: 10%;
+                position: absolute;
+                top: 50px;
+                z-index: 1003;
+                background-color: transparent;
+                border: none;
+                border-bottom: 2px solid white;
+                box-shadow: @grey 0px 2px 5px;
+            }
+
+            > input[type="submit"] {
+                display: none;
+            }
+        }
+
+        > .cst-search-no-result {
+            width: 100%;
             position: absolute;
-            z-index: 1002;
-            background-color: transparent;
-            border: none;
-            border-bottom: 2px solid white;
-            box-shadow: @grey 0px 2px 5px;
+            top: 150px;
+            z-index: 1003;
+            text-align: center;
+            font-family: 'Intro';
+        }
+
+        > .cst-search-articles {
+            position: absolute;
+            top: 150px;
+            z-index: 1003;
+
+            .cst-article-main-img {
+                width: 100%;
+                margin: 0 auto;
+            }
+
+            h2 {
+                text-align: center;
+			    font-family: 'Intro';
+                
+                > a {
+                    color: #333;
+                    
+                    &:hover {
+                        color: #c2becb;
+                    }
+                }
+            }
+
+            .cst-article-date
+            {
+                text-align: center;
+			    font-family: 'Intro';
+            }
+
+            .cst-article-inner-content
+            {
+
+            }
         }
 
         &:after {
@@ -41,8 +93,8 @@
             top: 0;
             left: 0;
             position: fixed;
-            z-index: 1001;
-            opacity: 0.7;
+            z-index: 1002;
+            opacity: 0.8;
         }
     }
 

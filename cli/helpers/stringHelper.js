@@ -22,11 +22,14 @@ module.exports = StringHelper = (function() {
 
     StringHelper.prototype.removeTagsPonctuations = function(str) {
         return str.replace(/[\n\t\r]/g, ' ')
-					.replace(/[,;.?!:"_+*]/g, ' ')
+					.replace(/[,;.?!:_+*]/g, ' ')
+                    .replace(/['"]/g, ' ')
                     .replace(/[(]/g, ' ')
                     .replace(/[)]/g, ' ')
                     .replace(/'/g, ' ')
                     .replace(/\//g, ' ')
+                    .replace(/</g, ' ')
+                    .replace(/>/g, ' ')
                     .replace(/\\/g, ' ');
     };
 
@@ -164,7 +167,7 @@ module.exports = StringHelper = (function() {
     ];
 
     var defaultWordsRemovalMapFR = [
-        'oui', 'non', 'aucune', 'aucun', 'lui', 'sa', 'son',
+        'oui', 'non', 'aucune', 'aucun', 'lui', 'sa', 'son', 'ne',
         'une', 'un', 'le', 'la', 'a', 'de', 'du', 'ce', 'ça', 'cet', 'cette', 'ces', 'ses',
         'apres', 'pour', 'pourtant', 'parfaitement', 'grave', 'trop', 'beaucoup', 'tres', 'ma', 'mon', 'ton', 'ta',
         'mais', 'ou', 'et', 'donc', 'or', 'ni', 'car', 'puis', 'quand', 'que', 'qui', 'qu',

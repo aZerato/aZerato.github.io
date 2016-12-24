@@ -130,11 +130,24 @@ module.exports = function(grunt){
 		execute: {
 			postsConverter: {
 				src: [
-					'cli/posts.converter.js'
+					'cli/program.js'
 				],
 				options: {
 					args: [
 						'convert', 
+						'-d',
+						'-p',
+						'blog/content/posts/'
+					],
+				}
+			},
+			postsIndexing: {
+				src: [
+					'cli/program.js'
+				],
+				options: {
+					args: [
+						'indexing', 
 						'-d',
 						'-p',
 						'blog/content/posts/'
@@ -173,6 +186,10 @@ module.exports = function(grunt){
 
 	grunt.registerTask('convert', [
 		'execute:postsConverter'
+	]);
+
+	grunt.registerTask('index', [
+		'execute:postsIndexing'
 	]);
 
 	grunt.registerTask('build', [
