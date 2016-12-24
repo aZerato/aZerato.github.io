@@ -30,6 +30,7 @@ module.exports = StringHelper = (function() {
                     .replace(/\//g, ' ')
                     .replace(/</g, ' ')
                     .replace(/>/g, ' ')
+                    .replace(/&/g, ' ')
                     .replace(/\\/g, ' ');
     };
 

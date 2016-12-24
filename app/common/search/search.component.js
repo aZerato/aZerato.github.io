@@ -25,6 +25,7 @@
 		self.research = function()
 		{
 			self.searchForm = true;
+			window.scrollTo(0, 0);
 		};
 
 		self.search = function() {
@@ -33,7 +34,7 @@
 
 			if(self.stringSearch != '' && self.stringSearch.trim() != '')
 			{
-				articlesService.search(self.stringSearch, $rootScope.currentLang, $http, $q, $sce)
+				articlesService.search(self.stringSearch.toLowerCase(), $rootScope.currentLang, $http, $q, $sce)
 				.then(function(response) {
 					if(response.length > 0)
 					{

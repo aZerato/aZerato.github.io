@@ -2540,7 +2540,7 @@ ul.cst-list-nodecoration {
   top: 10px;
   right: 10px;
   font-size: 25px;
-  z-index: 1003;
+  z-index: 1004;
 }
 .cst-search .cst-search-form > form > input[type="text"] {
   font-size: 5.1em;
@@ -2599,7 +2599,7 @@ ul.cst-list-nodecoration {
   left: 0;
   position: fixed;
   z-index: 1002;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 .cst-search .cst-search-btn {
   background-color: #3097d1;

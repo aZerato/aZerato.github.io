@@ -194,6 +194,7 @@ module.exports = function(grunt){
 
 	grunt.registerTask('build', [
 		'execute:postsConverter',
+		'execute:postsIndexing',
 		'clean:build',
 		'useminPrepare',
 		'concat',

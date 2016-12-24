@@ -17,7 +17,7 @@
 					<img class="cst-article-main-img" ng-src="{{article.img}}" />
 				</div>
 				<div class="col-xs-12 col-md-8">
-					<h2 ng-show="$root.currentLang == 'fr'">
+					<h2 ng-show="$root.currentLang == 'fr'" ng-click="$ctrl.hideResearch()">
 						<a ui-sref="root.details({articleId : article.id})" ng-bind-html="article.fr.title"></a>
 					</h2>
 					<div ng-show="$root.currentLang == 'fr'" class="cst-article-date">
@@ -26,7 +26,7 @@
 					<div class="cst-article-inner-content" ng-show="$root.currentLang == 'fr'" ng-bind-html="article.fr.summary">
 					</div>
 
-					<h2 ng-show="$root.currentLang == 'en'">
+					<h2 ng-show="$root.currentLang == 'en'" ng-click="$ctrl.hideResearch()">
 						<a ui-sref="root.details({articleId : article.id})" ng-bind-html="article.en.title"></a>
 					</h2>
 					<div ng-show="$root.currentLang == 'en'" class="cst-article-date">
