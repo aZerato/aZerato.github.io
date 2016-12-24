@@ -1,0 +1,107 @@
+<div data-model="publication_date">12-24-2016</div>
+
+<img data-img="http://a.memegen.com/obdo0d.gif" />
+	
+<div data-lang="fr">
+	<div data-model="title">Visual Studio Code : Debugger une application console Commander Node.js</div>
+	<div data-model="summary">
+		<p>
+			<b>Visual Studio Code</b> permet de debugger nos applications.
+			Voici un lien vers les bases du debug avec Visual Studio Code : 
+			<a href="https://code.visualstudio.com/Docs/editor/debugging" target="_blank">lien</a>.
+		</p>
+		<p>
+			Maintenant que vous savez naviguer vers le mode debug et surtout vers le fichier de configuration "launch.json", vous pouvez
+			éditer la manière de lancer votre programme.
+		</p>
+		<p>
+			Dans un précédent article j'avais présenté différentes lib node dont "commander" et "grunt-execute" car dans le code de ce site j'utilise
+			une tache pour "compiler" / "indexer" mes articles. 
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			<b>Visual Studio Code</b> permet de debugger nos applications.
+			Voici un lien vers les bases du debug avec Visual Studio Code : 
+			<a href="https://code.visualstudio.com/Docs/editor/debugging" target="_blank">lien</a>.
+		</p>
+		<p>
+			Maintenant que vous savez naviguer vers le mode debug et surtout vers le fichier de configuration "launch.json", vous pouvez
+			éditer la manière de lancer votre programme.
+		</p>
+		<p>
+			Dans un précédent article j'avais présenté différentes lib node dont "commander" et "grunt-execute". Dans le code de ce site j'utilise
+			donc une tache pour "compiler" / "indexer" mes articles. 
+		</p>
+		<p>
+			Voici a quoi ressemble mon "launch.json" pour executer uniquement l'action "indexing" de mon tool en cli :
+			<prism-component class="language-js line-numbers">
+{
+	"type": "node",
+	"request": "launch",
+	"name": "Lancer le programme",
+	"program": "${workspaceRoot}/cli/program.js",
+	"cwd": "${workspaceRoot}",
+	"args": [
+				"indexing", 
+				"-d",
+				"-p",
+				"blog/content/posts/"
+			]
+},
+			</prism-component>
+			Le fichier en question se trouve sur mon Github : <a href="https://github.com/aZerato/aZerato.github.io/blob/master/cli/program.js" target="_blank">lien</a>.
+		</p>
+	</div>
+</div>
+
+<div data-lang="en">
+	<div data-model="title">Visual Studio Code : Debug a Node.js Commander application console</div>
+	<div data-model="summary">
+		<p>
+			<b>Visual Studio Code</b> is really cool for debug a Node.js console application.
+			The basics : <a href="https://code.visualstudio.com/Docs/editor/debugging" target="_blank">lien</a>.
+		</p>
+		<p>
+			Now you are able to navigate between debug mode and the "launch.json" file configuration. You can edit it to customize 
+			the program execution.
+		</p>
+		<p>
+			Previously i'm talking about different libs like "commander" and "grunt-execute". For this application i'm using two task for posts "compiling" /
+			"indexing".
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			<b>Visual Studio Code</b> is really cool for debug a Node.js console application.
+			The basics : <a href="https://code.visualstudio.com/Docs/editor/debugging" target="_blank">lien</a>.
+		</p>
+		<p>
+			Now you are able to navigate between debug mode and the "launch.json" file configuration. You can edit it to customize 
+			the program execution.
+		</p>
+		<p>
+			Previously i'm talking about different libs like "commander" and "grunt-execute". For this application i'm using two task for posts "compiling" /
+			"indexing".
+		</p>
+		<p>
+			This is my "launch.json" file for launch only the "indexing" action of my tool :
+			<prism-component class="language-js line-numbers">
+{
+	"type": "node",
+	"request": "launch",
+	"name": "Lancer le programme",
+	"program": "${workspaceRoot}/cli/program.js",
+	"cwd": "${workspaceRoot}",
+	"args": [
+				"indexing", 
+				"-d",
+				"-p",
+				"blog/content/posts/"
+			]
+},
+			</prism-component>
+			The "program.js" file can be founded here : <a href="https://github.com/aZerato/aZerato.github.io/blob/master/cli/program.js" target="_blank">lien</a>.
+		</p>
+	</div>
+</div>
