@@ -1,0 +1,155 @@
+<div data-model="publication_date">01-02-2017</div>
+
+<img data-img="https://cdn.meme.am/instances/37792755.jpg" />
+	
+<div data-lang="fr">
+	<div data-model="title">Unity : Injecter des paramètres au constructeur lors du resolve.</div>
+	<div data-model="summary">
+		<p>
+			Lorsque vous utilisez l'injection de dépendances, vous pouvez avoir besoin d'initialiser votre 
+			résolution de dépendances avec certains paramètres.
+		</p>
+		<p>
+			Avec <b>Unity</b> votre "CustomUnityContainer" va hériter de "UnityContainer", qui va lui pemettre d'avoir les propriétés
+			et les méthodes comme la méthode "Resolve".
+		</p>		
+	</div>
+	<div data-model="content">
+		<p>
+			Lorsque vous utilisez l'injection de dépendances, vous pouvez avoir besoin d'initialiser votre 
+			résolution de dépendances avec certains paramètres.
+		</p>
+		<p>
+			Avec <b>Unity</b> votre "CustomUnityContainer" va hériter de "UnityContainer", qui va lui pemettre d'avoir les propriétés
+			et les méthodes comme la méthode "Resolve".
+		</p>
+		<p>
+			Exemple code :
+			<prism-component class="language-csharp line-numbers">
+public class CustomUnityContainer : UnityContainer
+{
+	[...]
+}
+			</prism-component>
+			Vous avez ensuite votre UnityFactory qui va permettre de récupérer l'instance du "CustomUnityContainer".
+			<prism-component class="language-csharp line-numbers">
+public class UnityFactory
+{
+	private static readonly CustomUnityContainer _unityContainer = new CustomUnityContainer();
+	
+	public static CustomUnityContainer Container
+	{
+		get { return _unityContainer; }
+	}
+
+	public static TService Resolve<TService>(ParameterOverrides overrides)
+	{
+		return _unityContainer.Resolve<TService>(overrides);
+	}
+
+	[...]
+}
+			</prism-component>
+		</p>
+		<p>
+			C'est donc cette class "ParameterOverrides" qui va nous interesser.
+			<prism-component class="language-csharp line-numbers">
+public class MyServices : IMyServices
+{
+	public MyServices()
+	{}
+
+	public MyServices(string param1, string param2)
+	{
+		[...]
+	}
+
+	[...]
+}
+			</prism-component>
+			Pour injecter nos paramètres au constructeur lors de notre résolution de dépendances, il faut donc faire :
+			<prism-component class="language-csharp line-numbers">
+var overrides = new ParameterOverrides();
+overrides.Add("param1", "value1" };
+overrides.Add("param2", "value2" };
+
+var myServices = UnityFactory.Resolve<IMyServices>(overrides);
+			</prism-component>
+		</p>
+	</div>
+</div>
+
+<div data-lang="en">
+	<div data-model="title">Unity : Inject params to constructor when you resolve dependency</div>
+	<div data-model="summary">
+		<p>
+			When you use the dependency injection you may have need to initialize your dependency resolution with some parameters.
+		</p>
+		<p>
+			With <b>Unity</b> your "CustomUnityContainer" inherit "UnityContainer". "CustomUnityContainer" can have access to "Resolve" 
+			method.
+		</p>		
+	</div>
+	<div data-model="content">
+		<p>
+			When you use the dependency injection you may have need to initialize your dependency resolution with some parameters.
+		</p>
+		<p>
+			With <b>Unity</b> your "CustomUnityContainer" inherit "UnityContainer". "CustomUnityContainer" can have access to "Resolve" 
+			method.
+		</p>	
+		<p>
+			Sample :
+			<prism-component class="language-csharp line-numbers">
+public class CustomUnityContainer : UnityContainer
+{
+	[...]
+}
+			</prism-component>
+			Your UnityFactory give you access to the "CustomUnityContainer" instance.
+			<prism-component class="language-csharp line-numbers">
+public class UnityFactory
+{
+	private static readonly CustomUnityContainer _unityContainer = new CustomUnityContainer();
+	
+	public static CustomUnityContainer Container
+	{
+		get { return _unityContainer; }
+	}
+
+	public static TService Resolve<TService>(ParameterOverrides overrides)
+	{
+		return _unityContainer.Resolve<TService>(overrides);
+	}
+
+	[...]
+}
+			</prism-component>
+		</p>
+		<p>
+			Our solution is the "ParameterOverrides" class !
+			<prism-component class="language-csharp line-numbers">
+public class MyServices : IMyServices
+{
+	public MyServices()
+	{}
+
+	public MyServices(string param1, string param2)
+	{
+		[...]
+	}
+
+	[...]
+}
+			</prism-component>
+			For inject my params to constructor :
+			<prism-component class="language-csharp line-numbers">
+var overrides = new ParameterOverrides();
+overrides.Add("param1", "value1" };
+overrides.Add("param2", "value2" };
+
+var myServices = UnityFactory.Resolve<IMyServices>(overrides);
+			</prism-component>
+		</p>
+	</div>
+</div>
