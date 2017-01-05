@@ -1,0 +1,157 @@
+<div data-model="publication_date">2017-01-05</div>
+
+<img data-img="https://cdn.meme.am/cache/instances/folder335/500x/57483335.jpg" />
+	
+<div data-lang="fr">
+	<div data-model="title">jQuery : "Cannot read property 'XXX' of undefined" lorsque je passe un paramètre à une méthode jQuery.</div>
+	<div data-model="summary">
+		<p>
+			Problème qui est survenu dans mon cas avec une vieille version de <b>jQuery</b> (1.4.2) lorsque que l'on redéfini la méthode "click" 
+			d'un élément du DOM.
+		</p>
+		<p>
+			Cette méthode "click" réalise un traitement particulier selon les paramètres passés, malheureusement j'obtiens l'erreur 
+			"Cannot read property 'handler' of undefined".
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			Problème qui est survenu dans mon cas avec une vieille version de <b>jQuery</b> (1.4.2) lorsque que l'on redéfini la méthode "click" 
+			d'un élément du DOM.
+		</p>
+		<p>
+			Cette méthode "click" réalise un traitement particulier selon les paramètres passés, malheureusement j'obtiens l'erreur 
+			"Cannot read property 'handler' of undefined".
+		</p>
+		<p>
+			Code initial :
+			<prism-component class="language-js line-numbers">
+$(".selector").bind('click', function(event)
+{
+	if (event.data != undefined && event.data.isCustom)
+	{
+		console.log("Do something Good");
+	}
+
+	if (event.data != undefined && !event.data.isCustom)
+	{
+		console.log("Do something Wrong");
+	}
+});
+
+[...]
+
+// Dans un autre fichier.
+function DoSometing(){
+    $('.selector').click({isCustom: true});
+}
+			</prism-component>
+		</p>
+		<p>
+			Dans la fonction "DoSometing" on voit que l'on tente de passer un paramètre à la méthode "click" et malheureusement sur Chrome
+			ça ne fonctionne pas (avec cette version de jQuery).
+		</p>
+		<p>
+			Code fonctionnel :
+			<prism-component class="language-js line-numbers">
+$(".selector").bind('click', function(event, data)
+{
+	if (data !== undefined && data.isCustom)
+	{
+		console.log("Do something Good");
+	}
+
+	if (data !== undefined && !data.isCustom)
+	{
+		console.log("Do something Wrong");
+	}
+});
+
+[...]
+
+// Dans un autre fichier.
+function DoSometing(){
+    $('.selector').triggerHandler('click', { isCustom: true });
+}
+			</prism-component>
+		</p>
+		<p>
+			On utilise donc la méthode jQuery "trigglerHandler" pour passer le paramètre, "trigger" ne fonctionne pas non plus dans 
+			notre cas.
+		</p>
+	</div>
+</div>
+
+<div data-lang="en">
+	<div data-model="title">jQuery : "Cannot read property 'XXX' of undefined".</div>
+	<div data-model="summary">
+		<p>
+			This problem comes on an old <b>jQuery</b> version (1.4.2) when we override an "click" method of an DOM element.
+		</p>
+		<p>
+			This "click" method needs to do something different if a parameter is given, but I encount this error : "Cannot read property 'handler' of undefined" on Chrome.
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			This problem comes on an old <b>jQuery</b> version (1.4.2) when we override an "click" method of an DOM element.
+		</p>
+		<p>
+			This "click" method needs to do something different if a parameter is given, but I encounter this error : "Cannot read property 'handler' of undefined" on Chrome.
+		</p>
+		<p>
+			Initially  :
+			<prism-component class="language-js line-numbers">
+$(".selector").bind('click', function(event)
+{
+	if (event.data != undefined && event.data.isCustom)
+	{
+		console.log("Do something Good");
+	}
+
+	if (event.data != undefined && !event.data.isCustom)
+	{
+		console.log("Do something Wrong");
+	}
+});
+
+[...]
+
+// In other file.
+function DoSometing(){
+    $('.selector').click({isCustom: true});
+}
+			</prism-component>
+		</p>	
+		<p>
+			In the "DoSometing" function, I attempt to use a parameter "isCustom" but isn't working with this jQuery version.
+		</p>
+		<p>
+			Revision :
+			<prism-component class="language-js line-numbers">
+$(".selector").bind('click', function(event, data)
+{
+	if (data !== undefined && data.isCustom)
+	{
+		console.log("Do something Good");
+	}
+
+	if (data !== undefined && !data.isCustom)
+	{
+		console.log("Do something Wrong");
+	}
+});
+
+[...]
+
+// In the other file.
+function DoSometing(){
+    $('.selector').triggerHandler('click', { isCustom: true });
+}
+			</prism-component>
+		</p>
+		<p>
+			I need to use the "trigglerHandler" method to use my parameter ("trigger" not working too).
+		</p>
+	</div>
+</div>
