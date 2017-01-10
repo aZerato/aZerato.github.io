@@ -18,7 +18,7 @@
 				</div>
 				<div class="col-xs-12 col-md-8">
 					<h2 ng-show="$root.currentLang == 'fr'" ng-click="$ctrl.hideResearch()">
-						<a ui-sref="root.details({articleId : article.id})" ng-bind-html="article.fr.title"></a>
+						<a ui-sref="root.details({articleId : article.id})" ng-bind-html="article.fr.title"></a> <span class="badge">{{article.force}}</span>
 					</h2>
 					<div ng-show="$root.currentLang == 'fr'" class="cst-article-date">
 						{{article.publication_date | date: 'dd/MM/yyyy'}}

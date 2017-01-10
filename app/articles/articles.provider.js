@@ -212,7 +212,7 @@
 									}
 								}
 							}
-
+	
 							defer.resolve(articleIds);
 						},
 						function(error) {
@@ -233,19 +233,26 @@
 						function(response) {
 							var articles = [];
 
-							for (var j = response.data.length - 1; j >= 0; j--) {
-								for(var k = searchObject.length - 1; k >= 0; k--)
-								{
+							for(var k = searchObject.length - 1; k >= 0; k--)
+							{
+								for (var j = response.data.length - 1; j >= 0; j--)
+								{							
 									if(response.data[j].id == searchObject[k].id)
 									{
 										$sce.trustAsHtml(response.data[j].fr.summary);
 										$sce.trustAsHtml(response.data[j].en.summary);
-								
+										
+										// add force.
+										response.data[j].force = searchObject[k].force;
+
 										articles.push(response.data[j]);
 									}
 								}
 							}
 
+							// sort by force.
+							articles = articles.sort(function(search1, search2) { return search2.force - search1.force; });
+							
 							defer.resolve(articles);
 						},
 						function(error) {
