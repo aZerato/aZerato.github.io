@@ -5,8 +5,15 @@
 This angular app is created for blogging.
 - Create your posts with a specific html template
 - "Compile" them
+- "Index" posts
 
-## How to configure
+## More
+
+- Portfolio : Flickr component [link](https://github.com/aZerato/aZerato.github.io/tree/master/app/flickr).
+- Comments : Disqus posts link [link](https://github.com/kirstein/angular-disqus).
+- Code Highlight : [Prism.js](http://prismjs.com/) component [link](https://github.com/aZerato/aZerato.github.io/blob/master/app/common/others/prism.component.js).
+
+## Site configuration [link](https://github.com/aZerato/aZerato.github.io/blob/master/app/app.config.js)
 
 Edit this file :
 
@@ -16,9 +23,22 @@ Set your posts folder :
 
 > articlesServiceProvider.setPostsEmplacement('/blog/content/posts/');
 
-Edit this file too :
+Set the Flickr provider component configuration :
 
-> cli/posts.converter.js
+> flickrServiceProvider.setFlickrApiKey('API_KEY');
+> flickrServiceProvider.setFlickrUserId('USER_ID');
+> flickrServiceProvider.setFlickrUsername('USERNAME');
+> flickrServiceProvider.setMaxPhotos(12);
+
+Set Disqus configuration :
+
+> disqusProvider.setShortname('DISQUS_SITE_ID');
+
+## CLI [link](https://github.com/aZerato/aZerato.github.io/tree/master/cli)
+
+Edit this file :
+
+> cli/program.js
 
 Set your posts folder :
 
@@ -27,7 +47,7 @@ Set your posts folder :
 My posts are in this folder '[blog/content/posts/](https://github.com/aZerato/aZerato.github.io/tree/master/blog/content/posts)'. 
 With specific html annotation, i write my posts, and i use a little CLI command for "compile" them to a json file '[blog/content/posts/posts.json](https://github.com/aZerato/aZerato.github.io/blob/master/blog/content/posts/posts.json)'.
 
-'[Sample post structure](https://github.com/aZerato/aZerato.github.io/blob/master/blog/content/posts/07-21-2016-sharepoint_2013_dll_not_found.html)'
+'[Sample post structure](https://github.com/aZerato/aZerato.github.io/blob/master/blog/content/posts/2016-08-31-node-js-grunt_execute_commander_cheerio.html)'
 
 ## How to start
 
@@ -42,7 +62,7 @@ If not already done :
 
 > npm install grunt-cli -g
 
-## Init
+## Install dependencies
 
 > npm install
 
@@ -61,6 +81,10 @@ or
 Convert posts
 
 > grunt convert
+
+Index posts
+
+> grunt index
 
 Run jshint
 
