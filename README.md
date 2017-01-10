@@ -26,8 +26,11 @@ Set your posts folder :
 Set the Flickr provider component configuration :
 
 > flickrServiceProvider.setFlickrApiKey('API_KEY');
+
 > flickrServiceProvider.setFlickrUserId('USER_ID');
+
 > flickrServiceProvider.setFlickrUsername('USERNAME');
+
 > flickrServiceProvider.setMaxPhotos(12);
 
 Set Disqus configuration :
