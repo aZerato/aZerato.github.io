@@ -7,7 +7,10 @@
 	<div class="cst-article-content">
 		<img 
 			class="cst-article-main-img" 
-			src="{{$ctrl.article.img}}" ng-show="$ctrl.article.img"/>
+			src="{{$ctrl.article.img}}" 
+			ng-show="$ctrl.article.img"
+			alt="{{$ctrl.article.img_alt}}"
+			title="source : {{$ctrl.article.img_alt}}" />
 		
 		<h2 ng-show="$root.currentLang == 'fr'" ng-bind-html="$ctrl.article.fr.title"></h2>
 		<div ng-show="$root.currentLang == 'fr'" class="cst-article-date">

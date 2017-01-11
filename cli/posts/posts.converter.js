@@ -63,6 +63,7 @@ module.exports = PostsConverter = (function(){
 					id: i,
 					publication_date: new Date($('[data-model="publication_date"]').html()).getTime(),
 					img: $('img[data-img]').attr('data-img'),
+					img_alt: $('img[data-img]').attr('data-img-alt'),
 					fr: {
 						title: cheerioHelper.replaceCharsInnerCodeTags($, $('[data-lang="fr"] [data-model="title"]')).html(),
 						summary: cheerioHelper.replaceCharsInnerCodeTags($, $('[data-lang="fr"] [data-model="summary"]')).html(),

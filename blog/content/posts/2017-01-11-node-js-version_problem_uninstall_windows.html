@@ -1,0 +1,90 @@
+<div data-model="publication_date">2017-01-11</div>
+
+<img data-img="/blog/files/img/nodejs-universe.jpg" data-img-alt="https://cdn.meme.am/cache/instances/folder93/58392093.jpg"/>
+	
+<div data-lang="fr">
+	<div data-model="title">NodeJS : Mise à jour Node/NPM impossible Windows.</div>
+	<div data-model="summary">
+		<p>
+			Je souhaite mettre à jour Node mais même après une réinstallation du package d'installation ; "node -v" ne retourne 
+			pas la version espérée.
+		</p>
+		<p>
+			Il semblerait que plusieurs version de Node sont installées sur la machine (version par défaut de Visual Studio).
+		</p>
+		<p>
+			Il faut désinstaller Node et supprimer toutes ses références.
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			Je souhaite mettre à jour Node mais même après une réinstallation du package d'installation ; "node -v" ne retourne 
+			pas la version espérée.
+		</p>
+		<p>
+			Il semblerait que plusieurs version de Node sont installées sur la machine (version par défaut de Visual Studio). 
+		</p>
+		<p>
+			Il faut désinstaller Node et supprimer toutes ses références.
+		</p>
+		<h2>Supprimer les références à Node (<a href="http://stackoverflow.com/a/20711410" alt="Source">source</a>)</h2>
+		<p>
+			<ul>
+				<li>Supprimer Node des "Programmes et fonctionnalités"</li>
+				<li>Vérifier que le dossier suivant est bien supprimer => C:\Program Files (x86)\Nodejs</li>
+				<li>Vérifier que le dossier suivant est bien supprimer => C:\Program Files\Nodejs</li>
+				<li>Supprimer => C:\Users\{User}\AppData\Roaming\npm (ou %appdata%\npm)</li>
+				<li>Supprimer => C:\Users\{User}\AppData\Roaming\npm-cache (ou %appdata%\npm-cache)</li>
+			</ul>
+			* Vérifier également sur les autres disques durs.
+		</p>
+		<h2>Clean Install / Update de NodeJs</h2>
+		<p>
+			Node nous recommande pour chaque "mise à jour" de faire une installation via le package d'install et non via ligne de commandes
+			(<a href="https://nodejs.org/en/download/current/">version actuelle</a>). Donc il faut télécharger le dernier ".msi"
+			correspondant à votre type de processeur/OS.
+		</p>
+	</div>
+</div>
+
+<div data-lang="en">
+	<div data-model="title">NodeJS : Unable to update Node/NPM on Windows..</div>
+	<div data-model="summary">
+		<p>
+			I want to update Node but even if I do an installation of the latest package the node version is wrong.
+		</p>
+		<p>
+			Maybe many node instances are installed (Visual Studio instance). 
+		</p>
+		<p>
+			You need to completely uninstall node and all references.
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			I want to update Node but even if I do an installation of the latest package the node version is wrong.
+		</p>
+		<p>
+			Maybe many node instances are installed (Visual Studio instance). 
+		</p>
+		<p>
+			You need to completely uninstall node and all references.
+		</p>
+		<h2>Remove Node completely (<a href="http://stackoverflow.com/a/20711410" alt="Source">source</a>)</h2>
+		<p>
+			<ul>
+				<li>Remove Node from "Programs and Features"</li>
+				<li>Check this folder dossier and remove it => C:\Program Files (x86)\Nodejs</li>
+				<li>Check this folder dossier and remove it => C:\Program Files\Nodejs</li>
+				<li>Remove => C:\Users\{User}\AppData\Roaming\npm (ou %appdata%\npm)</li>
+				<li>Remove => C:\Users\{User}\AppData\Roaming\npm-cache (ou %appdata%\npm-cache)</li>
+			</ul>
+			* Maybe check on others local disks.
+		</p>
+		<h2>NodeJS Clean Install/Update</h2>
+		<p>
+			The node recommandation when you want to update it is to download the latest installation package
+			(<a href="https://nodejs.org/en/download/current/">Current version</a>).
+		</p>
+	</div>
+</div>
