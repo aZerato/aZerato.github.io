@@ -193,19 +193,25 @@
 									if(response.data[j].word != undefined && response.data[j].word.indexOf(stringSearch[k]) != -1)
 									{
 										var state = false;
-										articleIds = articleIds.map(function(post) {
-											response.data[j].posts.map(function(cpost) {
-												if(cpost.id == post.id)
-												{
-													post.force += cpost.force;
-													state = true;
-												}
-											});
+										var temp = articleIds;
 
-											return post;
-										});
+										temp = response.data[j].posts.map(function(cpost) {
+													temp.map(function(post) {
+														if(cpost.id == post.id)
+														{
+															cpost.force += post.force;
+															state = true;
+														}
+													});
 
-										if(state == false)
+													return cpost;
+												});
+
+										if(state)
+										{
+											articleIds = temp;
+										}
+										else
 										{
 											articleIds = articleIds.concat(response.data[j].posts);
 										}
