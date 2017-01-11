@@ -3,12 +3,18 @@
 	<div class="cst-search-form" ng-show="$ctrl.searchForm">
 		<span class="glyphicon glyphicon-remove" ng-click="$ctrl.hideResearch()"/>
 		<form ng-submit="$ctrl.search()">
-			<input type="text" placeholder="{{'search.placeholder' | translate}}" ng-model="$ctrl.stringSearch" />
+			<input type="text" class="cst-search-form-input" placeholder="{{'search.placeholder' | translate}}" ng-model="$ctrl.stringSearch" />
+			<span class="glyphicon glyphicon-search" ng-click="$ctrl.search()"></span>
 			<input type="submit" />
 		</form>
 
-		<div class="cst-search-no-result" ng-show="$ctrl.noResult">
-			{{'search.noResult' | translate}}
+		<div class="cst-search-issues">
+			<div ng-show="$ctrl.noResult">
+				{{'search.noResult' | translate}}
+			</div>
+		 	<div ng-show="$ctrl.searchRequirements">
+				{{'search.searchRequirements' | translate}}
+			</div>
 		</div>
 
 		<div class="cst-search-articles container">

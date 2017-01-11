@@ -19,21 +19,32 @@
         }
 
         > form {
+            width: 80%;
+            height: 75px;
+            display: block;
+            margin-left: 10%;
+            position: absolute;
+            top: 50px;
+            z-index: 1003;
+            border-bottom: 2px solid white;
+            border-radius: 5px;
+            box-shadow: @grey 0px 2px 5px;
 
             > input[type="text"] 
-            {                
+            {
+                height: 75px;        
                 font-size: 5.1em;
-                width: 80%;
-                height: 75px;
-                display: block;
-                margin-left: 10%;
-                position: absolute;
-                top: 50px;
-                z-index: 1003;
                 background-color: transparent;
                 border: none;
-                border-bottom: 2px solid white;
-                box-shadow: @grey 0px 2px 5px;
+            }
+
+            > .glyphicon {
+                position: absolute;
+                right: 16px;
+                font-size: 55px;
+                top: 8px;
+                color: @grey;
+                cursor: pointer;
             }
 
             > input[type="submit"] {
@@ -41,7 +52,7 @@
             }
         }
 
-        > .cst-search-no-result {
+        > .cst-search-issues {
             width: 100%;
             position: absolute;
             top: 150px;

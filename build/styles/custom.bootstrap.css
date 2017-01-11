@@ -2542,8 +2542,7 @@ ul.cst-list-nodecoration {
   font-size: 25px;
   z-index: 1004;
 }
-.cst-search .cst-search-form > form > input[type="text"] {
-  font-size: 5.1em;
+.cst-search .cst-search-form > form {
   width: 80%;
   height: 75px;
   display: block;
@@ -2551,15 +2550,28 @@ ul.cst-list-nodecoration {
   position: absolute;
   top: 50px;
   z-index: 1003;
+  border-bottom: 2px solid white;
+  border-radius: 5px;
+  box-shadow: #2a2730 0px 2px 5px;
+}
+.cst-search .cst-search-form > form > input[type="text"] {
+  height: 75px;
+  font-size: 5.1em;
   background-color: transparent;
   border: none;
-  border-bottom: 2px solid white;
-  box-shadow: #2a2730 0px 2px 5px;
+}
+.cst-search .cst-search-form > form > .glyphicon {
+  position: absolute;
+  right: 16px;
+  font-size: 55px;
+  top: 8px;
+  color: #2a2730;
+  cursor: pointer;
 }
 .cst-search .cst-search-form > form > input[type="submit"] {
   display: none;
 }
-.cst-search .cst-search-form > .cst-search-no-result {
+.cst-search .cst-search-form > .cst-search-issues {
   width: 100%;
   position: absolute;
   top: 150px;

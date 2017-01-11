@@ -18,6 +18,7 @@
 	},
 	"search": {
 		"placeholder": "Rechercher ...",
-		"noResult": "Aucun resultat ..."
+		"noResult": "Aucun resultat ...",
+		"searchRequirements": "Minimum 3 lettres ..."
 	}
 }

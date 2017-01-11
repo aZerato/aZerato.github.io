@@ -20,19 +20,23 @@
 
 		self.$onInit = function()
 		{
+			self.$input = $('.cst-search-form-input');
 		};
 
 		self.research = function()
 		{
 			self.searchForm = true;
 			window.scrollTo(0, 0);
+
+			setInterval(function() { self.$input.focus(); }, 500);
 		};
 
 		self.search = function() {
 			self.articles = [];
 			self.noResult = false;
+			self.searchRequirements = false;
 
-			if(self.stringSearch != '' && self.stringSearch.trim() != '')
+			if(self.stringSearch != undefined && self.stringSearch.trim() != '' && self.stringSearch.length > 2)
 			{
 				articlesService.search(self.stringSearch.toLowerCase(), $rootScope.currentLang, $http, $q, $sce)
 				.then(function(response) {
@@ -49,6 +53,10 @@
 						self.noResult = true;
 					}
 				});
+			}
+			else
+			{
+				self.searchRequirements = true;
 			}
 		};
 

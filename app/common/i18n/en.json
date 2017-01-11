@@ -18,6 +18,7 @@
 	},
 	"search": {
 		"placeholder": "Search ...",
-		"noResult": "No result ..."
+		"noResult": "No result ...",
+		"searchRequirements": "Minimum 3 letters ..."
 	}
 }
