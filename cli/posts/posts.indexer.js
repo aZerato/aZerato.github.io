@@ -73,9 +73,9 @@ module.exports = PostsIndexer = (function(){
 
 				for(var j = 0; j < curPostTitleWords.length; j++)
 				{
-					if(curPostContentWords[j] != '')
+					if(curPostTitleWords[j] != '')
 					{
-						jsonWordsIndexers = indexingWords(jsonWordsIndexers, i, curPostContentWords[j]);
+						jsonWordsIndexers = indexingWords(jsonWordsIndexers, i, curPostTitleWords[j]);
 					}
 				}
 

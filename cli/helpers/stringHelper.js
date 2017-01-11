@@ -13,6 +13,8 @@ module.exports = StringHelper = (function() {
     };
 
     StringHelper.prototype.removeDiacritics = function (str) {
+        if (str === '') return str;
+
         var self = this;
 
         return str.replace(/[^\u0000-\u007E]/g, function(a){ 
@@ -21,6 +23,8 @@ module.exports = StringHelper = (function() {
     };
 
     StringHelper.prototype.removeTagsPonctuations = function(str) {
+        if (str === '') return str;
+
         return str.replace(/[\n\t\r]/g, ' ')
 					.replace(/[,;.?!:_+*]/g, ' ')
                     .replace(/['"]/g, ' ')
@@ -31,14 +35,21 @@ module.exports = StringHelper = (function() {
                     .replace(/</g, ' ')
                     .replace(/>/g, ' ')
                     .replace(/&/g, ' ')
-                    .replace(/\\/g, ' ');
+                    .replace(/\\/g, ' ')
+                    .replace(/%/g, ' ');;
     };
 
     StringHelper.prototype.removeShortsWords = function(str) {
+        if (str === '') return str;
+
+        if (str.length < 3) return '';
+
         return str.replace(/(\b([a-z\u00C0-\u017E]{1,3})\b([^a-z\u00C0-\u017E]|$))/gi,'');
     };
 
     StringHelper.prototype.removeUselessWordsFR = function(str) {
+        if (str === '') return str;
+
         var state = false;
         
         while(!state){
@@ -59,6 +70,8 @@ module.exports = StringHelper = (function() {
     };
 
     StringHelper.prototype.removeUselessWordsEN = function(str) {
+        if (str === '') return str;
+
         var state = false;
 
         while(!state){
@@ -173,20 +186,21 @@ module.exports = StringHelper = (function() {
         'apres', 'pour', 'pourtant', 'parfaitement', 'grave', 'trop', 'beaucoup', 'tres', 'ma', 'mon', 'ton', 'ta',
         'mais', 'ou', 'et', 'donc', 'or', 'ni', 'car', 'puis', 'quand', 'que', 'qui', 'qu',
         'est', 'etait', 'etre', 'fois', 'ont', 'sont', 'pouvoir', 'mettre', 'met', 'mets',
-        'faire', 'celui', 'ceux', 'celle', 'celles',
-        'pas',
-        'en',
+        'faire', 'celui', 'ceux', 'celle', 'celles', 'selon', 'lorsque', 'sauver', 'simple', 'difficile', 'suis', 'suit',
+        'pas', 'plusieurs', 'chaque', 'dans', 'egalement', 'impossible', 'possible',
+        'en', 'autre', 'autres', 'votre', 'notre', 'meme', 'tous', 'tout', 'toutes',
         'je', 'tu', 'il', 'elle', 'nous', 'vous', 'ils', 'elles',
-        'bien', 'bon', 'bonne', 'bons', 'bonnes'
+        'bien', 'bon', 'bonne', 'bons', 'bonnes', 'malheureusement'
     ];
 
     var defaultWordsRemovalMapEN = [
         'a', 'thus', 'much', 'more', 'the', 'when', 'where', 'then',
         'therefore', 'nevertheless', 'before', 'his', 'her', 'that', 'this',
         'maybe', 'nothing', 'none', 'yes', 'no', 'true', 'false',
-        'be', 'or',
-        'not', 't',
-        'to', 'it', 'in'
+        'be', 'or', 'many',
+        'not', 't', 'me', 'mine',
+        'to', 'it', 'in',
+        'other', 'others'
     ];
 
     return StringHelper;
