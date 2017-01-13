@@ -19,6 +19,30 @@
 
 		self.$onInit = function() {
 			self.$state = $state;
+			
+			// scroll bar change color.
+			self.$el = $('.cst-header');
+			self.scrollStart = 0;
+			self.$elLimit = $('.cst-container-articles');
+			self.limitOffset = self.$elLimit.offset();
+			if (self.$elLimit.length)
+			{
+				var offset = self.$elLimit.offset();
+				$(document).scroll(function() {
+					if (self.$state.is('root.articles'))
+					{
+						self.scrollStart = $(this).scrollTop();
+						if(self.scrollStart > self.limitOffset.top)
+						{
+							self.$el.addClass('header-color');
+						} 
+						else
+						{
+							self.$el.removeClass('header-color');
+						}
+					}
+				});
+			}
 		};		
 
 		self.changeLang = function(key) {

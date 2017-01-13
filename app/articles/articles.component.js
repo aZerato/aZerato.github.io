@@ -162,7 +162,7 @@
 					templateUrl: '/blog/content/pages/intro.html',
 				},
 				'main@': {
-					template: '<articles-component></articles-component>',
+					template: '<articles-component class="cst-container-articles"></articles-component>',
 				}
 			}
 		});
@@ -172,7 +172,7 @@
 			url: '/article/:articleId',
 			views: {
 				'main@': {
-					template: '<article-details-component></article-details-component>'
+					template: '<article-details-component class="cst-container-articles"></article-details-component>'
 				}
 			}
 		});

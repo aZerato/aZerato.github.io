@@ -1,0 +1,12 @@
+// Placez vos paramètres dans ce fichier pour remplacer les paramètres par défaut et les paramètres utilisateur.
+{
+    "files.autoSave": "off",
+
+    "html.format.enable": false,
+
+    // List of tags, comma separated, that shouldn't be reformatted. 'null' defaults to all tags listed at https://www.w3.org/TR/html5/dom.html#phrasing-content.
+    "html.format.unformatted": "a, abbr, acronym, b, bdo, big, br, button, cite, code, dfn, em, i, img, input, kbd, label, map, object, q, samp, script, select, small, span, strong, sub, sup, textarea, tt, var, prism-component",
+
+    // Maximum amount of characters per line (0 = disable).
+    "html.format.wrapLineLength": 0
+}

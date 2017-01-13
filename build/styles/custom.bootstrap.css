@@ -2433,20 +2433,17 @@ ul.cst-list-nodecoration {
   height: 50px;
   display: block;
 }
-.cst-header.transparency:after {
-  opacity: 0.4;
-}
 .cst-header {
   margin-bottom: 0px;
   position: fixed;
   width: 100%;
 }
 .cst-header.navbar-inverse {
-  background-color: transparent;
-  border-bottom: 1px solid #1c73a5;
+  background-color: inherit;
+  border-bottom: none;
 }
 .cst-header.navbar-inverse:after {
-  background-color: #3097d1;
+  background-color: inherit;
   width: 100%;
   height: 50px;
   position: fixed;
@@ -2471,6 +2468,41 @@ ul.cst-list-nodecoration {
 }
 .cst-header.navbar-inverse .navbar-nav > li > a {
   color: rgba(255, 255, 255, 0.8);
+}
+.cst-header.navbar-inverse .navbar-nav > .open > a {
+  background-color: inherit;
+}
+.cst-header.navbar-inverse.header-color {
+  background-color: white;
+  border-bottom: 1px solid #d3e0e9;
+}
+.cst-header.navbar-inverse.header-color .navbar-header .navbar-brand {
+  color: #1c73a5;
+  font-family: 'IntroInline';
+}
+.cst-header.navbar-inverse.header-color .navbar-collapse > ul.nav > li {
+  border-left: 1px solid #d3e0e9;
+}
+.cst-header.navbar-inverse.header-color .navbar-collapse > ul.nav > li:first-child {
+  border-right: none;
+}
+.cst-header.navbar-inverse.header-color .navbar-collapse > ul.nav > li:last-child {
+  border-right: 1px solid #d3e0e9;
+}
+.cst-header.navbar-inverse.header-color .navbar-collapse > ul.nav > li > a {
+  color: #1c73a5;
+}
+.cst-header > .nav .open > a {
+  background-color: inherit;
+}
+.cst-header .navbar-nav > li > .dropdown-menu {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  background-color: #1c73a5;
+  opacity: 0.9;
+}
+.cst-header .navbar-nav > li > .dropdown-menu > li a {
+  color: white;
 }
 .cst-footer {
   margin-top: 20px;
@@ -2550,9 +2582,7 @@ ul.cst-list-nodecoration {
   position: absolute;
   top: 50px;
   z-index: 1003;
-  border-bottom: 2px solid white;
-  border-radius: 5px;
-  box-shadow: #2a2730 0px 2px 5px;
+  border-bottom: 2px solid #3097d1;
 }
 .cst-search .cst-search-form > form > input[type="text"] {
   height: 75px;
@@ -3071,7 +3101,6 @@ ul.cst-list-nodecoration {
   max-width: 800px;
   margin-top: 20px;
   border: 1px solid #d3e0e9;
-  border-radius: 4px;
   padding: 0;
 }
 .cst-article > .cst-article-content {
@@ -3100,8 +3129,6 @@ ul.cst-list-nodecoration {
 }
 .cst-article > .cst-article-footer {
   background-color: #3097d1;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
 }
 .cst-article > .cst-article-footer > .cst-article-footer-link {
   text-align: center;

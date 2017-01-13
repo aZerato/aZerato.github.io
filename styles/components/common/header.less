@@ -4,13 +4,6 @@
 	display: block;
 }
 
-.cst-header.transparency 
-{
-	&:after {
-		opacity: 0.4;
-	}
-}
-
 .cst-header {
 
 	margin-bottom: 0px;
@@ -19,11 +12,11 @@
 
 	&.navbar-inverse 
 	{
-		background-color: transparent;
-		border-bottom: 1px solid @azure-darker;
+		background-color: inherit;
+		border-bottom: none;
 
 		&:after {
-			background-color: @azure;
+			background-color: inherit;
 			width: 100%;
 			height: 50px;
 			position: fixed;
@@ -69,6 +62,88 @@
 					}
 				}
     		}
+
+			> .open 
+			{
+				> a
+				{
+					background-color: inherit;
+				}
+			}
     	}
+
+		&.header-color
+		{
+			background-color: white;
+			border-bottom: 1px solid @grey-lite;
+
+			.navbar-header
+			{
+				.navbar-brand 
+				{
+					color: @azure-darker;
+					font-family: 'IntroInline';
+				}
+			}
+
+			.navbar-collapse
+			{
+				> ul.nav 
+				{
+					> li
+					{
+						&:first-child
+						{
+							border-right: none;
+						}
+						&:last-child
+						{
+							border-right: 1px solid @grey-lite;
+						}
+
+						border-left: 1px solid @grey-lite;
+						
+
+						> a
+						{
+							color: @azure-darker;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	> .nav
+	{
+		.open 
+		{
+			> a
+			{
+				background-color: inherit;
+			}
+		}
+	}
+
+	.navbar-nav
+	{
+		> li
+		{
+			> .dropdown-menu
+			{
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+				background-color: @azure-darker;
+				opacity: 0.9;
+
+				> li
+				{
+					a 
+					{
+						color: white;
+					}
+				}
+			}
+		}
 	}
 }
