@@ -7,10 +7,26 @@
     li {
         display: inline-block;
 
-        a, span { 
-            border-radius: 50% !important;
-            margin: 0 5px;
+        a, span
+        {
+            color: white;
+            background-color: @azure;
+            border: none;
+            border-radius: 0;
             display: block;
+
+            .transition(all .2s ease-in-out);
+
+            &.active
+            {
+                background: @azure-darker;
+            }
+
+            &:first-child,
+            &:last-child
+            {
+                border-radius: 0;
+            }
         }
     }
 }

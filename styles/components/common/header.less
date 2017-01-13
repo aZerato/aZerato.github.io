@@ -44,24 +44,20 @@
 		{
 			> li 
 			{
-				&.active,
-				&:hover,
-				&:focus 
+				> a
+				{
+					color: white;
+				}
+
+				&.active
 				{
 					> a 
 					{
 						color: white;
-						background-color: inherit;
+						background-color: inherit;	
 					}
 				}
-				&
-				{
-					> a
-					{
-						color: fade(white, 80%);
-					}
-				}
-    		}
+			}			
 
 			> .open 
 			{
@@ -75,7 +71,32 @@
 		&.header-color
 		{
 			background-color: white;
-			border-bottom: 1px solid @grey-lite;
+			border-bottom: 1px solid @azure-lite;
+
+
+			.navbar-nav 
+			{
+				> li 
+				{
+					> a
+					{
+						color: @azure;
+						background-color: inherit;
+						.transition(background-color .5s ease-in-out);	
+					}
+
+					&.active,
+					&:hover,
+					&:focus 
+					{
+						> a 
+						{
+							color: white;
+							background-color: @azure-lite;	
+						}
+					}
+				}
+			}
 
 			.navbar-header
 			{
@@ -98,10 +119,10 @@
 						}
 						&:last-child
 						{
-							border-right: 1px solid @grey-lite;
+							border-right: 1px solid @azure-lite;
 						}
 
-						border-left: 1px solid @grey-lite;
+						border-left: 1px solid @azure-lite;
 						
 
 						> a
@@ -135,12 +156,25 @@
 				border-bottom-right-radius: 0;
 				background-color: @azure-darker;
 				opacity: 0.9;
-
+				
 				> li
 				{
 					a 
 					{
+						.transition(all .2s ease-in-out);
+						
 						color: white;
+					}
+				}
+
+				&:hover
+				{
+					> li
+					{
+						a
+						{
+							color: @azure;
+						}
 					}
 				}
 			}
