@@ -26,6 +26,17 @@
 
 		.navbar-header
 		{
+			.navbar-toggle
+			{
+				border: inherit;
+				
+				&:hover,
+				&:focus
+				{
+					background-color: inherit;
+				}
+			}
+
 			.navbar-brand 
 			{
 				color: white;
@@ -100,6 +111,14 @@
 
 			.navbar-header
 			{
+				.navbar-toggle
+				{
+					.icon-bar
+					{
+						background-color: @azure-darker;
+					}
+				}
+
 				.navbar-brand 
 				{
 					color: @azure-darker;
@@ -178,6 +197,24 @@
 					}
 				}
 			}
+		}
+	}
+}
+
+@media screen and (max-width: 767px)
+{
+	.cst-header.navbar-inverse
+	{
+		.navbar-nav .open .dropdown-menu > li > a,
+		.navbar-collapse > ul.nav > li > a
+		{
+			color: white;
+		}
+
+		.navbar-nav .open .dropdown-menu > li > a:hover
+		{
+			background-color: @grey-lite;
+			color: @azure-darker;
 		}
 	}
 }

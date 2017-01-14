@@ -10,7 +10,8 @@
 		'ngSanitize',
 		'ngCookies',
 		'pascalprecht.translate',
-		'ngDisqus'
+		'ngDisqus',
+		'ngAnimate'
 	];
 
 	/*

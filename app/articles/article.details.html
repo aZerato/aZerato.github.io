@@ -5,13 +5,15 @@
 <div class="container cst-article" ng-show="$ctrl.articleLoaded">
 	
 	<div class="cst-article-content">
-		<img 
-			class="cst-article-main-img" 
-			src="{{$ctrl.article.img}}" 
-			ng-show="$ctrl.article.img"
-			alt="{{$ctrl.article.img_alt}}"
-			title="source : {{$ctrl.article.img_alt}}" />
-		
+		<div class="cst-article-img-container"
+			ng-show="$ctrl.article.img">
+			<img 
+				class="cst-article-main-img" 
+				src="{{$ctrl.article.img}}"
+				alt="{{$ctrl.article.img_alt}}"
+				title="source : {{$ctrl.article.img_alt}}" />
+		</div>
+
 		<h2 ng-show="$root.currentLang == 'fr'" ng-bind-html="$ctrl.article.fr.title"></h2>
 		<div ng-show="$root.currentLang == 'fr'" class="cst-article-date">
 			{{$ctrl.article.publication_date | date: 'dd/MM/yyyy'}}
