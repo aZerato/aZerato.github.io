@@ -18,6 +18,17 @@
 		</p>
 	</div>
 	<div data-model="content">
+		<p>
+			Le provider d'authentification d'Owin est une solution a envisager pour gérer au mieux les utilisateurs de son application WEB.
+			Vous pourrez gérer facilement la sécurité de votre application WEB via cookie et token.
+		</p>
+		<p>
+			En NodeJS nous avons <a href="http://passportjs.org/" target="_blank">Passport</a> qui permet de gérer de multiple provider d'authentification externe comme Facebook, Google, ... 
+			en .Net nous avons Owin.
+		</p>
+		<p>
+			Nous allons donc utiliser certaines des fonctionnalités d'Owin pour gérer entiérement l'authentification de nos utilisateurs.
+		</p>
 		<h2>Prérequis</h2>
 		<p>
 			Revoir <a href="https://oauth.net/2/" target="_blank">OAuth </a> & préparer sa solution avec Owin !
@@ -98,12 +109,12 @@ namespace MyProject.Web
 	}
 }		
 			</prism-component>
-			Nous avons donc configurer un système d'authentification par cookie pour une authentification basique par formulaire et surtout mis en 
+			Nous avons donc configuré un système d'authentification par cookie pour une authentification basique par formulaire et surtout mis en 
 			place les Bearer token qui sont des 'must have' lorsque l'on souhaite sécuriser une WEB API. Il reste bien évidemment à créer notre 'OAuthCustomAuthenticationProvider'.
 		</p>
 		<h2>Token API : "grant_type=password"</h2>
 		<p>
-			Je créait donc ma classe 'OAuthCustomAuthenticationProvider' dans un dossier 'Providers'. Il faut ensuite surcharger les méthodes de 'OAuthAuthorizationServerProvider'.
+			Nous créons la classe 'OAuthCustomAuthenticationProvider' dans un dossier 'Providers'. Il faut ensuite surcharger les méthodes de 'OAuthAuthorizationServerProvider'.
 			<prism-component class="language-csharp line-numbers">
 namespace MyProject.Web.Providers
 {
@@ -194,18 +205,18 @@ namespace MyProject.Web.Providers
 			<prism-component class="language-csharp line-numbers">
 var userID = int.Parse(((ClaimsIdentity)this.RequestContext.Principal.Identity).FindFirst(ClaimTypes.Sid).Value);
 			</prism-component>
-			Ceci grâce à la gestion des Threads et des Claims.
+			Ceci grâce à la gestion des Thread et des Claims.
 		</p>
 		<h2>Token API : tests</h2>
 		<p>
-			Pour tester l'authentification via token, il faut donc interroger l'url configurer dans le 'TokenEndpointPath' (dans notre exemple : /token).
-			On peut utiliser une application comme PostMan pour réaliser notre appel qui devrait ressembler à :
+			Pour tester l'authentification via token, il faut donc interroger l'url configuré dans le 'TokenEndpointPath' (dans notre exemple : /token).
+			On peut utiliser une application comme PostMan pour réaliser notre appel qui doit ressembler à :
 			<ul>
 				<li>POST http://localhost:29817/token</li>
 				<li>Headers : content_type=application/x-www-form-urlencoded</li>
 				<li>Body : grant_type=password&username=toto&password=titi</li>
 			</ul>
-			Vous recevrez ensuite votre Access Token pour réaliser les prochains appels, pour cela je vous renvoie vers la documentation de <a href="https://oauth.net/2/" target="_blank">OAuth </a>,
+			Vous recevez ensuite votre Access Token pour réaliser les prochains appels, pour cela je vous renvoie vers la documentation de <a href="https://oauth.net/2/" target="_blank">OAuth </a>,
 			mais il devrait ressembler à :
 			<ul>
 				<li>GET http://localhost:29817/Api/Group/test</li>
@@ -217,7 +228,7 @@ var userID = int.Parse(((ClaimsIdentity)this.RequestContext.Principal.Identity).
 			Exemple d'une action pour authentifier un utilisateur et une pour la déconnexion :
 			<prism-component class="language-csharp line-numbers">
 [HttpPost]
-public async Task<ActionResult> Index(LoginModel model)
+public async Task&lt;ActionResult&gt; Index(LoginModel model)
 {
 	if (ModelState.IsValid)
 	{
@@ -262,11 +273,261 @@ public ActionResult Logout()
 </div>
 
 <div data-lang="en">
-	<div data-model="title">Owin : Customize the authentication provider.</div>
+	<div data-model="title">Owin : Authentication provider customization.</div>
 	<div data-model="summary">
-		No already translated.
+		<p>
+			The authentication Owin provider is a really cool way for manage your users in a Web application.
+		</p>
+		<p>
+			With NodeJS you can found <a href="http://passportjs.org/" target="_blank">Passport</a>, this is able to do connection with Facebook, Google, ... 
+			In .Net we have Owin.
+		</p>
 	</div>
 	<div data-model="content">
-		No already translated.
+		<p>
+			The authentication Owin provider is a really cool way for manage your users in a Web application.
+		</p>
+		<p>
+			With NodeJS you can found <a href="http://passportjs.org/" target="_blank">Passport</a>, this is able to do connection with Facebook, Google, ... 
+			In .Net we have Owin.
+		</p>
+		<h2>Prerequisites</h2>
+		<p>
+			Look <a href="https://oauth.net/2/" target="_blank">OAuth </a> & install Owin !
+		</p>
+		<h2>At beginning</h2>
+		<p>
+			The "Startup.cs" file :
+			<prism-component class="language-csharp line-numbers">
+using Microsoft.Owin;
+[assembly: OwinStartup(typeof(MyProject.Web.Startup))]
+namespace MyProject.Web
+{
+	using Owin;
+	using System.Web.Mvc;
+	using System.Web.Http;
+	using System.Web.Routing;
+	using System.Web.Optimization;
+				
+	public partial class Startup
+	{
+		public void Configuration(IAppBuilder app)
+		{
+			ConfigureAuth(app);
+
+			AreaRegistration.RegisterAllAreas();
+			GlobalConfiguration.Configure(WebApiConfig.Register);
+			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+			RouteConfig.RegisterRoutes(RouteTable.Routes);
+			BundleConfig.RegisterBundles(BundleTable.Bundles);
+		}
+	}
+}
+			</prism-component>
+		</p>
+		<h2>Configuration</h2>
+		<p>
+			The 'ConfigureAuth' method is inthe 'App_Start' folder in a 'Startup.Auth.cs' file ('Startup' partial class <=> same namespace) :
+			<prism-component class="language-csharp line-numbers">
+namespace MyProject.Web
+{
+	using Microsoft.AspNet.Identity;
+	using Microsoft.Owin;
+	using Microsoft.Owin.Security.Cookies;
+	using Microsoft.Owin.Security.OAuth;
+	using Owin;
+	using Providers;
+	using System;
+
+	public partial class Startup
+	{
+		public void ConfigureAuth(IAppBuilder app)
+		{
+			// Cookie Owin for form authentication.
+			CookieAuthenticationOptions cookieAuthOptions = new CookieAuthenticationOptions
+			{
+				AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+				LoginPath = new PathString("/Home/Index"),
+				LogoutPath = new PathString("/Home/Logout"),
+				ExpireTimeSpan = TimeSpan.FromMinutes(30),
+				SlidingExpiration = true
+			};
+
+			app.UseCookieAuthentication(cookieAuthOptions);
+
+			// Token OAuth.
+			OAuthAuthorizationServerOptions oAuthServerOptions = new OAuthAuthorizationServerOptions
+			{
+				TokenEndpointPath = new PathString("/token"),
+				Provider = new OAuthCustomAuthenticationProvider(),
+				AccessTokenExpireTimeSpan = TimeSpan.FromDays(30),
+				AllowInsecureHttp = true,
+			};
+
+			// Token Generation
+			app.UseOAuthAuthorizationServer(oAuthServerOptions);
+			app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+		}
+	}
+}		
+			</prism-component>
+			The cookie authentication is now configurate, and the bearer token too !
+		</p>
+		<h2>Token API : "grant_type=password"</h2>
+		<p>
+			Add a new call 'OAuthCustomAuthenticationProvider' in a 'Providers' folder. After that override some methods 'OAuthAuthorizationServerProvider'.
+			<prism-component class="language-csharp line-numbers">
+namespace MyProject.Web.Providers
+{
+	[...]
+	using Microsoft.AspNet.Identity;
+    using Microsoft.Owin.Security;
+    using Microsoft.Owin.Security.Cookies;
+    using Microsoft.Owin.Security.OAuth;
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using System.Security.Claims;
+    using System.Security.Principal;
+    using System.ServiceModel.Security;
+    using System.Threading.Tasks;
+
+	public class OAuthCustomAuthenticationProvider : OAuthAuthorizationServerProvider
+    {
+		// no ClientId needed, use grant_type=password.
+		public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
+        {
+            if (context.ClientId == null)
+            {
+                context.Validated();
+            }
+        }
+
+		// After ValidateClientAuthentication time to do authentication.
+		public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
+        {
+            // Decrypt password
+            var usernameDecrypted = context.UserName;
+            var passwordDecrypted = context.Password;
+
+            // find user.
+			User user = new User();
+			try
+            {
+				user = userManager.Find(usernameDecrypted, passwordDecrypted); // this method is for the sample.
+			}
+            catch (SecurityNegotiationException ex)
+            {
+                context.SetError("invalid_grand", "The username or password is incorrect");
+                context.Response.Headers.Add("X-Challenge", new[] { ((int)HttpStatusCode.Unauthorized).ToString() });
+                return;
+            }
+            catch(Exception ex)
+            {
+                context.SetError("invalid_grand", "Problem with authentication provider");
+                context.Response.Headers.Add("X-Challenge", new[] { ((int)HttpStatusCode.ServiceUnavailable).ToString() });
+                return;
+            }
+
+			// create a claims.
+            var oAuthIdentity = new ClaimsIdentity(context.Options.AuthenticationType);
+            oAuthIdentity.AddClaim(new Claim(ClaimTypes.Sid, user.ID.ToString()));
+            oAuthIdentity.AddClaim(new Claim(ClaimTypes.Role, "user"));
+            oAuthIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.UserName));
+
+            var cookiesIdentity = new ClaimsIdentity(oAuthIdentity.Claims, CookieAuthenticationDefaults.AuthenticationType);
+
+			// custom properties.
+            var properties = new AuthenticationProperties(new Dictionary&lt;string, string&gt; {
+                    { "username", user.UserName }
+            });
+
+			// create the token.
+            var ticket = new AuthenticationTicket(oAuthIdentity, properties);
+
+            context.Validated(ticket);
+            context.Request.Context.Authentication.SignIn(cookiesIdentity);
+        }
+
+		// add the "custom properties" to your json response with access token.
+        public override Task TokenEndpoint(OAuthTokenEndpointContext context)
+        {
+            foreach (KeyValuePair&lt;string, string&gt; property in context.Properties.Dictionary)
+            {
+                context.AdditionalResponseParameters.Add(property.Key, property.Value);
+            }
+
+            return Task.FromResult&lt;object&gt;(null);
+        }
+	}
+}
+			</prism-component>
+			You can have the current user ID in an "action" of your "controller" with :
+			<prism-component class="language-csharp line-numbers">
+var userID = int.Parse(((ClaimsIdentity)this.RequestContext.Principal.Identity).FindFirst(ClaimTypes.Sid).Value);
+			</prism-component>
+			Thanks to the Thread & the Claims.
+		</p>
+		<h2>Token API : testing !</h2>
+		<p>
+			Test token authentication with a call to 'TokenEndpointPath' url (in this sample is : /token).
+			You can use PostMan for the call, it's may look like this :
+			<ul>
+				<li>POST http://localhost:29817/token</li>
+				<li>Headers : content_type=application/x-www-form-urlencoded</li>
+				<li>Body : grant_type=password&username=toto&password=titi</li>
+			</ul>
+			When you have the Access Token, the next api call may look like this :
+			<ul>
+				<li>GET http://localhost:29817/Api/Group/test</li>
+				<li>Headers : Authorization=Bearer MY_ACCESS_TOKEN</li>
+			</ul>
+		</p>
+		<h2>Form authentication</h2>
+		<p>
+			Sample of actions for login & logout an user :
+			<prism-component class="language-csharp line-numbers">
+[HttpPost]
+public async Task&lt;ActionResult&gt; Index(LoginModel model)
+{
+	if (ModelState.IsValid)
+	{
+		var user = userManager.Find(model.UserName, model.Password);
+
+		if (user != null)
+		{
+			var cookiesIdentity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie);
+            cookiesIdentity.AddClaim(new Claim(ClaimTypes.Sid, user.ID.ToString()));
+            cookiesIdentity.AddClaim(new Claim(ClaimTypes.Role, "admin"));
+            cookiesIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, model.UserName));
+
+            HttpContext.GetOwinContext().Authentication.SignIn(cookiesIdentity);
+
+			return RedirectToAction("List", "Users");
+		}
+		else
+		{
+			ModelState.AddModelError("", "The user name or password provided is incorrect.");
+		}
+	}
+
+	// If we got this far, something failed, redisplay form
+	return View(model);
+}
+
+[HttpGet]
+public ActionResult Logout()
+{
+	HttpContext.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+
+	return RedirectToAction("Index");
+}
+			</prism-component>
+			Everything is managed with Owin.
+		</p>
+		<h2>After ?</h2>
+		<p>
+			For a better security maybe you need to use the refreshToken ! ('AuthenticationTokenProvider' override).
+		</p>
 	</div>
 </div>
