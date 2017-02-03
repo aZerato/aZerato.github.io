@@ -2658,6 +2658,8 @@ ul.cst-list-nodecoration {
 }
 .cst-search .cst-search-form > .cst-search-articles .cst-article-main-img {
   width: 100%;
+  max-height: 400px;
+  overflow: hidden;
   margin: 0 auto;
 }
 .cst-search .cst-search-form > .cst-search-articles h2 {
@@ -7904,6 +7906,8 @@ ul.cst-list-nodecoration {
 }
 .cst-article > .cst-article-content > img.cst-article-main-img {
   width: 100%;
+  max-height: 400px;
+  overflow: hidden;
   -webkit-transition: transform 0.2s ease-in-out;
   -moz-transition: transform 0.2s ease-in-out;
   -ms-transition: transform 0.2s ease-in-out;
