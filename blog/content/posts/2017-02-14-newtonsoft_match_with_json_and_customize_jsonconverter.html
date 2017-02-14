@@ -1,0 +1,270 @@
+<div data-model="publication_date">2017-02-14</div>
+
+<img data-img="/blog/files/img/json-statham.jpg" data-img-alt="https://cdn.meme.am/cache/instances/folder350/500x/56076350.jpg"/>
+	
+<div data-lang="fr">
+	<div data-model="title">Newtonsoft : matcher des objets json à une classe csharp & personnaliser JsonConverter.</div>
+	<div data-model="summary">
+		<p>
+			S'il y a une librairie qui n'a plus besoin d'être présentée et je pense "Newtonsoft.Json" / "Json.net". J'ai une application qui doit matcher
+			des objets Json ; Newtonsoft le fait très bien.
+		</p>
+		<p>
+			Il faut donc utiliser des annotations sur nos classes et propriétés pour créer la correspondance avec le json que l'on souhaite parser 
+			et envoyer.
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			S'il y a une librairie qui n'a plus besoin d'être présentée et je pense "Newtonsoft.Json" / "Json.net". J'ai une application qui doit matcher
+			des objets Json ; Newtonsoft le fait très bien.
+		</p>
+		<p>
+			Il faut donc utiliser des annotations sur nos classes et propriétés pour créer la correspondance avec le json que l'on souhaite parser 
+			et envoyer.
+		</p>
+		<h2>Classe exemple</h2>
+		<p>
+			Exemple d'une classe c# que l'on souhaite faire matcher à une classe json existante ou que l'on souhaite renommer certaines propriétés au 
+			moment de sa sérialisation :
+			<prism-component class="language-csharp line-numbers">
+namespace MyProject.Web
+{
+	using System;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+				
+	[JsonObject(MemberSerialization.OptIn)]
+    public class Post
+    {
+        [JsonProperty(PropertyName = "category")]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public PostCategory Category { get; set; }
+
+        [JsonProperty(PropertyName = "title")]
+        public string Title { get; set; }
+
+        [JsonProperty(PropertyName = "date")]
+        [JsonConverter(typeof(JsonShortDateTimeConverter))]
+        public DateTime Date { get; set; }
+	}
+}
+			</prism-component>
+		</p>
+		<p>
+			Nous aurons donc un objet json de cette forme :
+			<prism-component class="language-js line-numbers">
+{
+	"category": "Media",
+	"title": "My First Post",
+	"date": "201702"
+}
+			</prism-component>
+		</p>
+		<h2>En action</h2>
+		<p>
+			Exemples pour une api avec sérialisation et conversion :
+			<prism-component class="language-csharp line-numbers">
+namespace MyProject.Web
+{
+	public class PostController : ApiController
+    {
+        [Route("api/Post/{id}")]
+        public HttpResponseMessage Get(int id)
+        {
+			var response = new Post {
+				Category = PostCategory.Media,
+				Title = "My First Post",
+				Date = DateTime.Now
+			};
+
+			return this.Request.CreateResponse(HttpStatusCode.OK, response);
+		}
+
+		[Route("api/Post")]
+        public HttpResponseMessage Put([FromBody] Post request)
+        {
+			var response = new Post {
+				Category = PostCategory.Media,
+				Title = "My First Post",
+				Date = DateTime.Now
+			};
+
+			response.Category = request.Category;
+			response.Title = request.Title;
+			response.Date = request.Date;
+
+			return this.Request.CreateResponse(HttpStatusCode.OK, response);
+		}
+
+		[Route("api/Post/update")]
+        public HttpResponseMessage Put2([FromBody] JObject request)
+        {
+			var requestConverted = request.ToObject<Post>();
+
+			var response = new Post {
+				Category = PostCategory.Media,
+				Title = "My First Post",
+				Date = DateTime.Now
+			};
+
+			response.Category = requestConverted.Category;
+			response.Title = requestConverted.Title;
+			response.Date = requestConverted.Date;
+
+			return this.Request.CreateResponse(HttpStatusCode.OK, response);
+		}
+	}
+}
+			</prism-component>
+		</p>
+		<h2>JsonConverter personnalisé</h2>
+		<p>
+			Vous pouvez personnaliser la manière dont vous souhaitez sérialiser vos données, dans mon cas je souhaitais avoir
+			des dates "DateTime" en csharp et un format string particulier en json (voir dans mon premier extrait de code).
+			<prism-component class="language-csharp line-numbers">
+	/// [JsonConverter(typeof(JsonShortDateTimeConverter))]
+	/// <summary>
+    /// Format a DateTime to YYYYMM format.
+    /// </summary>
+    public class JsonShortDateTimeConverter : IsoDateTimeConverter
+    {
+        public JsonShortDateTimeConverter()
+        {
+            this.DateTimeFormat = "yyyyMM";
+        }
+    }
+			</prism-component>
+		</p>
+	</div>
+</div>
+
+<div data-lang="en">
+	<div data-model="title">Newtonsoft : Matching a c# object with a json object & JsonConverter customizing.</div>
+	<div data-model="summary">
+		<p>
+			"Newtonsoft.Json" is a famous c# library for Json transformation.
+		</p>
+		<p>
+			You can use it for mathing a json with a c# object & vice versa.
+		</p>
+	</div>
+	<div data-model="content">
+		<p>
+			"Newtonsoft.Json" is a famous c# library for Json transformation.
+		</p>
+		<p>
+			You can use it for mathing a json with a c# object & vice versa.
+		</p>
+		<h2>Sample C# object</h2>
+		<p>
+			<prism-component class="language-csharp line-numbers">
+namespace MyProject.Web
+{
+	using System;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+				
+	[JsonObject(MemberSerialization.OptIn)]
+    public class Post
+    {
+        [JsonProperty(PropertyName = "category")]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public PostCategory Category { get; set; }
+
+        [JsonProperty(PropertyName = "title")]
+        public string Title { get; set; }
+
+        [JsonProperty(PropertyName = "date")]
+        [JsonConverter(typeof(JsonShortDateTimeConverter))]
+        public DateTime Date { get; set; }
+	}
+}
+			</prism-component>
+		</p>
+		<p>
+			Result to a json like:
+			<prism-component class="language-js line-numbers">
+{
+	"category": "Media",
+	"title": "My First Post",
+	"date": "201702"
+}
+			</prism-component>
+		</p>
+		<h2>In action</h2>
+		<p>
+			Serialization / Conversion :
+			<prism-component class="language-csharp line-numbers">
+namespace MyProject.Web
+{
+	public class PostController : ApiController
+    {
+        [Route("api/Post/{id}")]
+        public HttpResponseMessage Get(int id)
+        {
+			var response = new Post {
+				Category = PostCategory.Media,
+				Title = "My First Post",
+				Date = DateTime.Now
+			};
+
+			return this.Request.CreateResponse(HttpStatusCode.OK, response);
+		}
+
+		[Route("api/Post")]
+        public HttpResponseMessage Put([FromBody] Post request)
+        {
+			var response = new Post {
+				Category = PostCategory.Media,
+				Title = "My First Post",
+				Date = DateTime.Now
+			};
+
+			response.Category = request.Category;
+			response.Title = request.Title;
+			response.Date = request.Date;
+
+			return this.Request.CreateResponse(HttpStatusCode.OK, response);
+		}
+
+		[Route("api/Post/update")]
+        public HttpResponseMessage Put2([FromBody] JObject request)
+        {
+			var requestConverted = request.ToObject<Post>();
+
+			var response = new Post {
+				Category = PostCategory.Media,
+				Title = "My First Post",
+				Date = DateTime.Now
+			};
+
+			response.Category = requestConverted.Category;
+			response.Title = requestConverted.Title;
+			response.Date = requestConverted.Date;
+
+			return this.Request.CreateResponse(HttpStatusCode.OK, response);
+		}
+	}
+}
+			</prism-component>
+		</p>
+		<h2>Customizing a JsonConverter</h2>
+		<p>
+			How to customize a JsonConverter ?
+			<prism-component class="language-csharp line-numbers">
+	/// [JsonConverter(typeof(JsonShortDateTimeConverter))]
+	/// <summary>
+    /// Format a DateTime to YYYYMM format.
+    /// </summary>
+    public class JsonShortDateTimeConverter : IsoDateTimeConverter
+    {
+        public JsonShortDateTimeConverter()
+        {
+            this.DateTimeFormat = "yyyyMM";
+        }
+    }
+			</prism-component>
+		</p>
+	</div>
+</div>
