@@ -14,11 +14,13 @@
 				<div class="cst-article">
 
 					<div class="cst-article-content">
-						<img 
-							class="cst-article-main-img" 
-							ng-src="{{article.img}}" 
-							alt="{{article.img_alt}}"
-							title="source : {{article.img_alt}}"/>
+						<a ui-sref="root.details({articleId : article.id})">
+							<img 
+								class="cst-article-main-img" 
+								ng-src="{{article.img}}" 
+								alt="{{article.img_alt}}"
+								title="source : {{article.img_alt}}"/>
+						</a>
 
 						<h2 ng-show="$root.currentLang == 'fr'">
 							<a ui-sref="root.details({articleId : article.id})" ng-bind-html="article.fr.title"></a>

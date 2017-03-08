@@ -100,7 +100,7 @@ namespace MyProject.Web
 		[Route("api/Post/update")]
         public HttpResponseMessage Put2([FromBody] JObject request)
         {
-			var requestConverted = request.ToObject<Post>();
+			var requestConverted = request.ToObject&lt;Post&gt;();
 
 			var response = new Post {
 				Category = PostCategory.Media,
@@ -124,9 +124,9 @@ namespace MyProject.Web
 			des dates "DateTime" en csharp et un format string particulier en json (voir dans mon premier extrait de code).
 			<prism-component class="language-csharp line-numbers">
 	/// [JsonConverter(typeof(JsonShortDateTimeConverter))]
-	/// <summary>
+	/// &lt;summary&gt;
     /// Format a DateTime to YYYYMM format.
-    /// </summary>
+    /// &lt;/summary&gt;
     public class JsonShortDateTimeConverter : IsoDateTimeConverter
     {
         public JsonShortDateTimeConverter()
@@ -231,7 +231,7 @@ namespace MyProject.Web
 		[Route("api/Post/update")]
         public HttpResponseMessage Put2([FromBody] JObject request)
         {
-			var requestConverted = request.ToObject<Post>();
+			var requestConverted = request.ToObject&lt;Post&gt;();
 
 			var response = new Post {
 				Category = PostCategory.Media,
@@ -254,9 +254,9 @@ namespace MyProject.Web
 			How to customize a JsonConverter ?
 			<prism-component class="language-csharp line-numbers">
 	/// [JsonConverter(typeof(JsonShortDateTimeConverter))]
-	/// <summary>
+	/// &lt;summary&gt;
     /// Format a DateTime to YYYYMM format.
-    /// </summary>
+    /// &lt;/summary&gt;
     public class JsonShortDateTimeConverter : IsoDateTimeConverter
     {
         public JsonShortDateTimeConverter()

@@ -2627,6 +2627,7 @@ ul.cst-list-nodecoration {
   border-bottom: 2px solid #3097d1;
 }
 .cst-search .cst-search-form > form > input[type="text"] {
+  width: 100%;
   height: 60px;
   font-size: 2.1em;
   background-color: transparent;
@@ -7902,14 +7903,14 @@ ul.cst-list-nodecoration {
   position: relative;
   overflow: hidden;
 }
-.cst-article > .cst-article-content > img.cst-article-main-img {
+.cst-article > .cst-article-content > a > img.cst-article-main-img {
   width: 100%;
   -webkit-transition: transform 0.2s ease-in-out;
   -moz-transition: transform 0.2s ease-in-out;
   -ms-transition: transform 0.2s ease-in-out;
   -o-transition: transform 0.2s ease-in-out;
 }
-.cst-article > .cst-article-content > img.cst-article-main-img:hover {
+.cst-article > .cst-article-content > a > img.cst-article-main-img:hover {
   -webkit-transform: scale(1.1);
   -moz-transform: scale(1.1);
   -ms-transform: scale(1.1);
