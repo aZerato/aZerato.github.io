@@ -7930,6 +7930,7 @@ ul.cst-list-nodecoration {
 }
 .cst-article > .cst-article-content > h2 > a {
   color: #333;
+  text-shadow: #4d4d4d 1px 1px 0px;
   -webkit-transition: color 0.2s ease-in-out;
   -moz-transition: color 0.2s ease-in-out;
   -ms-transition: color 0.2s ease-in-out;

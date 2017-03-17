@@ -47,11 +47,12 @@
 
 			> a
 			{
-				color: #333;
+				color: @grey-alt;
+				.text-shadow(lighten(@grey-alt, 10%) 1px 1px 0px);
 				.transition(color .2s ease-in-out);
 
 				&:hover {
-					color: #c2becb;
+					color: @grey-lite-alt;
 				}
 			}
 		}
