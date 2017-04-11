@@ -192,36 +192,33 @@
 								for (var k = stringSearch.length - 1; k >= 0; k--) {
 									if(response.data[j].word != undefined && response.data[j].word.indexOf(stringSearch[k]) != -1)
 									{
-										var state = false;
-										var temp = articleIds;
-
-										temp = response.data[j].posts.map(function(cpost) {
-													temp.map(function(post) {
-														if(cpost.id == post.id)
-														{
-															cpost.force += post.force;
-															state = true;
-														}
-													});
-
-													return cpost;
-												});
-
-										if(state)
+										if (articleIds.length == 0)
 										{
-											articleIds = temp;
+											articleIds = response.data[j].posts;
+											break;
 										}
-										else
-										{
-											articleIds = articleIds.concat(response.data[j].posts);
-										}
+										response.data[j].posts.map(function(post) {
+											var cpost = articleIds.find(function(fpost) {
+												return fpost.id == post.id;
+											});
+
+											if (cpost != undefined)
+											{
+												cpost.force += post.force;
+											}
+											else
+											{
+												articleIds.push(post);
+											}
+										});
 									}
 								}
 							}
 	
 							defer.resolve(articleIds);
 						},
-						function(error) {
+						function(error)
+						{
 							console.log('articlesServiceProvider::$get::search error(' + error + ')');
 
 							defer.reject(error);

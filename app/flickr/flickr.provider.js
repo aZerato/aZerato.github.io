@@ -75,7 +75,7 @@
 								photos: []
 							};
 
-							for (var j = response.data.photos.photo.length - 1; j >= 0; j--)
+							for (var j = 0; j < response.data.photos.photo.length; j++)
 							{
 								var curPhoto = response.data.photos.photo[j];
 								// https://farm6.staticflickr.com/5566/30797468755_95e65ae1b6.jpg
