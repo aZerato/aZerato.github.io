@@ -2,7 +2,7 @@
 
 [My Github.io website](http://aZerato.github.io/)
 
-This angular app is created for blogging.
+It's a static site generator written in Node.js and Angular.
 - Create your posts with a specific html template
 - "Compile" them
 - "Index" posts
