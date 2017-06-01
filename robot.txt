@@ -1,0 +1,16 @@
+# Website Sitemap
+Sitemap: sitemap.xml
+# Crawlers Setup
+User-agent: *
+Disallow: /app/
+Disallow: /bower_components/
+Disallow: /build/
+Disallow: /cli/
+Disallow: /dist/
+Disallow: /node_modules/
+Disallow: /styles/
+Disallow: /.vscode/
+Disallow: bower.json
+Disallow: Gruntfile.js
+Disallow: LICENCE
+Disallow: package.json
