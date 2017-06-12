@@ -54,7 +54,7 @@
 					// Promise.
 					var defer = $q.defer();
 
-					$http.get(self.postsEmplacement)
+					$http.get(self.postsEmplacement, { cache: true})
 					.then(
 						function(response) {
 							var article = {};
@@ -87,7 +87,7 @@
 					// Promise.
 					var defer = $q.defer();
 
-					$http.get(self.postsEmplacement)
+					$http.get(self.postsEmplacement, { cache: true})
 					.then(
 						function(response) {
 							var articles = [];
@@ -117,7 +117,7 @@
 					// Promise.
 					var defer = $q.defer();
 
-					$http.get(self.paginationConfigEmplacement)
+					$http.get(self.paginationConfigEmplacement, { cache: true})
 					.then(
 						function(response) {
 							defer.resolve(response.data);
@@ -136,7 +136,7 @@
 					// Promise.
 					var defer = $q.defer();
 
-					$http.get(self.postsEmplacement)
+					$http.get(self.postsEmplacement, { cache: true})
 					.then(
 						function(response) {
 							var articles = [];
@@ -183,7 +183,7 @@
 
 					stringSearch = stringSearch.split(' ');
 
-					$http.get(emplacement)
+					$http.get(emplacement, { cache: true})
 					.then(
 						function(response) {
 							var articleIds = [];
@@ -231,7 +231,7 @@
 				{
 					var defer = $q.defer();
 
-					$http.get(self.postsEmplacement)
+					$http.get(self.postsEmplacement, { cache: true})
 					.then(
 						function(response) {
 							var articles = [];
