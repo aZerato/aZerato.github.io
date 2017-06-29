@@ -1,0 +1,82 @@
+<div data-model="publication_date">2017-06-21</div>
+
+<img data-img="/blog/files/img/joker-tfs.jpg" data-img-alt="https://cdn.meme.am/cache/instances/folder235/500x/38435235/joker-mind-loss-tell-that-tfs-is-down-and-everyone-loses-their-minds.jpg" />
+
+<div data-lang="fr">
+    <div data-model="title">Réaliser un merge avec TFS en ligne de commande</div>
+    <div data-model="summary">
+        <p>
+            Vous n'avez sans doute jamais réfléchi à la question mais, "Avons-nous la possibilité d'utiliser TFS via ligne de commande comme Git ?".
+        </p>
+        <p>
+            Oui c'est possible mais pourquoi on pourrait en avoir besoin ?
+        </p>
+    </div>
+    <div data-model="content">
+        <h2>Team Foundation Server en CLI</h2>
+        <p>
+            Vous n'avez sans doute jamais réfléchi à la question mais, "Avons-nous la possibilité d'utiliser TFS via ligne de commande comme Git ?".
+        </p>
+        <h3>Pourquoi s'infliger tant de souffrance ?</h3>
+        <p>
+            Et bien dans mon cas, nous avons deux solutions similaires dont les principales différences touchent le visuel.
+        </p>
+        <p>
+            Une des solutions a évolué plus rapidement que l'autre et il est temps maintenant d'appliquer les modifications de l'une sur l'autre.
+        </p>
+        <h3>Le problème</h3>
+        <p>
+            Nous sommes en train d'envisager un merge entre deux solutions "séparées". Et l'interface intégrée à Visual Studio ne nous permet pas se genre de manipulation (ce qui semble normal car risqué).
+        </p>
+        <p>
+            <blockquote>
+                Vu la similarité des projets, il aurait sans doute été préférable de créer une branche pour chaque projet et non de tout séparer.
+            </blockquote>
+        </p>
+        <h3>Comment accéder au CLI <b>TF</b> ?</h3>
+        <p>
+            La première chose à faire est de trouver le chemin vers 'TF.exe' (ex : D:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE). Vous pouvez maintenant l'ajouter à votre 'Path' <a href="http://sametmax.com/ajouter-un-chemin-a-la-variable-denvironnement-path-sous-windows/"
+                alt="Ajouter au Path Windows">(lien)</a>.
+        </p>
+        <p>
+            <blockquote>
+                Si vous ne l'avez pas ajouter à votre Path, il faut via votre outil de ligne de commande que vous vous déplacez dans le répertoire où se trouve 'TF.exe' et à partir de là vous serez en mesure de taper la commande suivante :
+                <code>> .\TF.exe</code>.
+            </blockquote>
+        </p>
+        <p>
+
+        </p>
+    </div>
+</div>
+
+<div data-lang="en">
+    <div data-model="title">C# : Change the WebClient timeout.</div>
+    <div data-model="summary">
+        <p>
+            With this sample you are able to change the default <b>WebClient</b> timeout. The default value depends on the <i>HttpWebRequest</i> Timeout => 100 seconds (default session timeout is 20 minutes).
+        </p>
+    </div>
+    <div data-model="content">
+        <p>
+            With this sample you are able to change the default <b>WebClient</b> timeout. The default value depends on the <i>HttpWebRequest</i> Timeout => 100 seconds (default session timeout is 20 minutes).
+        </p>
+        <h2>Sample method</h2>
+        <p>
+            Create an inherited class from WebClient :
+            <prism-component class="language-csharp line-numbers">
+                namespace System.Net { using System; /// &lt;summary&gt; /// Custom WebClient. /// &lt;/summary&gt; public class CustomWebClient : WebClient { /// &lt;summary&gt; /// Customized default WebClient timeout (100s) to 5s. /// &lt;/summary&gt; /// &lt;param
+                name="address"&gt;Url adresse.&lt;/param&gt; /// &lt;returns&gt;The customized WebRequest&lt;/returns&gt; protected override WebRequest GetWebRequest(Uri address) { WebRequest webR = base.GetWebRequest(address); webR.Timeout = 5000; //
+                milliseconds return webR; } } }
+            </prism-component>
+        </p>
+        <h2>En action</h2>
+        <p>
+            Now you can use your new class :
+            <prism-component class="language-csharp line-numbers">
+                using (var client = new CustomWebClient()) { [....] }
+            </prism-component>
+            If you want test this you can simulate slow response with "Thread.Sleep(15000);" (milliseconds).
+        </p>
+    </div>
+</div>
