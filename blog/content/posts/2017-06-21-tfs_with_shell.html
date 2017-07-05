@@ -51,32 +51,11 @@
 </div>
 
 <div data-lang="en">
-    <div data-model="title">C# : Change the WebClient timeout.</div>
+    <div data-model="title">Merge with TFS CLI.</div>
     <div data-model="summary">
-        <p>
-            With this sample you are able to change the default <b>WebClient</b> timeout. The default value depends on the <i>HttpWebRequest</i> Timeout => 100 seconds (default session timeout is 20 minutes).
-        </p>
+
     </div>
     <div data-model="content">
-        <p>
-            With this sample you are able to change the default <b>WebClient</b> timeout. The default value depends on the <i>HttpWebRequest</i> Timeout => 100 seconds (default session timeout is 20 minutes).
-        </p>
-        <h2>Sample method</h2>
-        <p>
-            Create an inherited class from WebClient :
-            <prism-component class="language-csharp line-numbers">
-                namespace System.Net { using System; /// &lt;summary&gt; /// Custom WebClient. /// &lt;/summary&gt; public class CustomWebClient : WebClient { /// &lt;summary&gt; /// Customized default WebClient timeout (100s) to 5s. /// &lt;/summary&gt; /// &lt;param
-                name="address"&gt;Url adresse.&lt;/param&gt; /// &lt;returns&gt;The customized WebRequest&lt;/returns&gt; protected override WebRequest GetWebRequest(Uri address) { WebRequest webR = base.GetWebRequest(address); webR.Timeout = 5000; //
-                milliseconds return webR; } } }
-            </prism-component>
-        </p>
-        <h2>En action</h2>
-        <p>
-            Now you can use your new class :
-            <prism-component class="language-csharp line-numbers">
-                using (var client = new CustomWebClient()) { [....] }
-            </prism-component>
-            If you want test this you can simulate slow response with "Thread.Sleep(15000);" (milliseconds).
-        </p>
+
     </div>
 </div>
