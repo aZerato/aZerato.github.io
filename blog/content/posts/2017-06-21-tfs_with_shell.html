@@ -1,0 +1,138 @@
+<div data-model="publication_date">2017-06-21</div>
+
+<img data-img="/blog/files/img/joker-tfs.jpg" data-img-alt="https://cdn.meme.am/cache/instances/folder235/500x/38435235/joker-mind-loss-tell-that-tfs-is-down-and-everyone-loses-their-minds.jpg" />
+
+<div data-lang="fr">
+    <div data-model="title">TFS en ligne de commande</div>
+    <div data-model="summary">
+        <p>
+            Vous n'avez sans doute jamais réfléchi à la question mais, "Avons-nous la possibilité d'utiliser TFS via ligne de commande comme Git ?".
+        </p>
+    </div>
+    <div data-model="content">
+        <h2>Team Foundation Server en CLI</h2>
+        <p>
+            Vous n'avez sans doute jamais réfléchi à la question mais, "Avons-nous la possibilité d'utiliser TFS via ligne de commande comme Git ?".
+        </p>
+        <h3>Pourquoi s'infliger tant de souffrance* ?</h3>
+        <p>
+            Et bien dans mon cas, nous avons deux solutions similaires dont les principales différences touchent le visuel.
+        </p>
+        <p>
+            Une des solutions a évolué plus rapidement que l'autre et il est temps maintenant d'appliquer les modifications de l'une à l'autre.
+        </p>
+        <h3>Le problème</h3>
+        <p>
+            Nous sommes en train d'envisager un merge entre deux solutions "séparées". Et l'interface intégrée à Visual Studio ne nous permet pas ce genre de manipulation (ce qui semble normal car risqué [trop de conflits]).
+        </p>
+        <p>
+            <blockquote>
+                Vu la similarité des projets, il aurait problablement préférable de créer une branche pour chaque projet et non de tout séparer.
+            </blockquote>
+        </p>
+        <h3>Comment accéder au CLI <b>TF</b> ?</h3>
+        <p>
+            La première chose à faire est de trouver le chemin vers 'TF.exe' (ex : D:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE). Vous pouvez maintenant l'ajouter à votre 'Path' <a href="http://sametmax.com/ajouter-un-chemin-a-la-variable-denvironnement-path-sous-windows/"
+                alt="Ajouter au Path Windows">(lien)</a>.
+        </p>
+        <p>
+            <blockquote>
+                Si vous ne l'avez pas ajouté à votre Path, il faut via votre outil de ligne de commande que vous vous déplacez dans le répertoire où se trouve 'TF.exe' et à partir de là vous serez en mesure de taper la commande suivante :
+                <code>> .\TF.exe</code>.
+            </blockquote>
+        </p>
+        <p>
+            Vous êtes en mesure d'éxécuter la commande :
+            <ul>
+                <li><code>> .\TF.exe workspaces</code></li>
+                <li>ou</li>
+                <li><code>> tf workspaces</code></li>
+            </ul>
+        </p>
+        <p>
+            Maintenant passons aux choses sérieuses :
+            <ul>
+                <li><code>> tf merge /baseless -r "$/Project2/Main/Source" "$/Project1/Main/Source"</code></li>
+                <li>ou directement sur les dossiers</li>
+                <li><code>> tf merge /baseless -r "D:/tfs-projects/Project2/Main/Source" "D:/tfs-projects/Project1/Main/Source"</code></li>
+            </ul>
+            /baseless = pas de relations entre les branches & -r = recursif.
+        </p>
+        <p>
+            * Je ne suis pas un "fou" des CLI mais, ça ne me dérange pas alors que certaines personnes sont plus sensibles à avoir des boutons ☺
+        </p>
+        <p style="text-align:center;">
+            <img class="img-rounded" src="/blog/files/img/cli-joke.jpg" alt="https://cmatskas.com/content/images/2015/Aug/Command_Line_tools_meme.jpg" />
+        </p>
+        <p>
+            <a href="https://benoit808.wordpress.com/2009/03/30/tfs-source-control-merging-between-team-projects/" alt="sources">sources</a>
+        </p>
+    </div>
+</div>
+
+<div data-lang="en">
+    <div data-model="title">TFS CLI.</div>
+    <div data-model="summary">
+        <p>
+            Can I use TFS through a CLI ?
+        </p>
+    </div>
+    <div data-model="content">
+        <h2>Team Foundation Server CLI</h2>
+        <p>
+            Can I use TFS through a CLI ?
+        </p>
+        <h3>But why ???*</h3>
+        <p>
+            In my case, I've got two similar solutions where the only difference is the "visual". The second is a copy from the first one.
+        </p>
+        <p>
+            However, one of these solutions has been upgraded many times, and now we need to update the other one.
+        </p>
+        <h3>Issue</h3>
+        <p>
+            We attempt to merge two separate solutions where no relation exists. The VS interface doesn't permit to do something like this (because too many risk of conflicts).
+        </p>
+        <p>
+            <blockquote>
+                Maybe next time the best solution was to create a branch.
+            </blockquote>
+        </p>
+        <h3>How to use <b>TF</b> CLI ?</h3>
+        <p>
+            Find the path to 'TF.exe' (ex : D:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE). Add to your 'Path' <a href="https://superuser.com/questions/949560/how-do-i-set-system-environment-variables-in-windows-10" alt="Customize the Windows path">(lien)</a>.
+        </p>
+        <p>
+            <blockquote>
+                If you didn't add it to your Path, you need to open the 'IDE' folder with you CLI :
+                <code>> .\TF.exe</code>.
+            </blockquote>
+        </p>
+        <p>
+            Test :
+            <ul>
+                <li><code>> .\TF.exe workspaces</code></li>
+                <li>or</li>
+                <li><code>> tf workspaces</code></li>
+            </ul>
+        </p>
+        <p>
+            Immediately get down to serious matter:
+            <ul>
+                <li><code>> tf merge /baseless -r "$/Project2/Main/Source" "$/Project1/Main/Source"</code></li>
+                <li>Or with folders</li>
+                <li><code>> tf merge /baseless -r "D:/tfs-projects/Project2/Main/Source" "D:/tfs-projects/Project1/Main/Source"</code></li>
+            </ul>
+            /baseless = ignore branches relationship & -r = recursive.
+        </p>
+        <p>
+            * Some people doesn't like to use a CLI !
+        </p>
+        <p style="text-align:center;">
+            <img class="img-rounded" src="/blog/files/img/cli-joke.jpg" alt="https://cmatskas.com/content/images/2015/Aug/Command_Line_tools_meme.jpg" />
+        </p>
+        <p>
+            <a href="https://benoit808.wordpress.com/2009/03/30/tfs-source-control-merging-between-team-projects/" alt="sources">sources</a>
+        </p>
+    </div>
+</div>
