@@ -18,7 +18,7 @@ module.exports = PostsConverter = (function(){
 	var PostsConverter = function() {
 	};
 
-	PostsConverter.prototype.convert = function(args, program)
+	PostsConverter.prototype.convert = function(program)
 	{
 		// init FileHelper.
 		var fileHelper = new FileHelper(program.debug);

@@ -9,9 +9,12 @@ var path = require('path');
  * Commander Program : Posts converter.
  */
 program
-	.version('0.0.1')
+	.version('0.0.2')
+	.option('-i, --index', 'Posts indexing')
+	.option('-c, --convert', 'Posts conversion')
 	.option('-d, --debug', 'Show trace')
-	.option('-p --path <string>', 'Specify the posts path', path, 'blog/content/posts/');
+	.option('-p --path <string>', 'Specify the posts path', path, 'blog/content/posts/')
+	.parse(process.argv);
 
 /*
  * Internal dependencies.
@@ -25,15 +28,15 @@ var postsIndexer = new PostsIndexer();
 /*
  * Convert posts.
  */
-program.on('convert', function(args) {
-	postsConverter.convert(args, program);
-});
+if (program.convert)
+{
+	postsConverter.convert(program);
+}
 
 /*
  * Convert posts.
  */
-program.on('indexing', function(args) {
-	postsIndexer.indexing(args, program);
-});
-
-program.parse(process.argv);
+if (program.index)
+{
+	postsIndexer.indexing(program);
+}

@@ -19,7 +19,7 @@ module.exports = PostsIndexer = (function(){
 	var PostsIndexer = function() {
 	};
 
-	PostsConverter.prototype.indexing = function(args, program)
+	PostsConverter.prototype.indexing = function(program)
 	{
 		this.fileHelper = new FileHelper(program.debug);
 		this.stringHelper = new StringHelper();
