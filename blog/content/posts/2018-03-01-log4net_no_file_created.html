@@ -3,7 +3,7 @@
 <img data-img="/blog/files/img/log-all.png" data-img-alt="http://in-security.org/2015/11/20/log-all-the-things-episode-039/" />
 
 <div data-lang="fr">
-    <div data-model="title">Log4Net : Aucun fichier de log généré</div>
+    <div data-model="title">Log4Net : Aucun fichier de log généré avec "log4net.Config.XmlConfigurator" && Création d'un fichier de configuration</div>
     <div data-model="summary">
         <p>
             J'ai une solution relativement simple découpée en trois "dossiers de projets" (inspiration DDD) :
@@ -16,9 +16,9 @@
         <p>
             Le problème vient du fait que j'ai voulu gérer deux fichiers de configurations.
         </p>
-        <p>
+        <h3>
             Pourquoi ? 
-        </p>
+        </h3>
         <p>
             J'ai deux projets dans la couche "Presentation", un projet "Legacy" qui appelle un autre projet de la couche "Presentation", et c'est autre projet qui a un lien avec tous les autres couches.
         </p>
@@ -38,20 +38,56 @@
             <p>
                 Le problème vient du fait que j'ai voulu gérer deux fichiers de configurations.
             </p>
-            <p>
+            <h3>
                 Pourquoi ? 
-            </p>
+            </h3>
             <p>
                 J'ai deux projets dans la couche "Presentation", un projet "Legacy" qui appel un autre projet de la couche "Presentation", et c'est autre projet qui a un lien avec tous les autres couches.
             </p>
             <p>
                 Le projet "Legacy" de la couche "Presentation" est "indépendant", il n'a que l'invocation d'une class "COM" de l'autre projet. Je souhaitais vraiment défaire un maximum de liens possibles entre le projet "Legacy" et le reste.
             </p>
+            <p>
+                Comme je n'ai pas de "vrai" application, j'ai donc créé un fichier de configuration directement dans le projet se situant dans la couche "CrossCutting".
+            </p>
+            <h3>
+                Création d'un fichier de configuration pour une DLL ou un projet
+            </h3>
+            <p>
+                Si votre projet s'appelle "Groot.CrossCutting" avec l'exemple C# que je vais donner, il faut que votre fichier de configuration soit nommé "Groot.CrossCutting.dll.config".
+            </p>
+            <p>
+                Vous créez ensuite une class type "ConfigurationHelper" :
+            </p>
+            <prism-component class="language-csharp line-numbers">
+private ConfigurationHelper()
+{
+    this.ApplicationConfiguration = ConfigurationManager.OpenExeConfiguration(this.GetType().Assembly.Location);
+    this.FilePath = this.ApplicationConfiguration.FilePath;
+    this.AppSettings = this.ApplicationConfiguration.AppSettings;
+}
+
+public string AppSettingsValue(string key)
+{
+    string value = null;
+    var keyvalue = this.AppSettings.Settings[key];
+
+    if (keyvalue != null)
+    {
+        value = keyvalue.Value;
+    }
+
+    return value;
+}
+            </prism-component>
+            <p>
+
+            </p>
     </div>
 </div>
 
 <div data-lang="en">
-    <div data-model="title">Log4Net : No log file generated</div>
+    <div data-model="title">Log4Net : No log file generated with "log4net.Config.XmlConfigurator" && Configuration file creation</div>
     <div data-model="summary">
         <p>
             Be patient !

@@ -134,7 +134,7 @@ module.exports = function(grunt){
 				],
 				options: {
 					args: [
-						'convert', 
+						'-c', 
 						'-d',
 						'-p',
 						'blog/content/posts/'
@@ -147,7 +147,7 @@ module.exports = function(grunt){
 				],
 				options: {
 					args: [
-						'indexing', 
+						'-i', 
 						'-d',
 						'-p',
 						'blog/content/posts/'
