@@ -3,3 +3,5 @@ bower_components
 dist
 debug.log
 .tmp
+.vscode/settings.json
+change author git.sh
