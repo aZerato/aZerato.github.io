@@ -3,7 +3,7 @@
 <img data-img="/blog/files/img/log-all.png" data-img-alt="http://in-security.org/2015/11/20/log-all-the-things-episode-039/" />
 
 <div data-lang="fr">
-    <div data-model="title">Log4Net : Aucun fichier de log généré avec "log4net.Config.XmlConfigurator" && Création d'un fichier de configuration</div>
+    <div data-model="title">Log4Net : Aucun fichier de log généré && Création d'un fichier de configuration</div>
     <div data-model="summary">
         <p>
             J'ai une solution relativement simple découpée en trois "dossiers de projets" (inspiration DDD) :
@@ -80,14 +80,20 @@ public string AppSettingsValue(string key)
     return value;
 }
             </prism-component>
+            <h3>
+                Log4Net
+            </h3>
             <p>
-
+                C'est ensuite au niveau de l'"AssemblyInfo" du projet "Groot.CrossCutting" que l'on va placer la propriété Log4Net "[assembly: log4net.Config.XmlConfigurator(Watch=true)]".
+            </p>
+            <p>
+                Vous pouvez ensuite remplir le fichier de configuration normalement en y ajoutant la partie Log4Net !
             </p>
     </div>
 </div>
 
 <div data-lang="en">
-    <div data-model="title">Log4Net : No log file generated with "log4net.Config.XmlConfigurator" && Configuration file creation</div>
+    <div data-model="title">Log4Net : No log file generated && Configuration file creation</div>
     <div data-model="summary">
         <p>
             Be patient !
