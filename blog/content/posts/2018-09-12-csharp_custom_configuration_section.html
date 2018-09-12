@@ -1,0 +1,563 @@
+<div data-model="publication_date">2018-09-12</div>
+
+<img data-img="/blog/files/img/where-is-config-file.jpg" data-img-alt="https://kyleferg.com/immutability-beyond-code/" />
+
+<div data-lang="fr">
+    <div data-model="title">C# : Création d'une section dans votre fichier de configuration.</div>
+    <div data-model="summary">
+        <p>
+            Création d'une section personnalisée dans un fichier de configuration.
+        </p>
+        <p>
+            Comprendre le principe de "section" et son utilisation de manière custom.
+        </p>
+    </div>
+    <div data-model="content">
+        <p>
+            Création d'une section personnalisée dans un fichier de configuration.
+        </p>
+        <p>
+            Fichier de configuration final :
+        </p>
+        <prism-component class="language-xml line-numbers">
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <configSections>
+        <section name="comelements" type="Groot.Configuration.CustElementsSection, Groot" />
+    </configSections>
+    <appSettings>
+        <add key="ApplicationUrl" value="localhost" />
+        <add key="ApplicationPort" value="5099" />
+    </appSettings>
+    <comelements>
+        <comelement>
+            <add type="Test" title="Title 1" attr1="Attr 1.1" attr2="Attr 2.1" attr3="Attr 3.1" attr4="Attr 4.1" />
+            <add type="Test2" title="Title 2" attr1="Attr 1.2" attr2="Attr 2.2" attr3="Attr 3.2" attr4="Attr 4.2" />
+            <add type="Test3" title="Title 3" attr1="Attr 1.3" attr2="Attr 2.3" attr3="Attr 3.3" attr4="Attr 4.3" />
+        </comelement>
+    </comelements>
+</configuration>
+        </prism-component> 
+        <p>
+            Il faut déclarer sa nouvelle section personnalisée "comelements".
+        </p>
+        <p>
+            On peut voir que le type match avec la classe suivante :
+        </p>
+        <prism-component class="language-csharp line-numbers">
+namespace Groot.Configuration
+{
+    using System;
+    using System.Configuration;
+    
+    /// <summary>
+    /// The CustElementsSection class.
+    /// </summary>
+    public class CustElementsSection : ConfigurationSection
+    {
+        public const string SectionGroupName = "custelements";
+        public const string SectionName = "custelement";
+    
+        [ConfigurationProperty(CustElementsSection.SectionName)]
+        [ConfigurationCollection(typeof(CustElementsCollection),
+                AddItemName = "add",
+                ClearItemsName = "clear",
+                RemoveItemName = "remove")]
+        public CustElementsCollection CustElements
+        {
+            get 
+            {
+                var CustElementsCollection = ((CustElementsCollection)(base[CustElementsSection.SectionName]));
+    
+                return CustElementsCollection;
+            }
+            set
+            {
+                var CustElementsCollection = value;
+            }
+        }
+    
+        // Create a new instance of the CustElementsSection.
+        // This constructor creates a configuration element 
+        // using the CustElement default values.
+        // It assigns this element to the collection.
+        public CustElementsSection()
+        {
+            CustElement element = new CustElement();
+            CustElements.Add(element);
+        }
+    }
+    
+    /// <summary>
+    /// The CustElementsCollection class.
+    /// </summary>
+    public class CustElementsCollection : ConfigurationElementCollection
+    {
+        public CustElementsCollection() { }
+    
+        public override ConfigurationElementCollectionType CollectionType
+        {
+            get
+            {
+                return ConfigurationElementCollectionType.AddRemoveClearMap;
+            }
+        }
+    
+        protected override ConfigurationElement CreateNewElement()
+        {
+            return new CustElement();
+        }
+    
+        protected override Object GetElementKey(ConfigurationElement element)
+        {
+            return ((CustElement)element).Type;
+        }
+    
+        public CustElement this[int index]
+        {
+            get
+            {
+                return (CustElement)BaseGet(index);
+            }
+            set
+            {
+                if (BaseGet(index) != null)
+                {
+                    BaseRemoveAt(index);
+                }
+                BaseAdd(index, value);
+            }
+        }
+    
+        new public CustElement this[string Name]
+        {
+            get
+            {
+                return (CustElement)BaseGet(Name);
+            }
+        }
+    
+        public int IndexOf(CustElement url)
+        {
+            return BaseIndexOf(url);
+        }
+    
+        public void Add(CustElement element)
+        {
+            BaseAdd(element);
+        }
+    
+        protected override void BaseAdd(ConfigurationElement element)
+        {
+            BaseAdd(element, false);
+        }
+    
+        public void Remove(CustElement element)
+        {
+            if (BaseIndexOf(element) >= 0)
+            {
+                BaseRemove(element.Type);
+            }
+        }
+    
+        public void RemoveAt(int index)
+        {
+            BaseRemoveAt(index);
+        }
+    
+        public void Remove(string name)
+        {
+            BaseRemove(name);
+        }
+    
+        public void Clear()
+        {
+            BaseClear();
+        }
+    }
+    
+    /// <summary>
+    /// The CustElement class.
+    /// </summary>
+    public class CustElement : ConfigurationElement
+    {
+        /// <summary>
+        /// Create a "Type" attribute.
+        /// </summary>
+        [ConfigurationProperty("type", IsRequired = true, IsKey = true)]
+        public string Type
+        {
+            get
+            {
+                return (string)this["type"];
+            }
+            set
+            {
+                this["type"] = value;
+            }
+        }
+    
+        /// <summary>
+        /// Create a "Title" attribute.
+        /// </summary>
+        [ConfigurationProperty("title", IsRequired = true, IsKey = true)]
+        public string Title
+        {
+            get
+            {
+                return (string)this["title"];
+            }
+            set
+            {
+                this["title"] = value;
+            }
+        }
+    
+        /// <summary>
+        /// Create a "attr1" attribute.
+        /// </summary>
+        [ConfigurationProperty("attr1", IsRequired = true)]
+        public string attr1
+        {
+            get
+            {
+                return (string)this["attr1"];
+            }
+            set
+            {
+                this["attr1"] = value;
+            }
+        }
+    
+        /// <summary>
+        /// Create a "attr2" attribute.
+        /// </summary>
+        [ConfigurationProperty("attr2", IsRequired = true)]
+        public string attr2
+        {
+            get
+            {
+                return (string)this["attr2"];
+            }
+            set
+            {
+                this["attr2"] = value;
+            }
+        }
+    
+        /// <summary>
+        /// Create a "attr3" attribute.
+        /// </summary>
+        [ConfigurationProperty("attr3", IsRequired = true)]
+        public string attr3
+        {
+            get
+            {
+                return (string)this["attr3"];
+            }
+            set
+            {
+                this["attr3"] = value;
+            }
+        }
+    
+        /// <summary>
+        /// Create a "attr4" attribute.
+        /// </summary>
+        [ConfigurationProperty("attr4", IsRequired = true)]
+        public string attr4
+        {
+            get
+            {
+                return (string)this["attr4"];
+            }
+            set
+            {
+                this["attr4"] = value;
+            }
+        }
+    }
+}
+        </prism-component>
+    </div>
+</div>
+
+<div data-lang="en">
+    <div data-model="title">C# : Custom section in configuration file.</div>
+    <div data-model="summary">
+        <p>
+            Create a custom configuration file.
+        </p>
+        <p>
+            The "section" principle & how to use it !
+        </p>
+    </div>
+    <div data-model="content">
+        <p>
+            Create a custom configuration file.
+        </p>
+        <p>
+            Your final configuration file :
+        </p>
+        <prism-component class="language-xml line-numbers">
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <configSections>
+        <section name="comelements" type="Groot.Configuration.CustElementsSection, Groot" />
+    </configSections>
+    <appSettings>
+        <add key="ApplicationUrl" value="localhost" />
+        <add key="ApplicationPort" value="5099" />
+    </appSettings>
+    <comelements>
+        <comelement>
+            <add type="Test" title="Title 1" attr1="Attr 1.1" attr2="Attr 2.1" attr3="Attr 3.1" attr4="Attr 4.1" />
+            <add type="Test2" title="Title 2" attr1="Attr 1.2" attr2="Attr 2.2" attr3="Attr 3.2" attr4="Attr 4.2" />
+            <add type="Test3" title="Title 3" attr1="Attr 1.3" attr2="Attr 2.3" attr3="Attr 3.3" attr4="Attr 4.3" />
+        </comelement>
+    </comelements>
+</configuration>
+        </prism-component> 
+        <p>
+            You need to declare you custom section "comelements".
+        </p>
+        <p>
+            The "type" attribute matches with this following class :
+        </p>
+        <prism-component class="language-csharp line-numbers">
+namespace Groot.Configuration
+{
+    using System;
+    using System.Configuration;
+    
+    /// <summary>
+    /// The CustElementsSection class.
+    /// </summary>
+    public class CustElementsSection : ConfigurationSection
+    {
+        public const string SectionGroupName = "custelements";
+        public const string SectionName = "custelement";
+    
+        [ConfigurationProperty(CustElementsSection.SectionName)]
+        [ConfigurationCollection(typeof(CustElementsCollection),
+                AddItemName = "add",
+                ClearItemsName = "clear",
+                RemoveItemName = "remove")]
+        public CustElementsCollection CustElements
+        {
+            get 
+            {
+                var CustElementsCollection = ((CustElementsCollection)(base[CustElementsSection.SectionName]));
+    
+                return CustElementsCollection;
+            }
+            set
+            {
+                var CustElementsCollection = value;
+            }
+        }
+    
+        // Create a new instance of the CustElementsSection.
+        // This constructor creates a configuration element 
+        // using the CustElement default values.
+        // It assigns this element to the collection.
+        public CustElementsSection()
+        {
+            CustElement element = new CustElement();
+            CustElements.Add(element);
+        }
+    }
+    
+    /// <summary>
+    /// The CustElementsCollection class.
+    /// </summary>
+    public class CustElementsCollection : ConfigurationElementCollection
+    {
+        public CustElementsCollection() { }
+    
+        public override ConfigurationElementCollectionType CollectionType
+        {
+            get
+            {
+                return ConfigurationElementCollectionType.AddRemoveClearMap;
+            }
+        }
+    
+        protected override ConfigurationElement CreateNewElement()
+        {
+            return new CustElement();
+        }
+    
+        protected override Object GetElementKey(ConfigurationElement element)
+        {
+            return ((CustElement)element).Type;
+        }
+    
+        public CustElement this[int index]
+        {
+            get
+            {
+                return (CustElement)BaseGet(index);
+            }
+            set
+            {
+                if (BaseGet(index) != null)
+                {
+                    BaseRemoveAt(index);
+                }
+                BaseAdd(index, value);
+            }
+        }
+    
+        new public CustElement this[string Name]
+        {
+            get
+            {
+                return (CustElement)BaseGet(Name);
+            }
+        }
+    
+        public int IndexOf(CustElement url)
+        {
+            return BaseIndexOf(url);
+        }
+    
+        public void Add(CustElement element)
+        {
+            BaseAdd(element);
+        }
+    
+        protected override void BaseAdd(ConfigurationElement element)
+        {
+            BaseAdd(element, false);
+        }
+    
+        public void Remove(CustElement element)
+        {
+            if (BaseIndexOf(element) >= 0)
+            {
+                BaseRemove(element.Type);
+            }
+        }
+    
+        public void RemoveAt(int index)
+        {
+            BaseRemoveAt(index);
+        }
+    
+        public void Remove(string name)
+        {
+            BaseRemove(name);
+        }
+    
+        public void Clear()
+        {
+            BaseClear();
+        }
+    }
+    
+    /// <summary>
+    /// The CustElement class.
+    /// </summary>
+    public class CustElement : ConfigurationElement
+    {
+        /// <summary>
+        /// Create a "Type" attribute.
+        /// </summary>
+        [ConfigurationProperty("type", IsRequired = true, IsKey = true)]
+        public string Type
+        {
+            get
+            {
+                return (string)this["type"];
+            }
+            set
+            {
+                this["type"] = value;
+            }
+        }
+    
+        /// <summary>
+        /// Create a "Title" attribute.
+        /// </summary>
+        [ConfigurationProperty("title", IsRequired = true, IsKey = true)]
+        public string Title
+        {
+            get
+            {
+                return (string)this["title"];
+            }
+            set
+            {
+                this["title"] = value;
+            }
+        }
+    
+        /// <summary>
+        /// Create a "attr1" attribute.
+        /// </summary>
+        [ConfigurationProperty("attr1", IsRequired = true)]
+        public string attr1
+        {
+            get
+            {
+                return (string)this["attr1"];
+            }
+            set
+            {
+                this["attr1"] = value;
+            }
+        }
+    
+        /// <summary>
+        /// Create a "attr2" attribute.
+        /// </summary>
+        [ConfigurationProperty("attr2", IsRequired = true)]
+        public string attr2
+        {
+            get
+            {
+                return (string)this["attr2"];
+            }
+            set
+            {
+                this["attr2"] = value;
+            }
+        }
+    
+        /// <summary>
+        /// Create a "attr3" attribute.
+        /// </summary>
+        [ConfigurationProperty("attr3", IsRequired = true)]
+        public string attr3
+        {
+            get
+            {
+                return (string)this["attr3"];
+            }
+            set
+            {
+                this["attr3"] = value;
+            }
+        }
+    
+        /// <summary>
+        /// Create a "attr4" attribute.
+        /// </summary>
+        [ConfigurationProperty("attr4", IsRequired = true)]
+        public string attr4
+        {
+            get
+            {
+                return (string)this["attr4"];
+            }
+            set
+            {
+                this["attr4"] = value;
+            }
+        }
+    }
+}
+        </prism-component>
+    </div>
+</div>
