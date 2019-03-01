@@ -6,13 +6,13 @@
 		<div class="loader"></div>
 	</div>
 
-	<div class="cst-flickr-imgs mx-auto" 
+	<div class="cst-flickr-imgs row" 
 		ng-show="$ctrl.imgsLoaded">
 
 		<a ng-repeat="img in $ctrl.imgs" 
 			title="Photo Flickr by {{$ctrl.username}} - {{img.title}}" 
 			href="{{img.publicUrl}}" 
-			class="col-xs-4 col-sm-3 col-md-3 cst-flickr-img" 
+			class="col-xs-3 col-sm-3 col-md-4 cst-flickr-img" 
 			target="_blank">
 			<img src="{{img.url}}" alt="{{img.title}}" />
 			<span class="cst-flickr-title">{{img.title}}</span>
