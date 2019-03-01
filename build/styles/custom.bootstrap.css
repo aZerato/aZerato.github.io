@@ -2615,6 +2615,7 @@ ul.cst-list-nodecoration {
   right: 10px;
   font-size: 25px;
   z-index: 1004;
+  color: #f39c12;
 }
 .cst-search .cst-search-form > form {
   width: 80%;
@@ -2624,7 +2625,7 @@ ul.cst-list-nodecoration {
   position: absolute;
   top: 50px;
   z-index: 1003;
-  border-bottom: 2px solid #c0392b;
+  border-bottom: 2px solid #f39c12;
 }
 .cst-search .cst-search-form > form > input[type="text"] {
   width: 100%;
@@ -2632,6 +2633,7 @@ ul.cst-list-nodecoration {
   font-size: 2.1em;
   background-color: transparent;
   border: none;
+  color: #d35400;
 }
 .cst-search .cst-search-form > form > .glyphicon {
   position: absolute;
@@ -2664,16 +2666,22 @@ ul.cst-list-nodecoration {
 .cst-search .cst-search-form > .cst-search-articles h2 {
   text-align: center;
   font-family: 'Intro';
+  color: #c0392b;
+  text-shadow: #d65548 1px 1px 0px;
 }
 .cst-search .cst-search-form > .cst-search-articles h2 > a {
-  color: #333;
+  color: #c0392b;
 }
 .cst-search .cst-search-form > .cst-search-articles h2 > a:hover {
-  color: ligthen(#2a2730, 10%);
+  color: #d35400;
 }
 .cst-search .cst-search-form > .cst-search-articles .cst-article-date {
   text-align: center;
   font-family: 'Intro';
+  color: #d35400;
+}
+.cst-search .cst-search-form > .cst-search-articles .cst-article-inner-content {
+  color: white;
 }
 .cst-search .cst-search-form > .cst-search-articles:before {
   content: ' ';
