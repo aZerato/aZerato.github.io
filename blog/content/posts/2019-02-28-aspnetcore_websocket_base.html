@@ -1,0 +1,156 @@
+<div data-model="publication_date">2019-02-28</div>
+
+<img data-img="/blog/files/img/websocket.gif" data-img-alt="https://www.imaginarycloud.com/blog/websockets-and-action-cable-in-rails-5/" />
+
+<div data-lang="fr">
+    <div data-model="title">ASP .NET Core / Javascript : HTTPS et "Error during WebSocket handshake" / CORS.</div>
+    <div data-model="summary">
+        <p>
+            Bonjour, me voilà sur un nouveau test avec ASP .NET Core et les websocket via SignalR.
+        </p>
+        <p>
+            Je vous envoie tout d'abord vers la documentation Microsoft 
+            (<a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/websockets?view=aspnetcore-2.2" alt="Doc Microsoft WebSocket">lien</a>) 
+            car vous y trouverez une excellente base.
+        </p>
+        <p>
+            Si vous démarrez d'un projet from scratch, vous remarquerez que votre site sera en Https.
+            Et c'est bien le point que j'avais omis dans la partie javascript que je codais pour tester mon service WS.
+        </p>
+    </div>
+    <div data-model="content">
+        <p>
+            Bonjour, me voilà sur un nouveau test avec ASP .NET Core et les websocket via SignalR.
+        </p>
+        <p>
+            Je vous envoie tout d'abord vers la documentation Microsoft 
+            (<a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/websockets?view=aspnetcore-2.2" alt="Doc Microsoft WebSocket">lien</a>) 
+            car vous y trouverez une excellente base.
+        </p>
+        
+        <h2>Core</h2> 
+        <p>
+            Si vous démarrez d'un projet from scratch, vous remarquerez que votre site sera en Https.
+            Et c'est bien le point que j'avais omis dans la partie javascript que je codais pour tester mon service WS.
+        </p>
+
+        <h2>Cors</h2> 
+        <p>
+            J'ai démarré mon application Core et lancé une petite application Javascript sur un server Http port 8080 (node <a href="https://www.npmjs.com/package/http-server">http-server</a>).
+        </p>
+        <p>
+            Comme mes deux applications sont 'séparées' n'oubliez pas <a href="https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-2.2">CORS</a> ! 
+        </p>
+        <p>
+            Car forte heureusement vous ne pouvez pas requêter un autre server comme ça :)
+        </p>
+        <p style="text-align:center;">
+            <img class="img-rounded" src="/blog/files/img/cors.png" alt="https://www.we45.com/blog/3-ways-to-exploit-misconfigured-cross-origin-resource-sharing-cors" />
+        </p>
+        <p>
+            Mon application Core tourne en Https sur le port 5001 et mon application JS tourne sur le port 8080.
+        </p>
+        <p>
+            Vous devez autoriser dans votre application Core les requêtes provenant d'une application externe.
+        </p>
+        <prism-component class="language-csharp line-numbers">
+public class Startup
+{
+    public Startup(IConfiguration configuration)
+    {
+        Configuration = configuration;
+    }
+
+    public IConfiguration Configuration { get; }
+
+    // This method gets called by the runtime. Use this method to add services to the container.
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowSpecificOrigin",
+                builder => builder.WithOrigins("http://localhost:8080"));
+        });
+    }
+
+    [...]
+}
+        </prism-component>
+                    
+        <h2>Javascript WebSocket</h2> 
+        <p>
+            En Javascript, j'ai utilisé l'objet <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications">WebSocket</a> 
+            et j'ai donc écris un code dans ce genre là :
+        </p>
+        <prism-component class="language-javascript line-numbers">
+let serverUrlWs = 'wss://localhost:5001/ws';
+let ws = new WebSocket(serverUrlWs);
+
+ws.onopen = function (event) {
+    console.log("Connected !"); 
+};
+
+ws.onclose = function(event) {
+    console.log("Closed connection !");
+};
+
+ws.onmessage = function(event) {
+    console.log(event.data);
+};
+
+ws.onerror = function(event) {
+    console.log("error: " + event.data);
+};
+        </prism-component>
+        <h2>Core WebSocket</h2> 
+        <p>
+            Côté Core je n'ai rien touché et vous retrouverez la configuration proposée dans l'exemple de la documentation, soit :
+        </p>
+        <prism-component class="language-csharp line-numbers">
+_app.Use(async (context, next) =>
+{
+    if (context.Request.Path == "/ws")
+    {
+        if (context.WebSockets.IsWebSocketRequest)
+        {
+            WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync();
+            await Echo(context, webSocket);
+        }
+        else
+        {
+            context.Response.StatusCode = 400;
+        }
+    }
+    else
+    {
+        await next();
+    }
+
+});
+        </prism-component>
+        <h2>Core configuration de base = HTTPS</h2> 
+        <p>
+            Mon erreur a été d'oublier que mon application Core en local était en Https ...
+        </p>
+        <p>
+            Donc "wss://localhost:5001/ws" pas juste "ws://localhost:5001/ws" ...
+        </p>
+        <br />
+        <p>
+            J'ai trouvé également ce petit article, la classe middleware créée peut être assez pratique :
+            <a href="https://radu-matei.com/blog/aspnet-core-websockets-middleware/" alt="Tuto WS">Tuto</a>
+        </p>
+    </div>
+</div>
+
+<div data-lang="en">
+    <div data-model="title">ASP .NET Core / Javascript : HTTPS & "Error during WebSocket handshake" / CORS</div>
+    <div data-model="summary">
+        Be patient !
+    </div>
+    <div data-model="content">
+        Be patient !
+    </div>
+</div>
