@@ -11,7 +11,7 @@
 	margin: 0 auto;
 	margin-top: 20px;
 	padding: 0;
-	background-color: white;
+	background-color: darken(@grey-lite, .5%);
 
 	> .cst-article-content {
 		position: relative;
@@ -44,15 +44,16 @@
 			text-align: center;
 			font-family: 'Intro';
 			padding: 0 10px;
-
+			color: @azure;
+			.text-shadow(lighten(@azure, 10%) 1px 1px 0px);
+				
 			> a
 			{
-				color: @grey-alt;
-				.text-shadow(lighten(@grey-alt, 10%) 1px 1px 0px);
+				color: @azure;
 				.transition(color .2s ease-in-out);
 
 				&:hover {
-					color: @grey-lite-alt;
+					color: @azure-lite;
 				}
 			}
 		}
@@ -60,10 +61,12 @@
 		> .cst-article-date {
 			text-align: center;
 			font-family: 'Intro';
+			color: @azure-lite;
 		}
 
 		> .cst-article-inner-content {
 			padding: 15px 30px;
+			color: white;
 		}
 	}
 

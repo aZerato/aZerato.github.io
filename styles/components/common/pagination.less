@@ -17,16 +17,17 @@
 
             .transition(all .2s ease-in-out);
 
-            &.active
-            {
-                background: @azure-darker;
-            }
-
             &:first-child,
             &:last-child
             {
                 border-radius: 0;
             }
+        }
+        
+        &.active a,
+        &.active:hover a
+        {
+            background: @azure-darker;
         }
     }
 }
