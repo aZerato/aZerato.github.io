@@ -1,0 +1,72 @@
+<div data-model="publication_date">2020-05-13</div>
+
+<img data-img="/blog/files/img/signalr.jpg" data-img-alt="https://www.memecreator.org/meme/use-signalr-they-said-its-gonna-be-fun-they-said/" />
+
+<div data-lang="fr">
+    <div data-model="title">ASP .NET Core - SignalR - MessagePack - Angular</div>
+    <div data-model="summary">
+        <p>
+            Bonjour, aujourd'hui on va améliorer les performances de notre application SignalR.
+        </p>
+        <p>
+            MessagePack est une librairie permettant la serialisation de nos trames WS en binaire. 
+            (<a href="https://msgpack.org/" alt="Site MessagePack">lien</a>).
+        </p>
+    </div>
+    <div data-model="content">
+        <p>
+            Bonjour, aujourd'hui on va améliorer les performances de notre application SignalR.
+        </p>
+        <p>
+            MessagePack est une librairie permettant la serialisation de nos trames WS en binaire. 
+            (<a href="https://msgpack.org/" alt="Site MessagePack">lien</a>).
+        </p>
+        
+        <h2>Core</h2> 
+        <p>
+            Installer la dépendance nugget : Microsoft.AspNetCore.SignalR.Protocols.MessagePack.
+        </p>
+        <p>
+            Rendez-vous ensuite dans le fichier Startup.cs pour dire à SignalR d'utiliser MessagePack. 
+        </p>
+        <prism-component class="language-csharp line-numbers">
+services.AddSignalR(o => { o.EnableDetailedErrors = true; })
+.AddMessagePackProtocol(options =>
+    {
+        options.FormatterResolvers = new List<IFormatterResolver>()
+        {
+            MessagePack.Resolvers.StandardResolver.Instance
+        };
+    });
+        </prism-component>
+    
+        <h2>Angular</h2>
+        <p>
+            Ajouter la dépendance : @microsoft/signalr-protocol-msgpack.
+        </p>
+        <p>
+            Il faut configurer votre "HubConnectionBuilder" :
+        </p>
+        <prism-component class="language-csharp line-numbers">
+let hubConnectionBuilder: HubConnectionBuilder = new HubConnectionBuilder();
+hubConnectionBuilder.withUrl(huburl,{
+    skipNegotiation: true,
+    transport: HttpTransportType.WebSockets,
+});
+hubConnectionBuilder.withHubProtocol(new MessagePackHubProtocol());
+        </prism-component>
+        <p>
+            À date sur mon Github, j'ai un projet "Shaker" qui utilise tout ça.
+        </p>
+    </div>
+</div>
+
+<div data-lang="en">
+    <div data-model="title">ASP .NET Core - SignalR - MessagePack - Angular</div>
+    <div data-model="summary">
+        Be patient !
+    </div>
+    <div data-model="content">
+        Be patient !
+    </div>
+</div>
