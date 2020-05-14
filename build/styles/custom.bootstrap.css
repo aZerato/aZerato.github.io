@@ -95,9 +95,9 @@
   left: -1.85714286em;
 }
 .fa-border {
-  padding: .2em .25em .15em;
+  padding: 0.2em 0.25em 0.15em;
   border: solid 0.08em #eee;
-  border-radius: .1em;
+  border-radius: 0.1em;
 }
 .fa-pull-left {
   float: left;
@@ -106,10 +106,10 @@
   float: right;
 }
 .fa.fa-pull-left {
-  margin-right: .3em;
+  margin-right: 0.3em;
 }
 .fa.fa-pull-right {
-  margin-left: .3em;
+  margin-left: 0.3em;
 }
 .pull-right {
   float: right;
@@ -118,10 +118,10 @@
   float: left;
 }
 .fa.pull-left {
-  margin-right: .3em;
+  margin-right: 0.3em;
 }
 .fa.pull-right {
-  margin-left: .3em;
+  margin-left: 0.3em;
 }
 .fa-spin {
   -webkit-animation: fa-spin 2s infinite linear;
@@ -3750,7 +3750,7 @@ ul.cst-list-nodecoration {
   0%,
   50%,
   100% {
-    opacity: 1.00;
+    opacity: 1;
   }
   25%,
   75% {
@@ -3761,7 +3761,7 @@ ul.cst-list-nodecoration {
   0%,
   50%,
   100% {
-    opacity: 1.00;
+    opacity: 1;
   }
   25%,
   75% {
@@ -3772,7 +3772,7 @@ ul.cst-list-nodecoration {
   0%,
   50%,
   100% {
-    opacity: 1.00;
+    opacity: 1;
   }
   25%,
   75% {
@@ -3783,7 +3783,7 @@ ul.cst-list-nodecoration {
   0%,
   50%,
   100% {
-    opacity: 1.00;
+    opacity: 1;
   }
   25%,
   75% {
@@ -7807,8 +7807,8 @@ ul.cst-list-nodecoration {
 .cst-intro .hexagon-container .hexBottom:after {
   content: "";
   position: absolute;
-  width: 190.0000px;
-  height: 109.69655114602891px;
+  width: 190px;
+  height: 109.69655115px;
   -webkit-transform: rotate(45deg) scaleY(1.7321) translateY(-54.8483px);
   -moz-transform: rotate(45deg) scaleY(1.7321) translateY(-54.8483px);
   -ms-transform: rotate(45deg) scaleY(1.7321) translateY(-54.8483px);
@@ -7840,7 +7840,7 @@ ul.cst-list-nodecoration {
   position: absolute;
   top: 2.8868px;
   left: 0;
-  width: 190.0000px;
+  width: 190px;
   height: 109.6966px;
   z-index: 2;
   background: inherit;
@@ -7849,7 +7849,7 @@ ul.cst-list-nodecoration {
   .cst-intro .hexagon-container .hexagon {
     width: 100px;
     height: 57.74px;
-    background-size: auto 103.9230px;
+    background-size: auto 103.923px;
     margin: 28.87px 0;
   }
   .cst-intro .hexagon-container .hexTop,
@@ -7864,8 +7864,8 @@ ul.cst-list-nodecoration {
   }
   .cst-intro .hexagon-container .hexTop:after,
   .cst-intro .hexagon-container .hexBottom:after {
-    width: 90.0000px;
-    height: 51.96152422706633px;
+    width: 90px;
+    height: 51.96152423px;
     -webkit-transform: rotate(45deg) scaleY(1.7321) translateY(-25.9808px);
     -moz-transform: rotate(45deg) scaleY(1.7321) translateY(-25.9808px);
     -ms-transform: rotate(45deg) scaleY(1.7321) translateY(-25.9808px);
@@ -7884,7 +7884,7 @@ ul.cst-list-nodecoration {
   .cst-intro .hexagon-container .hexagon:after {
     top: 2.8868px;
     left: 0;
-    width: 90.0000px;
+    width: 90px;
     height: 51.9615px;
   }
   .cst-intro .cst-intro-para .cst-intro-para-2 {
